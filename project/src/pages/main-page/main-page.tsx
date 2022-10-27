@@ -1,6 +1,17 @@
 import FilmCard from 'src/components/film-card/film-card';
 
-const MainPage = props => {
+type TMainPage = {
+  filmCardInfo?: {
+    poster: string;
+    title: string;
+    meta: {
+      genre: string;
+      year: number;
+    };
+  };
+};
+
+const MainPage = ({ filmCardInfo }: TMainPage) => {
   const FILMS_COUNT = 20;
 
   return (
