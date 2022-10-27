@@ -24,7 +24,9 @@ const MoviePage = () => (
               </div>
             </li>
             <li className="user-block__item">
-              <a className="user-block__link">Sign out</a>
+              <a href="!#" className="user-block__link">
+                Sign out
+              </a>
             </li>
           </ul>
         </header>
@@ -74,17 +76,17 @@ const MoviePage = () => (
             <nav className="film-nav film-card__nav">
               <ul className="film-nav__list">
                 <li className="film-nav__item film-nav__item--active">
-                  <a href="#" className="film-nav__link">
+                  <a href="!#" className="film-nav__link">
                     Overview
                   </a>
                 </li>
                 <li className="film-nav__item">
-                  <a href="#" className="film-nav__link">
+                  <a href="!#" className="film-nav__link">
                     Details
                   </a>
                 </li>
                 <li className="film-nav__item">
-                  <a href="#" className="film-nav__link">
+                  <a href="!#" className="film-nav__link">
                     Reviews
                   </a>
                 </li>
@@ -103,14 +105,14 @@ const MoviePage = () => (
               <p>
                 In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided
                 over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes
-                Gustave's friend and protege.
+                Gustave&apos;s friend and protege.
               </p>
 
               <p>
-                Gustave prides himself on providing first-className service to the hotel's guests,
-                including satisfying the sexual needs of the many elderly women who stay there. When
-                one of Gustave's lovers dies mysteriously, Gustave finds himself the recipient of a
-                priceless painting and the chief suspect in her murder.
+                Gustave prides himself on providing first-className service to the hotel&apos;s
+                guests, including satisfying the sexual needs of the many elderly women who stay
+                there. When one of Gustave&apos;s lovers dies mysteriously, Gustave finds himself
+                the recipient of a priceless painting and the chief suspect in her murder.
               </p>
 
               <p className="film-card__director">

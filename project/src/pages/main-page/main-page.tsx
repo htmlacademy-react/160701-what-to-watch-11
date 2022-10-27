@@ -32,7 +32,7 @@ const MainPage = ({ filmCardInfo }: TMainPage) => {
 
         <header className="page-header film-card__head">
           <div className="logo">
-            <a className="logo__link">
+            <a href="!#" className="logo__link">
               <span className="logo__letter logo__letter--1">W</span>
               <span className="logo__letter logo__letter--2">T</span>
               <span className="logo__letter logo__letter--3">W</span>
@@ -46,7 +46,9 @@ const MainPage = ({ filmCardInfo }: TMainPage) => {
               </div>
             </li>
             <li className="user-block__item">
-              <a className="user-block__link">Sign out</a>
+              <a href="!#" className="user-block__link">
+                Sign out
+              </a>
             </li>
           </ul>
         </header>
@@ -54,7 +56,7 @@ const MainPage = ({ filmCardInfo }: TMainPage) => {
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src={poster} width="218" height="327" />
+              <img src={poster} width="218" height="327" alt="" />
             </div>
 
             <div className="film-card__desc">
@@ -90,52 +92,52 @@ const MainPage = ({ filmCardInfo }: TMainPage) => {
 
           <ul className="catalog__genres-list">
             <li className="catalog__genres-item catalog__genres-item--active">
-              <a href="#" className="catalog__genres-link">
+              <a href="!#" className="catalog__genres-link">
                 All genres
               </a>
             </li>
             <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
+              <a href="!#" className="catalog__genres-link">
                 Comedies
               </a>
             </li>
             <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
+              <a href="!#" className="catalog__genres-link">
                 Crime
               </a>
             </li>
             <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
+              <a href="!#" className="catalog__genres-link">
                 Documentary
               </a>
             </li>
             <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
+              <a href="!#" className="catalog__genres-link">
                 Dramas
               </a>
             </li>
             <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
+              <a href="!#" className="catalog__genres-link">
                 Horror
               </a>
             </li>
             <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
+              <a href="!#" className="catalog__genres-link">
                 Kids & Family
               </a>
             </li>
             <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
+              <a href="!#" className="catalog__genres-link">
                 Romance
               </a>
             </li>
             <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
+              <a href="!#" className="catalog__genres-link">
                 Sci-Fi
               </a>
             </li>
             <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">
+              <a href="!#" className="catalog__genres-link">
                 Thrillers
               </a>
             </li>
@@ -156,7 +158,7 @@ const MainPage = ({ filmCardInfo }: TMainPage) => {
 
         <footer className="page-footer">
           <div className="logo">
-            <a className="logo__link logo__link--light">
+            <a href="!#" className="logo__link logo__link--light">
               <span className="logo__letter logo__letter--1">W</span>
               <span className="logo__letter logo__letter--2">T</span>
               <span className="logo__letter logo__letter--3">W</span>

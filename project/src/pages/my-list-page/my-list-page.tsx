@@ -19,7 +19,9 @@ const MyListPage = () => (
           </div>
         </li>
         <li className="user-block__item">
-          <a className="user-block__link">Sign out</a>
+          <a href="!#" className="user-block__link">
+            Sign out
+          </a>
         </li>
       </ul>
     </header>
