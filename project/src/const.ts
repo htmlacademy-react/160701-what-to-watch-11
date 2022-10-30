@@ -9,11 +9,11 @@ const sampleFilm = {
 
 enum AppRoute {
   Root = '/',
-  Login = 'login',
-  Player = 'player',
-  Film = 'films/:id',
-  MyList = 'mylist',
-  AddReview = 'films/:id/review'
+  Login = '/login',
+  Player = '/player',
+  Film = '/films/:id',
+  MyList = '/mylist',
+  AddReview = '/films/:id/review'
 }
 
 enum AuthStatus {
