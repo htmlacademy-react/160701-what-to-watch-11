@@ -16,4 +16,10 @@ enum AppRoute {
   AddReview = 'films/:id/review'
 }
 
-export { sampleFilm, AppRoute };
+enum AuthStatus {
+  Auth = 'AUTH',
+  NoAuth = 'NO_AUTH',
+  Unknown = 'UNKNOWN'
+}
+
+export { sampleFilm, AppRoute, AuthStatus };
