@@ -7,4 +7,13 @@ const sampleFilm = {
   },
 };
 
-export { sampleFilm };
+enum AppRoute {
+  Root = '/',
+  Login = 'login',
+  Player = 'player',
+  Film = 'films/:id',
+  MyList = 'mylist',
+  AddReview = 'films/:id/review'
+}
+
+export { sampleFilm, AppRoute };
