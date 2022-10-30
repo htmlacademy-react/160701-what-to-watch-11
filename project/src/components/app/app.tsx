@@ -1,5 +1,6 @@
 import MainPage from 'src/pages/main-page/main-page';
 import { TFilmCardInfo } from 'src/pages/main-page/main-page';
+import { HelmetProvider } from 'react-helmet-async';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import { AppRoute, AuthStatus } from 'src/const';
 import Page404 from 'src/pages/404-page/404-page';
@@ -19,30 +20,32 @@ const App = (props: TApp): JSX.Element => {
 
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path={AppRoute.Root} element={<MainPage filmCardInfo={film} />} />
-        <Route path={AppRoute.Login} element={<SingInPage />} />
-        <Route
-          path={AppRoute.MyList}
-          element={
-            <PrivateRoute authStatus={AuthStatus.NoAuth}>
-              <MyListPage />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path={AppRoute.AddReview}
-          element={
-            <PrivateRoute authStatus={AuthStatus.NoAuth}>
-              <AddReviewPage />
-            </PrivateRoute>
-          }
-        />
+      <HelmetProvider>
+        <Routes>
+          <Route path={AppRoute.Root} element={<MainPage filmCardInfo={film} />} />
+          <Route path={AppRoute.Login} element={<SingInPage />} />
+          <Route
+            path={AppRoute.MyList}
+            element={
+              <PrivateRoute authStatus={AuthStatus.NoAuth}>
+                <MyListPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={AppRoute.AddReview}
+            element={
+              <PrivateRoute authStatus={AuthStatus.NoAuth}>
+                <AddReviewPage />
+              </PrivateRoute>
+            }
+          />
 
-        <Route path={AppRoute.Player} element={<PlayerPage />} />
-        <Route path={AppRoute.Film} element={<MoviePage />} />
-        <Route path="*" element={<Page404 />} />
-      </Routes>
+          <Route path={AppRoute.Player} element={<PlayerPage />} />
+          <Route path={AppRoute.Film} element={<MoviePage />} />
+          <Route path="*" element={<Page404 />} />
+        </Routes>
+      </HelmetProvider>
     </BrowserRouter>
   );
 };

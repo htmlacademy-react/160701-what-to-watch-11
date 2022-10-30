@@ -1,7 +1,12 @@
+import { Helmet } from 'react-helmet-async';
 import Logo from 'src/components/logo/logo';
+import { PageTitles } from 'src/const';
 
 const MoviePage = () => (
   <>
+    <Helmet>
+      <title>{PageTitles.Film}</title>
+    </Helmet>
     <section className="film-card film-card--full">
       <div className="film-card__hero">
         <div className="film-card__bg">

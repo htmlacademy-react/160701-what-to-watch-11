@@ -1,5 +1,7 @@
+import { Helmet } from 'react-helmet-async';
 import FilmCard from 'src/components/film-card/film-card';
 import Logo from 'src/components/logo/logo';
+import { PageTitles } from 'src/const';
 
 export type TFilmCardInfo = {
   poster: string;
@@ -24,6 +26,9 @@ const MainPage = ({ filmCardInfo }: TMainPage) => {
 
   return (
     <>
+      <Helmet>
+        <title>{PageTitles.Root}</title>
+      </Helmet>
       <section className="film-card">
         <div className="film-card__bg">
           <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />

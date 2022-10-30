@@ -21,5 +21,13 @@ enum AuthStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN'
 }
-
-export { sampleFilm, AppRoute, AuthStatus };
+enum PageTitles {
+  Root = 'Главная страница',
+  Login = 'Логин',
+  Player = 'Плеер',
+  Film = 'Фильм',
+  MyList = 'Избранное',
+  AddReview = 'Добавить отзыв',
+  Page404 = 'Страница не найдена'
+}
+export { sampleFilm, AppRoute, AuthStatus, PageTitles };
