@@ -1,4 +1,7 @@
+import { Helmet } from 'react-helmet-async';
 import FilmCard from 'src/components/film-card/film-card';
+import Logo from 'src/components/logo/logo';
+import { PageTitles } from 'src/const';
 
 export type TFilmCardInfo = {
   poster: string;
@@ -23,6 +26,9 @@ const MainPage = ({ filmCardInfo }: TMainPage) => {
 
   return (
     <>
+      <Helmet>
+        <title>{PageTitles.Root}</title>
+      </Helmet>
       <section className="film-card">
         <div className="film-card__bg">
           <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
@@ -31,13 +37,7 @@ const MainPage = ({ filmCardInfo }: TMainPage) => {
         <h1 className="visually-hidden">WTW</h1>
 
         <header className="page-header film-card__head">
-          <div className="logo">
-            <a href="!#" className="logo__link">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
+          <Logo />
 
           <ul className="user-block">
             <li className="user-block__item">
@@ -157,13 +157,7 @@ const MainPage = ({ filmCardInfo }: TMainPage) => {
         </section>
 
         <footer className="page-footer">
-          <div className="logo">
-            <a href="!#" className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
+          <Logo isLight />
 
           <div className="copyright">
             <p>© 2019 What to watch Ltd.</p>
