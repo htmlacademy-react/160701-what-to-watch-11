@@ -8,6 +8,7 @@ import SingInPage from 'src/pages/sing-in-page/sing-in-page';
 import MyListPage from 'src/pages/my-list-page/my-list-page';
 import PlayerPage from 'src/pages/player-page/player-page';
 import MoviePage from 'src/pages/movie-page/movie-page';
+import PrivateRouteOutlet from '../private-route-outlet/private-route-outlet';
 import PrivateRoute from '../private-route/private-route';
 import AddReviewPage from 'src/pages/add-review-page/add-review-page';
 
@@ -26,12 +27,10 @@ const App = (props: TApp): JSX.Element => {
           <Route path={AppRoute.Login} element={<SingInPage />} />
           <Route
             path={AppRoute.MyList}
-            element={
-              <PrivateRoute authStatus={AuthStatus.NoAuth}>
-                <MyListPage />
-              </PrivateRoute>
-            }
-          />
+            element={<PrivateRouteOutlet authStatus={AuthStatus.NoAuth} />}
+          >
+            <Route element={<MyListPage />} />
+          </Route>
           <Route
             path={AppRoute.AddReview}
             element={
