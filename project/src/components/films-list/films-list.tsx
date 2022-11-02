@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import FilmCard from '../film-card/film-card';
+import SmallFilmCard from '../small-film-card/small-film-card';
 import { TFilmsList } from 'src/types/films';
 
 const FilmsList = ({ films, maxFilms = films.length }: TFilmsList) => {
@@ -12,7 +12,7 @@ const FilmsList = ({ films, maxFilms = films.length }: TFilmsList) => {
       {films
         .filter((_, idx) => idx + 1 <= maxFilms)
         .map((film) => (
-          <FilmCard key={film.id} film={film} onMouseOver={cardMouseOverHandler} />
+          <SmallFilmCard key={film.id} film={film} onMouseOver={cardMouseOverHandler} />
         ))}
     </div>
   );

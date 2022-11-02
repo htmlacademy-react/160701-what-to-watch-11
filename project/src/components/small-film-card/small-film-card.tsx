@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { TFilmCard } from 'src/types/films';
 
-const FilmCard = ({ film, onMouseOver }: TFilmCard) => {
+const SmallFilmCard = ({ film, onMouseOver }: TFilmCard) => {
   const { id, name, posterImage } = film;
 
   return (
@@ -18,4 +18,4 @@ const FilmCard = ({ film, onMouseOver }: TFilmCard) => {
   );
 };
 
-export default FilmCard;
+export default SmallFilmCard;
