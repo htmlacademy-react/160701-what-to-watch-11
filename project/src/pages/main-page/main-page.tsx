@@ -1,28 +1,17 @@
 import { Helmet } from 'react-helmet-async';
 import FilmCard from 'src/components/film-card/film-card';
+import FilmsList from 'src/components/films-list/films-list';
 import Logo from 'src/components/logo/logo';
 import { PageTitles } from 'src/const';
-
-export type TFilmCardInfo = {
-  poster: string;
-  title: string;
-  meta: {
-    genre: string;
-    year: number;
-  };
-};
+import { TFilm, TFilmCardInfo } from 'src/types/films';
 
 type TMainPage = {
   filmCardInfo: TFilmCardInfo;
+  films: TFilm[];
 };
 
-const MainPage = ({ filmCardInfo }: TMainPage) => {
-  const FILMS_COUNT = 20;
-  const {
-    title,
-    poster,
-    meta: { genre, year },
-  } = filmCardInfo;
+const MainPage = ({ filmCardInfo, films }: TMainPage) => {
+  const { name, posterImage, backgroundImage, genre, released } = filmCardInfo;
 
   return (
     <>
@@ -31,7 +20,7 @@ const MainPage = ({ filmCardInfo }: TMainPage) => {
       </Helmet>
       <section className="film-card">
         <div className="film-card__bg">
-          <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+          <img src={backgroundImage} alt={name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -56,14 +45,14 @@ const MainPage = ({ filmCardInfo }: TMainPage) => {
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src={poster} width="218" height="327" alt="" />
+              <img src={posterImage} width="218" height="327" alt="" />
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{title}</h2>
+              <h2 className="film-card__title">{name}</h2>
               <p className="film-card__meta">
                 <span className="film-card__genre">{genre}</span>
-                <span className="film-card__year">{year}</span>
+                <span className="film-card__year">{released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -143,11 +132,7 @@ const MainPage = ({ filmCardInfo }: TMainPage) => {
             </li>
           </ul>
 
-          <div className="catalog__films-list">
-            {Array.from({ length: FILMS_COUNT }, (_, i) => (
-              <FilmCard key={i} />
-            ))}
-          </div>
+          <FilmsList films={films} maxFilms={8} />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">
