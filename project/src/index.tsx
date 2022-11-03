@@ -7,6 +7,6 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
 root.render(
   <React.StrictMode>
-    <App film={films[0]} films={films} />
+    <App films={films} />
   </React.StrictMode>,
 );

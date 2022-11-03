@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from 'src/const';
 
 const UserBlock = () => {
-  const isAuth = false;
+  const isAuth = true;
 
   return (
     <ul className="user-block">
