@@ -2,7 +2,7 @@ import { PropsWithChildren } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { AppRoute } from 'src/const';
 import { TFilm } from 'src/types/films';
-import { adjustColor } from 'src/utils';
+import { adjustColor, getFilmRatingPhrase } from 'src/utils';
 import AddReviewForm from '../add-review-form/add-review-form';
 import Breadcrumbs from '../breadcrumbs/breadcrumbs';
 import FilmNav from '../film-nav/film-nav';
@@ -121,7 +121,7 @@ const FilmCard = ({ film }: TFilmCard) => {
                 <div className="film-rating">
                   <div className="film-rating__score">{rating}</div>
                   <p className="film-rating__meta">
-                    <span className="film-rating__level">Very good</span>
+                    <span className="film-rating__level">{getFilmRatingPhrase(rating)}</span>
                     <span className="film-rating__count">{scoresCount} ratings</span>
                   </p>
                 </div>
