@@ -5,6 +5,7 @@ import { TFilm } from 'src/types/films';
 import { adjustColor } from 'src/utils';
 import AddReviewForm from '../add-review-form/add-review-form';
 import Breadcrumbs from '../breadcrumbs/breadcrumbs';
+import FilmNav from '../film-nav/film-nav';
 import Header from '../header/header';
 
 type TFilmCard = {
@@ -116,25 +117,7 @@ const FilmCard = ({ film }: TFilmCard) => {
             <FilmCardInfo>
               <FilmCardPoster isBig />
               <FilmCardDescr>
-                <nav className="film-nav film-card__nav">
-                  <ul className="film-nav__list">
-                    <li className="film-nav__item film-nav__item--active">
-                      <a href="!#" className="film-nav__link">
-                        Overview
-                      </a>
-                    </li>
-                    <li className="film-nav__item">
-                      <a href="!#" className="film-nav__link">
-                        Details
-                      </a>
-                    </li>
-                    <li className="film-nav__item">
-                      <a href="!#" className="film-nav__link">
-                        Reviews
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
+                <FilmNav />
                 <div className="film-rating">
                   <div className="film-rating__score">{rating}</div>
                   <p className="film-rating__meta">
