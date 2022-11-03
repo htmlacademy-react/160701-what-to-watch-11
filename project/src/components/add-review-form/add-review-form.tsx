@@ -30,6 +30,7 @@ const AddReviewForm = () => {
                     name="rating"
                     value={count}
                     onChange={onChange}
+                    checked={count === Number(formData.rating)}
                   />
                   <label className="rating__label" htmlFor={`star-${count}`}>
                     Rating {count}
@@ -47,6 +48,7 @@ const AddReviewForm = () => {
             id="review-text"
             placeholder="Review text"
             onChange={onChange}
+            value={formData['review-text']}
           />
           <div className="add-review__submit">
             <button className="add-review__btn" type="submit">
