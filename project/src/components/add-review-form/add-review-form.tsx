@@ -1,6 +1,9 @@
 import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
 
-const AddReviewForm = () => {
+type TAddReviewForm = {
+  backgroundColor: string;
+};
+const AddReviewForm = ({ backgroundColor }: TAddReviewForm) => {
   const [formData, setFormData] = useState({
     'rating': '',
     'review-text': '',
@@ -12,36 +15,41 @@ const AddReviewForm = () => {
   };
   const onChange = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { value, name } = evt.target;
+
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+  const isValid = !!(formData.rating && formData['review-text']);
   return (
     <div className="add-review">
       <form className="add-review__htmlForm" onSubmit={formSubmitHandler}>
         <div className="rating">
           <div className="rating__stars">
-            {Array.from({ length: 10 }, (_, idx) => {
-              const count = idx + 1;
-              return (
-                <Fragment key={count}>
-                  <input
-                    className="rating__input"
-                    id={`star-${count}`}
-                    type="radio"
-                    name="rating"
-                    value={count}
-                    onChange={onChange}
-                    checked={count === Number(formData.rating)}
-                  />
-                  <label className="rating__label" htmlFor={`star-${count}`}>
-                    Rating {count}
-                  </label>
-                </Fragment>
-              );
-            })}
+            {Array.from({ length: 10 }, (_, idx) => idx + 1)
+              .reverse()
+              .map((count) => {
+                const isCurrent = count === Number(formData.rating);
+
+                return (
+                  <Fragment key={count}>
+                    <input
+                      className="rating__input"
+                      id={`star-${count}`}
+                      type="radio"
+                      name="rating"
+                      value={count}
+                      onChange={onChange}
+                      checked={isCurrent}
+                    />
+                    <label className="rating__label" htmlFor={`star-${count}`}>
+                      Rating {count}
+                    </label>
+                  </Fragment>
+                );
+              })}
           </div>
         </div>
 
-        <div className="add-review__text">
+        <div className="add-review__text" style={{ backgroundColor }}>
           <textarea
             className="add-review__textarea"
             name="review-text"
@@ -49,9 +57,11 @@ const AddReviewForm = () => {
             placeholder="Review text"
             onChange={onChange}
             value={formData['review-text']}
+            minLength={50}
+            maxLength={400}
           />
           <div className="add-review__submit">
-            <button className="add-review__btn" type="submit">
+            <button className="add-review__btn" type="submit" disabled={!isValid}>
               Post
             </button>
           </div>

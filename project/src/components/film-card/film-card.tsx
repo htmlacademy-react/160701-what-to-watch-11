@@ -2,6 +2,7 @@ import { PropsWithChildren } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { AppRoute } from 'src/const';
 import { TFilm } from 'src/types/films';
+import { adjustColor } from 'src/utils';
 import AddReviewForm from '../add-review-form/add-review-form';
 import Breadcrumbs from '../breadcrumbs/breadcrumbs';
 import Header from '../header/header';
@@ -11,6 +12,7 @@ type TFilmCard = {
 };
 const FilmCard = ({ film }: TFilmCard) => {
   const {
+    id,
     name,
     posterImage,
     backgroundImage,
@@ -51,7 +53,7 @@ const FilmCard = ({ film }: TFilmCard) => {
         <span className="film-card__count">9</span>
       </button>
       {isMoviePage && (
-        <Link className="btn film-card__button" to="review">
+        <Link className="btn film-card__button" to={`/films/${id}/review`}>
           Add review
         </Link>
       )}
@@ -167,7 +169,7 @@ const FilmCard = ({ film }: TFilmCard) => {
           </FilmCardWrap>
         )}
       </FilmCardHeaderWrap>
-      {isAddReviewPage && <AddReviewForm />}
+      {isAddReviewPage && <AddReviewForm backgroundColor={adjustColor(backgroundColor, 10)} />}
     </section>
   );
 };
