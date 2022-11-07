@@ -1,5 +1,5 @@
-import { PropsWithChildren } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { PropsWithChildren, FC, ReactNode } from 'react';
+import { useLocation } from 'react-router-dom';
 import { AppRoute } from 'src/const';
 import { TFilm } from 'src/types/films';
 import { adjustColor, getFilmRatingPhrase } from 'src/utils';
@@ -7,6 +7,9 @@ import AddReviewForm from '../add-review-form/add-review-form';
 import Breadcrumbs from '../breadcrumbs/breadcrumbs';
 import FilmNav from '../film-nav/film-nav';
 import Header from '../header/header';
+import FilmCardButtons from './components/film-card-buttons/film-card-buttons';
+import FilmCardPoster from './components/film-card-poster/film-card-poster';
+import FilmCardData from './components/film-card-data/film-card-data';
 
 type TFilmCard = {
   film: TFilm;
@@ -35,40 +38,11 @@ const FilmCard = ({ film }: TFilmCard) => {
   const FilmCardHeroWrap = ({ children }: PropsWithChildren) =>
     // eslint-disable-next-line react/jsx-no-useless-fragment
     isMoviePage ? <div className="film-card__hero">{children}</div> : <>{children}</>;
+
   const FilmCardHeaderWrap = ({ children }: PropsWithChildren) =>
     // eslint-disable-next-line react/jsx-no-useless-fragment
     isAddReviewPage ? <div className="film-card__header">{children}</div> : <>{children}</>;
-  const FilmCardButtons = () => (
-    <div className="film-card__buttons">
-      <button className="btn btn--play film-card__button" type="button">
-        <svg viewBox="0 0 19 19" width="19" height="19">
-          <use xlinkHref="#play-s"></use>
-        </svg>
-        <span>Play</span>
-      </button>
-      <button className="btn btn--list film-card__button" type="button">
-        <svg viewBox="0 0 19 20" width="19" height="20">
-          <use xlinkHref="#add"></use>
-        </svg>
-        <span>My list</span>
-        <span className="film-card__count">9</span>
-      </button>
-      {isMoviePage && (
-        <Link className="btn film-card__button" to={`/films/${id}/review`}>
-          Add review
-        </Link>
-      )}
-    </div>
-  );
-  const FilmCardPoster = ({ isBig, isSmall }: { isBig?: boolean; isSmall?: boolean }) => (
-    <div
-      className={`film-card__poster
-      ${isBig ? 'film-card__poster--big' : ''}
-      ${isSmall ? 'film-card__poster--small' : ''}`}
-    >
-      <img src={posterImage} width="218" height="327" alt={name} />
-    </div>
-  );
+
   const FilmCardWrap = ({
     children,
     className = '',
@@ -81,15 +55,7 @@ const FilmCard = ({ film }: TFilmCard) => {
   const FilmCardInfo = ({ children }: PropsWithChildren) => (
     <div className="film-card__info">{children}</div>
   );
-  const FilmCardData = () => (
-    <>
-      <h2 className="film-card__title">{name}</h2>
-      <p className="film-card__meta">
-        <span className="film-card__genre">{genre}</span>
-        <span className="film-card__year">{released}</span>
-      </p>
-    </>
-  );
+
   return (
     <section className={`film-card ${isFull ? 'film-card--full' : ''}`} style={{ backgroundColor }}>
       <FilmCardHeaderWrap>
@@ -101,12 +67,12 @@ const FilmCard = ({ film }: TFilmCard) => {
           <h1 className="visually-hidden">WTW</h1>
 
           <Header>{isAddReviewPage && <Breadcrumbs />}</Header>
-          {isAddReviewPage && <FilmCardPoster isSmall />}
+          {isAddReviewPage && <FilmCardPoster posterImage={posterImage} name={name} isSmall />}
           {isMoviePage && (
             <FilmCardWrap>
               <FilmCardDescr>
-                <FilmCardData />
-                <FilmCardButtons />
+                <FilmCardData name={name} genre={genre} released={released} />
+                <FilmCardButtons id={id} withReviewLink />
               </FilmCardDescr>
             </FilmCardWrap>
           )}
@@ -115,7 +81,7 @@ const FilmCard = ({ film }: TFilmCard) => {
         {isMoviePage && (
           <FilmCardWrap className="film-card__translate-top">
             <FilmCardInfo>
-              <FilmCardPoster isBig />
+              <FilmCardPoster posterImage={posterImage} name={name} isBig />
               <FilmCardDescr>
                 <FilmNav />
                 <div className="film-rating">
@@ -143,9 +109,9 @@ const FilmCard = ({ film }: TFilmCard) => {
         {isRootPage && (
           <FilmCardWrap>
             <FilmCardInfo>
-              <FilmCardPoster />
+              <FilmCardPoster posterImage={posterImage} name={name} />
               <FilmCardDescr>
-                <FilmCardData />
+                <FilmCardData name={name} genre={genre} released={released} />
                 <FilmCardButtons />
               </FilmCardDescr>
             </FilmCardInfo>
