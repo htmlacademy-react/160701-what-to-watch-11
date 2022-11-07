@@ -13,6 +13,7 @@ import PrivateRoute from '../private-route/private-route';
 import AddReviewPage from 'src/pages/add-review-page/add-review-page';
 import UserLayout from 'src/layouts/user-layout/user-layout';
 import FilmCardLayout from 'src/layouts/film-card-layout/film-card-layout';
+import ScrollToTop from '../scroll-to-top/scroll-to-top';
 
 type TApp = {
   films: TFilm[];
@@ -23,6 +24,7 @@ const App = (props: TApp): JSX.Element => {
 
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <HelmetProvider>
         <Routes>
           <Route path={AppRoute.Player} element={<PlayerPage film={films[0]} />} />
