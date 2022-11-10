@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import MainPage from 'src/pages/main-page/main-page';
 import { TFilm } from 'src/types/films';
 import { HelmetProvider } from 'react-helmet-async';

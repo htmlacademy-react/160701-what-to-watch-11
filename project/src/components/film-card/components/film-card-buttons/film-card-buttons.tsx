@@ -4,7 +4,7 @@ type TFilmCardButtons = {
   withReviewLink?: boolean;
   id?: string | number;
 };
-const FilmCardButtons = ({ withReviewLink, id }: TFilmCardButtons) => (
+const FilmCardButtons = ({ withReviewLink, id = '' }: TFilmCardButtons) => (
   <div className="film-card__buttons">
     <button className="btn btn--play film-card__button" type="button">
       <svg viewBox="0 0 19 19" width="19" height="19">

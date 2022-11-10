@@ -1,4 +1,4 @@
-import { PropsWithChildren, FC, ReactNode } from 'react';
+import { PropsWithChildren } from 'react';
 import { useLocation } from 'react-router-dom';
 import { AppRoute } from 'src/const';
 import { TFilm } from 'src/types/films';

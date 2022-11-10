@@ -69,7 +69,7 @@ const films: TFilm[] = [
     backgroundImage: 'https://11.react.pages.academy/static/film/background/Fantastic_Beasts.jpg',
     backgroundColor: '#B6A99F',
     description:
-      "In an effort to thwart Grindelwald's plans of raising pure-blood wizards to rule over all non-magical beings, Albus Dumbledore enlists his former student Newt Scamander, who agrees to help, though he's unaware of the dangers that lie ahead. Lines are drawn as love and loyalty are tested, even among the truest friends and family, in an increasingly divided wizarding world.",
+      'In an effort to thwart Grindelwald\'s plans of raising pure-blood wizards to rule over all non-magical beings, Albus Dumbledore enlists his former student Newt Scamander, who agrees to help, though he\'s unaware of the dangers that lie ahead. Lines are drawn as love and loyalty are tested, even among the truest friends and family, in an increasingly divided wizarding world.',
     rating: 3.4,
     scoresCount: 160757,
     director: 'David Yates',
@@ -89,7 +89,7 @@ const films: TFilm[] = [
     backgroundImage: 'https://11.react.pages.academy/static/film/background/Midnight_Special.jpg',
     backgroundColor: '#828585',
     description:
-      "A father and son go on the run, pursued by the government and a cult drawn to the child's special powers.",
+      'A father and son go on the run, pursued by the government and a cult drawn to the child\'s special powers.',
     rating: 3.3,
     scoresCount: 67815,
     director: 'Jeff Nichols',
@@ -169,7 +169,7 @@ const films: TFilm[] = [
     backgroundImage: 'https://11.react.pages.academy/static/film/background/Aviator.jpg',
     backgroundColor: '#D6CDAF',
     description:
-      "A biopic depicting the early years of legendary Director and aviator Howard Hughes' career from the late 1920s to the mid 1940s.",
+      'A biopic depicting the early years of legendary Director and aviator Howard Hughes\' career from the late 1920s to the mid 1940s.',
     rating: 9.8,
     scoresCount: 307174,
     director: 'Martin Scorsese',
@@ -189,7 +189,7 @@ const films: TFilm[] = [
     backgroundImage: 'https://11.react.pages.academy/static/film/background/gangs_of_new_york.jpg',
     backgroundColor: '#A6B7AC',
     description:
-      "In 1862, Amsterdam Vallon returns to the Five Points area of New York City seeking revenge against Bill the Butcher, his father's killer.",
+      'In 1862, Amsterdam Vallon returns to the Five Points area of New York City seeking revenge against Bill the Butcher, his father\'s killer.',
     rating: 8.8,
     scoresCount: 370881,
     director: 'Martin Scorsese',
@@ -351,7 +351,7 @@ const films: TFilm[] = [
       'https://11.react.pages.academy/static/film/background/What-We-Do-in-the-Shadows.jpg',
     backgroundColor: '#A39E81',
     description:
-      "A look into the daily (or rather, nightly) lives of three vampires who've lived together for over 100 years, in Staten Island.",
+      'A look into the daily (or rather, nightly) lives of three vampires who\'ve lived together for over 100 years, in Staten Island.',
     rating: 7.2,
     scoresCount: 6173,
     director: 'Jemaine Clement',
@@ -416,7 +416,7 @@ const films: TFilm[] = [
       'https://11.react.pages.academy/static/film/background/Seven_Years_in_Tibet.jpg',
     backgroundColor: '#C6CADF',
     description:
-      "True story of Heinrich Harrer, an Austrian mountain climber who became friends with the Dalai Lama at the time of China's takeover of Tibet.",
+      'True story of Heinrich Harrer, an Austrian mountain climber who became friends with the Dalai Lama at the time of China\'s takeover of Tibet.',
     rating: 3.6,
     scoresCount: 112612,
     director: 'Jean-Jacques Annaud',
@@ -459,7 +459,7 @@ const films: TFilm[] = [
       'https://11.react.pages.academy/static/film/background/We_need_to_talk_about_Kevin.jpg',
     backgroundColor: '#E1DFDE',
     description:
-      "Kevin's mother struggles to love her strange child, despite the increasingly dangerous things he says and does as he grows up. But Kevin is just getting started, and his final act will be beyond anything anyone imagined.",
+      'Kevin\'s mother struggles to love her strange child, despite the increasingly dangerous things he says and does as he grows up. But Kevin is just getting started, and his final act will be beyond anything anyone imagined.',
     rating: 3.8,
     scoresCount: 123240,
     director: 'Lynne Ramsay',
@@ -480,7 +480,7 @@ const films: TFilm[] = [
       'https://11.react.pages.academy/static/film/background/Dardjeeling_Limited.jpg',
     backgroundColor: '#AD9F8B',
     description:
-      "A year after their father's funeral, three brothers travel across India by train in an attempt to bond with each other.",
+      'A year after their father\'s funeral, three brothers travel across India by train in an attempt to bond with each other.',
     rating: 3.6,
     scoresCount: 165106,
     director: 'Wes Anderson',
@@ -500,7 +500,7 @@ const films: TFilm[] = [
     backgroundImage: 'https://11.react.pages.academy/static/film/background/Johnny_English.jpg',
     backgroundColor: '#F0DBA2',
     description:
-      "After a sudden attack on the MI5, Johnny English, Britain's most confident yet unintelligent spy, becomes Britain's only spy.",
+      'After a sudden attack on the MI5, Johnny English, Britain\'s most confident yet unintelligent spy, becomes Britain\'s only spy.',
     rating: 10,
     scoresCount: 136843,
     director: 'Peter Howitt',
