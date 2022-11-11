@@ -42,6 +42,36 @@ const reviews = [
     comment: 'A movie that will take you to another world full of emotions.',
     date: '2022-09-27T13:58:46.523Z',
   },
+  {
+    id: 5,
+    user: {
+      id: 16,
+      name: 'Mollie 5',
+    },
+    rating: 1.4,
+    comment: 'A movie that will take you to another world full of emotions.',
+    date: '2022-09-27T13:58:46.523Z',
+  },
+  {
+    id: 6,
+    user: {
+      id: 16,
+      name: 'Mollie 6',
+    },
+    rating: 3.4,
+    comment: 'A movie that will take you to another world full of emotions.',
+    date: '2022-09-27T13:58:46.523Z',
+  },
+  {
+    id: 7,
+    user: {
+      id: 16,
+      name: 'Mollie 7',
+    },
+    rating: 7.4,
+    comment: 'A movie that will take you to another world full of emotions.',
+    date: '2022-09-27T13:58:46.523Z',
+  },
 ];
 
 export default reviews;
