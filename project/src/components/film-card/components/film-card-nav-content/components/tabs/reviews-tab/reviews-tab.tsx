@@ -1,6 +1,6 @@
 import reviews from 'src/mocks/reviews';
 import { TFilm } from 'src/types/films';
-import { adjustColor } from 'src/utils';
+import { adjustColor } from 'src/utils/main';
 
 const ReviewsTab = ({ film: { backgroundColor } }: { film: TFilm }) => (
   <div className="film-card__reviews film-card__row">

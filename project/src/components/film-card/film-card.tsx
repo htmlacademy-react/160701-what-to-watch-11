@@ -2,7 +2,7 @@ import { PropsWithChildren } from 'react';
 import { useLocation } from 'react-router-dom';
 import { AppRoute } from 'src/const';
 import { TFilm } from 'src/types/films';
-import { adjustColor } from 'src/utils';
+import { adjustColor } from 'src/utils/main';
 import AddReviewForm from '../add-review-form/add-review-form';
 import Breadcrumbs from '../breadcrumbs/breadcrumbs';
 import FilmNav from '../film-nav/film-nav';

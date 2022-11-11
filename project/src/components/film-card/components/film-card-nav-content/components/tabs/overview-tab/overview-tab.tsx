@@ -1,5 +1,5 @@
 import { TFilm } from 'src/types/films';
-import { getFilmRatingPhrase } from 'src/utils';
+import { getFilmRatingPhrase } from 'src/utils/main';
 
 const OverviewTab = ({ film }: { film: TFilm }) => {
   const { description, rating, director, starring, scoresCount } = film;
