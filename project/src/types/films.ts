@@ -24,8 +24,10 @@ export type TFilmCardInfo = Pick<
 >;
 
 export type TFilmCard = {
-  film: Pick<TFilm, 'id' | 'name' | 'posterImage' | 'previewImage'>;
+  film: Pick<TFilm, 'id' | 'name' | 'posterImage' | 'previewImage' | 'previewVideoLink'>;
+  withVideo?: boolean;
   onMouseOver: (id: number) => void;
+  onMouseLeave: () => void;
 };
 
 export type TFilmsList = {
