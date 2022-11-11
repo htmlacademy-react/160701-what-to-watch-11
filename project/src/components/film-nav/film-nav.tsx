@@ -1,21 +1,24 @@
-const FilmNav = () => (
+import { Link } from 'react-router-dom';
+
+type TFilmNav = {
+  data: string[];
+  current: string;
+};
+
+const FilmNav = ({ data, current }: TFilmNav) => (
   <nav className="film-nav film-card__nav">
     <ul className="film-nav__list">
-      <li className="film-nav__item film-nav__item--active">
-        <a href="!#" className="film-nav__link">
-          Overview
-        </a>
-      </li>
-      <li className="film-nav__item">
-        <a href="!#" className="film-nav__link">
-          Details
-        </a>
-      </li>
-      <li className="film-nav__item">
-        <a href="!#" className="film-nav__link">
-          Reviews
-        </a>
-      </li>
+      {data.map((item) => {
+        const isCurrent = current === item;
+
+        return (
+          <li key={item} className={`film-nav__item ${isCurrent ? 'film-nav__item--active' : ''}`}>
+            <Link to={`#${item}`} className="film-nav__link">
+              {item}
+            </Link>
+          </li>
+        );
+      })}
     </ul>
   </nav>
 );
