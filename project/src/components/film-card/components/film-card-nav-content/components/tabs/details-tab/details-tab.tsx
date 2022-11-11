@@ -1,4 +1,5 @@
 import { TFilm } from 'src/types/films';
+import { HumanizeDate } from 'src/utils/date';
 
 const DetailsTab = ({ film }: { film: TFilm }) => {
   const { director, starring, released, genre, runTime } = film;
@@ -31,7 +32,7 @@ const DetailsTab = ({ film }: { film: TFilm }) => {
       <div className="film-card__text-col">
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Run Time</strong>
-          <span className="film-card__details-value">{runTime}</span>
+          <span className="film-card__details-value">{HumanizeDate.FilmDuration(runTime)}</span>
         </p>
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Genre</strong>

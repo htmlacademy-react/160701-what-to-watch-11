@@ -17,8 +17,11 @@ class HumanizeDate {
     return dayjs(date).format('M MMM YYYY');
   }
 
-  static Comment(date: Date) {
-    return dayjs(date).format('YYYY/MM/DD HH:mm');
+  static CommentDateTime(date: Date | string) {
+    return dayjs(date).format('YYYY-MM-DD');
+  }
+  static Comment(date: Date | string) {
+    return dayjs(date).format('MMMM D, YYYY');
   }
 
   static FromNow(date: Date) {

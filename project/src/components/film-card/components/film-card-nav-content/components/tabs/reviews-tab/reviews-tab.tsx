@@ -1,5 +1,6 @@
 import reviews from 'src/mocks/reviews';
 import { TFilm } from 'src/types/films';
+import { HumanizeDate } from 'src/utils/date';
 import { adjustColor } from 'src/utils/main';
 
 const ReviewsTab = ({ film: { backgroundColor } }: { film: TFilm }) => (
@@ -25,8 +26,8 @@ const ReviewsTab = ({ film: { backgroundColor } }: { film: TFilm }) => (
 
               <footer className="review__details">
                 <cite className="review__author">{name}</cite>
-                <time className="review__date" dateTime={date}>
-                  {date}
+                <time className="review__date" dateTime={HumanizeDate.CommentDateTime(date)}>
+                  {HumanizeDate.Comment(date)}
                 </time>
               </footer>
             </blockquote>
