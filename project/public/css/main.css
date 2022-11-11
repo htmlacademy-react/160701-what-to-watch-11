@@ -1309,6 +1309,7 @@ main {
     z-index: 3;
     -webkit-transform: scale(1.2);
             transform: scale(1.2); }
+  .small-film-card video,
   .small-film-card img {
     vertical-align: top;
     width: 100%;
