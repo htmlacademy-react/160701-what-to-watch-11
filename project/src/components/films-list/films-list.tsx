@@ -3,12 +3,18 @@ import SmallFilmCard from '../small-film-card/small-film-card';
 import { TFilmsList } from 'src/types/films';
 const FilmsList = ({ films, maxFilms = films.length }: TFilmsList) => {
   const [activeFilmCard, setActiveFilmCard] = useState<number | null>(null);
+  let isHovered = false;
+
   const cardMouseOverHandler = (id: number) => {
+    isHovered = true;
     setTimeout(() => {
-      setActiveFilmCard(id);
+      if (isHovered) {
+        setActiveFilmCard(id);
+      }
     }, 1000);
   };
   const cardMouseLeaveHandler = () => {
+    isHovered = false;
     setActiveFilmCard(null);
   };
 
