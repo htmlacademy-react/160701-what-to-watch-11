@@ -1,21 +1,20 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import SmallFilmCard from '../small-film-card/small-film-card';
 import { TFilmsList } from 'src/types/films';
 const FilmsList = ({ films, maxFilms = films.length }: TFilmsList) => {
   const [activeFilmCard, setActiveFilmCard] = useState<number | null>(null);
-  let isHovered = false;
+  const timer = useRef<NodeJS.Timeout>();
 
   const cardMouseOverHandler = (id: number) => {
-    isHovered = true;
-    setTimeout(() => {
-      if (isHovered) {
-        setActiveFilmCard(id);
-      }
+    timer.current = setTimeout(() => {
+      setActiveFilmCard(id);
     }, 1000);
   };
   const cardMouseLeaveHandler = () => {
-    isHovered = false;
     setActiveFilmCard(null);
+    if (timer.current) {
+      clearTimeout(timer.current);
+    }
   };
 
   return (
