@@ -19,11 +19,13 @@ const SmallFilmCard = ({ film, withVideo, onMouseOver, onMouseLeave }: TFilmCard
       <div className="small-film-card__image">
         {withVideo ? (
           <Player
+            poster={posterImage}
             src={previewVideoLink}
             width={ImageSize.Width}
             height={ImageSize.Height}
             autoPlay
             loop
+            muted
           />
         ) : (
           <img src={posterImage} alt={name} width={ImageSize.Width} height={ImageSize.Height} />
