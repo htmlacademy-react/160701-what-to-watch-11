@@ -1,18 +1,26 @@
 import { Helmet } from 'react-helmet-async';
-import { PageTitles } from 'src/const';
+import { Link } from 'react-router-dom';
+import { AppRoute, PageTitles } from 'src/const';
+import { TFilm } from 'src/types/films';
 
-const PlayerPage = () => (
+type TPlayerPage = {
+  film: TFilm;
+};
+const PlayerPage = ({ film: { previewImage, videoLink } }: TPlayerPage) => (
   <>
     <Helmet>
       <title>{PageTitles.Player}</title>
     </Helmet>
 
     <div className="player">
-      <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
+      <video src={videoLink} className="player__video" poster={previewImage}></video>
 
-      <button type="button" className="player__exit">
+      {/* <button type="button" className="player__exit">
         Exit
-      </button>
+      </button> */}
+      <Link className="player__exit" to={AppRoute.Root}>
+        Exit
+      </Link>
 
       <div className="player__controls">
         <div className="player__controls-row">
