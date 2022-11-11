@@ -19,7 +19,9 @@ const MoviePage = ({ films }: TMoviePage) => {
   return (
     <>
       <Helmet>
-        <title>{PageTitles.Film}</title>
+        <title>
+          {PageTitles.Film} - {currentFilm.name}
+        </title>
       </Helmet>
 
       {films.length ? (
