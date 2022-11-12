@@ -20,6 +20,7 @@ class HumanizeDate {
   static CommentDateTime(date: Date | string) {
     return dayjs(date).format('YYYY-MM-DD');
   }
+
   static Comment(date: Date | string) {
     return dayjs(date).format('MMMM D, YYYY');
   }
