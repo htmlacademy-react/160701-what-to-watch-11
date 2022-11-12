@@ -4,8 +4,8 @@ import { HumanizeDate } from 'src/utils/date';
 import { adjustColor } from 'src/utils/main';
 
 const ReviewsTab = ({ film: { backgroundColor } }: { film: TFilm }) => {
-  const getReviews = (start = 0, end = 0) =>
-    reviews.slice(start, end).map((review) => {
+  const getReviews = (filterFunc: (elem: unknown, i: number) => boolean | number) =>
+    reviews.filter(filterFunc).map((review) => {
       const {
         id,
         comment,
@@ -33,8 +33,8 @@ const ReviewsTab = ({ film: { backgroundColor } }: { film: TFilm }) => {
     });
   return (
     <div className="film-card__reviews film-card__row">
-      <div className="film-card__reviews-col">{getReviews(0, 3)}</div>
-      <div className="film-card__reviews-col">{getReviews(3, 6)}</div>
+      <div className="film-card__reviews-col">{getReviews((_, i) => !(i % 2))}</div>
+      <div className="film-card__reviews-col">{getReviews((_, i) => i % 2)}</div>
     </div>
   );
 };
