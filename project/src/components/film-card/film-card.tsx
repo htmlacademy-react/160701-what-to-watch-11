@@ -2,7 +2,7 @@ import { PropsWithChildren } from 'react';
 import { useLocation } from 'react-router-dom';
 import { AppRoute } from 'src/const';
 import { TFilm } from 'src/types/films';
-import { adjustColor, getFilmRatingPhrase } from 'src/utils';
+import { adjustColor } from 'src/utils/main';
 import AddReviewForm from '../add-review-form/add-review-form';
 import Breadcrumbs from '../breadcrumbs/breadcrumbs';
 import FilmNav from '../film-nav/film-nav';
@@ -10,25 +10,20 @@ import Header from '../header/header';
 import FilmCardButtons from './components/film-card-buttons/film-card-buttons';
 import FilmCardPoster from './components/film-card-poster/film-card-poster';
 import FilmCardData from './components/film-card-data/film-card-data';
+import FilmCardNavContent from './components/film-card-nav-content/film-card-nav-content';
 
 type TFilmCard = {
   film: TFilm;
 };
+
+const TabsNames = {
+  Overview: 'Overview',
+  Details: 'Details',
+  Reviews: 'Reviews',
+} as const;
+
 const FilmCard = ({ film }: TFilmCard) => {
-  const {
-    id,
-    name,
-    posterImage,
-    backgroundImage,
-    genre,
-    released,
-    backgroundColor,
-    description,
-    rating,
-    director,
-    starring,
-    scoresCount,
-  } = film;
+  const { id, name, posterImage, backgroundImage, genre, released, backgroundColor } = film;
   const location = useLocation();
   const isAddReviewPage = location.pathname.includes('review');
   const isMoviePage = location.pathname.includes('films') && !isAddReviewPage;
@@ -53,6 +48,9 @@ const FilmCard = ({ film }: TFilmCard) => {
   const FilmCardInfo = ({ children }: PropsWithChildren) => (
     <div className="film-card__info">{children}</div>
   );
+
+  const dataNav = Object.keys(TabsNames);
+  const currentTab = location.hash.slice(1) || TabsNames.Overview;
 
   return (
     <section className={`film-card ${isFull ? 'film-card--full' : ''}`} style={{ backgroundColor }}>
@@ -81,25 +79,8 @@ const FilmCard = ({ film }: TFilmCard) => {
             <FilmCardInfo>
               <FilmCardPoster posterImage={posterImage} name={name} isBig />
               <FilmCardDescr>
-                <FilmNav />
-                <div className="film-rating">
-                  <div className="film-rating__score">{rating}</div>
-                  <p className="film-rating__meta">
-                    <span className="film-rating__level">{getFilmRatingPhrase(rating)}</span>
-                    <span className="film-rating__count">{scoresCount} ratings</span>
-                  </p>
-                </div>
-                <div className="film-card__text">
-                  <p>{description}</p>
-
-                  <p className="film-card__director">
-                    <strong>Director: {director}</strong>
-                  </p>
-
-                  <p className="film-card__starring">
-                    <strong>Starring: {starring.join(',')} and other</strong>
-                  </p>
-                </div>
+                <FilmNav data={dataNav} current={currentTab} />
+                <FilmCardNavContent current={currentTab} film={film} />
               </FilmCardDescr>
             </FilmCardInfo>
           </FilmCardWrap>
@@ -121,4 +102,5 @@ const FilmCard = ({ film }: TFilmCard) => {
   );
 };
 
+export { TabsNames };
 export default FilmCard;
