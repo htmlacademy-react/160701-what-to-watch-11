@@ -27,7 +27,7 @@ const FilmsList = ({ films, maxFilms = films.length }: TFilmsList) => {
             film={film}
             onMouseOver={cardMouseOverHandler}
             onMouseLeave={cardMouseLeaveHandler}
-            withVideo={film.id === activeFilmCard}
+            playing={film.id === activeFilmCard}
           />
         ))}
     </div>
