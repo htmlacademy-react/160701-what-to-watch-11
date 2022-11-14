@@ -1,5 +1,4 @@
 import MainPage from 'src/pages/main-page/main-page';
-import { TFilm } from 'src/types/films';
 import { HelmetProvider } from 'react-helmet-async';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import { AppRoute, AuthStatus } from 'src/const';
@@ -13,13 +12,10 @@ import AddReviewPage from 'src/pages/add-review-page/add-review-page';
 import UserLayout from 'src/layouts/user-layout/user-layout';
 import FilmCardLayout from 'src/layouts/film-card-layout/film-card-layout';
 import ScrollToTop from '../scroll-to-top/scroll-to-top';
+import { useAppSelector } from '../../hooks';
 
-type TApp = {
-  films: TFilm[];
-};
-
-const App = (props: TApp): JSX.Element => {
-  const { films } = props;
+const App = (): JSX.Element => {
+  const films = useAppSelector((state) => state.films);
 
   return (
     <BrowserRouter>
