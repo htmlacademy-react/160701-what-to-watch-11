@@ -2,12 +2,7 @@ import { TFilm } from 'src/types/films';
 import DetailsTab from './components/tabs/details-tab/details-tab';
 import OverviewTab from './components/tabs/overview-tab/overview-tab';
 import ReviewsTab from './components/tabs/reviews-tab/reviews-tab';
-
-const TabsNames = {
-  Overview: 'Overview',
-  Details: 'Details',
-  Reviews: 'Reviews',
-} as const;
+import { TabsNames } from 'src/components/film-card/film-card';
 
 type TFilmCardNavContent = {
   current: string;

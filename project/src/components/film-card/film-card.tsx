@@ -15,6 +15,13 @@ import FilmCardNavContent from './components/film-card-nav-content/film-card-nav
 type TFilmCard = {
   film: TFilm;
 };
+
+const TabsNames = {
+  Overview: 'Overview',
+  Details: 'Details',
+  Reviews: 'Reviews',
+} as const;
+
 const FilmCard = ({ film }: TFilmCard) => {
   const { id, name, posterImage, backgroundImage, genre, released, backgroundColor } = film;
   const location = useLocation();
@@ -41,12 +48,6 @@ const FilmCard = ({ film }: TFilmCard) => {
   const FilmCardInfo = ({ children }: PropsWithChildren) => (
     <div className="film-card__info">{children}</div>
   );
-
-  const TabsNames = {
-    Overview: 'Overview',
-    Details: 'Details',
-    Reviews: 'Reviews',
-  } as const;
 
   const dataNav = Object.keys(TabsNames);
   const currentTab = location.hash.slice(1) || TabsNames.Overview;
@@ -101,4 +102,5 @@ const FilmCard = ({ film }: TFilmCard) => {
   );
 };
 
+export { TabsNames };
 export default FilmCard;
