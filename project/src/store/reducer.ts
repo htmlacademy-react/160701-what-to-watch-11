@@ -1,18 +1,22 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { changeCurrentGenre, getAllFilms } from './action';
-import films from 'src/mocks/films';
+import { TFilm } from 'src/types/films';
+import { changeCurrentGenre, setAllFilms, setCurrentFilm } from './action';
 
 const initialState = {
   currentGenre: 'All genres',
-  films,
+  films: [] as TFilm[],
+  currentFilm: null as TFilm | null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
   builder.addCase(changeCurrentGenre, (state, action) => {
     state.currentGenre = action.payload;
   });
-  builder.addCase(getAllFilms, (state, action) => {
+  builder.addCase(setAllFilms, (state, action) => {
     state.films = action.payload;
+  });
+  builder.addCase(setCurrentFilm, (state, action) => {
+    state.currentFilm = action.payload;
   });
 });
 

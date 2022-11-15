@@ -5,8 +5,11 @@ const changeCurrentGenre = createAction('films/currentGenre', (value: string) =>
   payload: value,
 }));
 
-const getAllFilms = createAction('films/getAll', (value: TFilm[]) => ({
+const setAllFilms = createAction('films/getAll', (value: TFilm[]) => ({
+  payload: value,
+}));
+const setCurrentFilm = createAction('films/current', (value: TFilm) => ({
   payload: value,
 }));
 
-export { changeCurrentGenre, getAllFilms };
+export { changeCurrentGenre, setAllFilms, setCurrentFilm };
