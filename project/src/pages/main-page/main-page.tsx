@@ -18,7 +18,7 @@ const MainPage = ({ films }: TMainPage) => (
     <section className="catalog">
       <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-      <GenresList />
+      <GenresList films={films} />
 
       <FilmsList films={films} maxFilms={8} />
 

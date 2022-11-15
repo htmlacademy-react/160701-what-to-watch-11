@@ -1,5 +1,4 @@
 import MainPage from 'src/pages/main-page/main-page';
-import { TFilm } from 'src/types/films';
 import { HelmetProvider } from 'react-helmet-async';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import { AppRoute, AuthStatus } from 'src/const';
@@ -13,22 +12,24 @@ import AddReviewPage from 'src/pages/add-review-page/add-review-page';
 import UserLayout from 'src/layouts/user-layout/user-layout';
 import FilmCardLayout from 'src/layouts/film-card-layout/film-card-layout';
 import ScrollToTop from '../scroll-to-top/scroll-to-top';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setAllFilms, setCurrentFilm } from 'src/store/action';
+import mockFilms from 'src/mocks/films';
 
-type TApp = {
-  films: TFilm[];
-};
-
-const App = (props: TApp): JSX.Element => {
-  const { films } = props;
+const App = (): JSX.Element => {
+  const dispatch = useAppDispatch();
+  dispatch(setAllFilms(mockFilms));
+  dispatch(setCurrentFilm(mockFilms[0]));
+  const films = useAppSelector((state) => state.films);
 
   return (
     <BrowserRouter>
       <ScrollToTop />
       <HelmetProvider>
         <Routes>
-          <Route path={AppRoute.Player} element={<PlayerPage film={films[0]} />} />
+          <Route path={AppRoute.Player} element={<PlayerPage films={films} />} />
 
-          <Route element={<FilmCardLayout film={films[0]} />}>
+          <Route element={<FilmCardLayout films={films} />}>
             <Route path={AppRoute.Root} element={<MainPage films={films} />} />
             <Route
               path={AppRoute.AddReview}
@@ -38,7 +39,7 @@ const App = (props: TApp): JSX.Element => {
                 </PrivateRoute>
               }
             />
-            <Route path={AppRoute.Film} element={<MoviePage films={films} />} />
+            <Route path={AppRoute.Film} element={<MoviePage />} />
           </Route>
 
           <Route element={<UserLayout filmsCount={films.length} />}>

@@ -1,25 +1,16 @@
-const sampleFilm = {
-  poster: 'img/the-grand-budapest-hotel-poster.jpg',
-  title: 'The Grand Budapest Hotel',
-  meta: {
-    genre: 'Drama',
-    year: 2014,
-  },
-};
-
 enum AppRoute {
   Root = '/',
   Login = '/login',
-  Player = '/player',
+  Player = '/player/:id',
   Film = '/films/:id',
   MyList = '/mylist',
-  AddReview = '/films/:id/review'
+  AddReview = '/films/:id/review',
 }
 
 enum AuthStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
-  Unknown = 'UNKNOWN'
+  Unknown = 'UNKNOWN',
 }
 enum PageTitles {
   Root = 'Главная страница',
@@ -28,6 +19,6 @@ enum PageTitles {
   Film = 'Фильм',
   MyList = 'Избранное',
   AddReview = 'Добавить отзыв',
-  Page404 = 'Страница не найдена'
+  Page404 = 'Страница не найдена',
 }
-export { sampleFilm, AppRoute, AuthStatus, PageTitles };
+export { AppRoute, AuthStatus, PageTitles };

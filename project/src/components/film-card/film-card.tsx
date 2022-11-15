@@ -91,7 +91,7 @@ const FilmCard = ({ film }: TFilmCard) => {
               <FilmCardPoster posterImage={posterImage} name={name} />
               <FilmCardDescr>
                 <FilmCardData name={name} genre={genre} released={released} />
-                <FilmCardButtons />
+                <FilmCardButtons id={id} />
               </FilmCardDescr>
             </FilmCardInfo>
           </FilmCardWrap>

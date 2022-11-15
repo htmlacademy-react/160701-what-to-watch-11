@@ -1,6 +1,6 @@
-import { DetailedHTMLProps, useEffect, useRef } from 'react';
+import { useEffect, useRef, VideoHTMLAttributes } from 'react';
 
-type TPlayer = DetailedHTMLProps<React.VideoHTMLAttributes<HTMLVideoElement>, HTMLVideoElement> & {
+type TPlayer = VideoHTMLAttributes<HTMLVideoElement> & {
   playing?: boolean;
 };
 
