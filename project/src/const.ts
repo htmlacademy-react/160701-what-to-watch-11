@@ -1,11 +1,17 @@
-enum AppRoute {
-  Root = '/',
-  Login = '/login',
-  Player = '/player/:id',
-  Film = '/films/:id',
-  MyList = '/mylist',
-  AddReview = '/films/:id/review',
-}
+const RouteName = {
+  Player: 'player',
+  Films: 'films',
+  Review: 'review',
+} as const;
+
+const AppRoute = {
+  Root: '',
+  Login: '/login',
+  Player: `/${RouteName.Player}/:id`,
+  Film: `/${RouteName.Films}/:id`,
+  MyList: '/mylist',
+  AddReview: `/${RouteName.Films}/:id/${RouteName.Review}`,
+} as const;
 
 enum AuthStatus {
   Auth = 'AUTH',
@@ -21,4 +27,4 @@ enum PageTitles {
   AddReview = 'Добавить отзыв',
   Page404 = 'Страница не найдена',
 }
-export { AppRoute, AuthStatus, PageTitles };
+export { RouteName, AppRoute, AuthStatus, PageTitles };

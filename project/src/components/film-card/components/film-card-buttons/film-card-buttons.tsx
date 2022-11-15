@@ -1,4 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { RouteName } from 'src/const';
 
 type TFilmCardButtons = {
   withReviewLink?: boolean;
@@ -30,7 +31,10 @@ const FilmCardButtons = ({ withReviewLink, id = '' }: TFilmCardButtons) => {
         <span className="film-card__count">9</span>
       </button>
       {withReviewLink && (
-        <Link className="btn film-card__button" to={`/films/${id}/review`}>
+        <Link
+          className="btn film-card__button"
+          to={`/${RouteName.Films}/${id}/${RouteName.Review}`}
+        >
           Add review
         </Link>
       )}

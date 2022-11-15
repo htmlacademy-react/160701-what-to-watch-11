@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { Link, Navigate, useParams } from 'react-router-dom';
-import { AppRoute, PageTitles } from 'src/const';
+import { AppRoute, PageTitles, RouteName } from 'src/const';
 import { TFilm } from 'src/types/films';
 
 type TPlayerPage = {
@@ -25,7 +25,7 @@ const PlayerPage = ({ films }: TPlayerPage) => {
       <div className="player">
         <video src={videoLink} className="player__video" poster={previewImage}></video>
 
-        <Link className="player__exit" to={`/films/${currentFilm.id}`}>
+        <Link className="player__exit" to={`/${RouteName.Films}/${currentFilm.id}`}>
           Exit
         </Link>
 

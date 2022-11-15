@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { AppRoute, RouteName } from 'src/const';
 import { TFilm } from 'src/types/films';
 
 type TGenresList = {
@@ -21,7 +22,7 @@ const GenresList = ({ films }: TGenresList) => {
           className={`catalog__genres-item ${idx === 0 ? 'catalog__genres-item--active' : ''}`}
           key={item}
         >
-          <Link className="catalog__genres-link" to="/">
+          <Link className="catalog__genres-link" to={AppRoute.Root}>
             {item}
           </Link>
         </li>

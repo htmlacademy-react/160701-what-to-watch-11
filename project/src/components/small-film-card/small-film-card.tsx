@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { RouteName } from 'src/const';
 import { TFilmCard } from 'src/types/films';
 import Player from '../player/player';
 
@@ -28,7 +29,7 @@ const SmallFilmCard = ({ film, playing, onMouseOver, onMouseLeave }: TFilmCard) 
         />
       </div>
       <h3 className="small-film-card__title">
-        <Link className="small-film-card__link" to={`/films/${id}`}>
+        <Link className="small-film-card__link" to={`/${RouteName.Films}/${id}`}>
           {name}
         </Link>
       </h3>
