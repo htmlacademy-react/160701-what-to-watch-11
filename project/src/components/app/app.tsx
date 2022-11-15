@@ -12,9 +12,14 @@ import AddReviewPage from 'src/pages/add-review-page/add-review-page';
 import UserLayout from 'src/layouts/user-layout/user-layout';
 import FilmCardLayout from 'src/layouts/film-card-layout/film-card-layout';
 import ScrollToTop from '../scroll-to-top/scroll-to-top';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setAllFilms, setCurrentFilm } from 'src/store/action';
+import mockFilms from 'src/mocks/films';
 
 const App = (): JSX.Element => {
+  const dispatch = useAppDispatch();
+  dispatch(setAllFilms(mockFilms));
+  dispatch(setCurrentFilm(mockFilms[0]));
   const films = useAppSelector((state) => state.films);
 
   return (
@@ -22,9 +27,9 @@ const App = (): JSX.Element => {
       <ScrollToTop />
       <HelmetProvider>
         <Routes>
-          <Route path={AppRoute.Player} element={<PlayerPage film={films[0]} />} />
+          <Route path={AppRoute.Player} element={<PlayerPage films={films} />} />
 
-          <Route element={<FilmCardLayout film={films[0]} />}>
+          <Route element={<FilmCardLayout />}>
             <Route path={AppRoute.Root} element={<MainPage films={films} />} />
             <Route
               path={AppRoute.AddReview}
@@ -34,7 +39,7 @@ const App = (): JSX.Element => {
                 </PrivateRoute>
               }
             />
-            <Route path={AppRoute.Film} element={<MoviePage films={films} />} />
+            <Route path={AppRoute.Film} element={<MoviePage />} />
           </Route>
 
           <Route element={<UserLayout filmsCount={films.length} />}>
