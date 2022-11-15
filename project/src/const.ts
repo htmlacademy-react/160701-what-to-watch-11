@@ -5,7 +5,7 @@ const RouteName = {
 } as const;
 
 const AppRoute = {
-  Root: '',
+  Root: '/',
   Login: '/login',
   Player: `/${RouteName.Player}/:id`,
   Film: `/${RouteName.Films}/:id`,
