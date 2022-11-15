@@ -1,9 +1,10 @@
 import { createReducer } from '@reduxjs/toolkit';
+import { DEFAULT_NAME_GENRE } from 'src/const';
 import { TFilm } from 'src/types/films';
 import { changeCurrentGenre, setAllFilms, setCurrentFilm } from './action';
 
 const initialState = {
-  currentGenre: 'All genres',
+  currentGenre: DEFAULT_NAME_GENRE,
   films: [] as TFilm[],
   currentFilm: null as TFilm | null,
 };

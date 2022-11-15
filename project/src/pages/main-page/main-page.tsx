@@ -2,29 +2,38 @@ import { Helmet } from 'react-helmet-async';
 import FilmsList from 'src/components/films-list/films-list';
 import GenresList from 'src/components/genres-list/genres-list';
 import ShowMoreBtn from 'src/components/show-more-btn/show-more-btn';
-import { PageTitles } from 'src/const';
+import { DEFAULT_NAME_GENRE, PageTitles } from 'src/const';
+import { useAppSelector } from 'src/hooks';
 import { TFilm } from 'src/types/films';
 
 type TMainPage = {
   films: TFilm[];
 };
 
-const MainPage = ({ films }: TMainPage) => (
-  <>
-    <Helmet>
-      <title>{PageTitles.Root}</title>
-    </Helmet>
+const MainPage = ({ films }: TMainPage) => {
+  const currentGenre = useAppSelector((state) => state.currentGenre);
 
-    <section className="catalog">
-      <h2 className="catalog__title visually-hidden">Catalog</h2>
+  const sortedFilms =
+    currentGenre === DEFAULT_NAME_GENRE
+      ? films
+      : films.filter((film) => film.genre === currentGenre);
+  return (
+    <>
+      <Helmet>
+        <title>{PageTitles.Root}</title>
+      </Helmet>
 
-      <GenresList films={films} />
+      <section className="catalog">
+        <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-      <FilmsList films={films} maxFilms={8} />
+        <GenresList films={films} />
 
-      <ShowMoreBtn />
-    </section>
-  </>
-);
+        <FilmsList films={sortedFilms} maxFilms={8} />
+
+        <ShowMoreBtn />
+      </section>
+    </>
+  );
+};
 
 export default MainPage;

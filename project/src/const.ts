@@ -1,3 +1,5 @@
+const DEFAULT_NAME_GENRE = 'All genres';
+
 const RouteName = {
   Player: 'player',
   Films: 'films',
@@ -27,4 +29,4 @@ enum PageTitles {
   AddReview = 'Добавить отзыв',
   Page404 = 'Страница не найдена',
 }
-export { RouteName, AppRoute, AuthStatus, PageTitles };
+export { DEFAULT_NAME_GENRE, RouteName, AppRoute, AuthStatus, PageTitles };
