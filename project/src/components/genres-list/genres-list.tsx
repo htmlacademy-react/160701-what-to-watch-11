@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { DEFAULT_NAME_GENRE } from 'src/const';
 import { useAppDispatch } from 'src/hooks';
@@ -19,14 +18,16 @@ const GenresList = ({ films }: TGenresList) => {
     0,
     MAX_FILMS_GENRES,
   );
-  const [active, setActive] = useState(hash || DEFAULT_NAME_GENRE);
+  const isDefault = !genres.includes(hash);
 
   return (
     <ul className="catalog__genres-list">
       {genres.map((item) => (
         <li
           className={`catalog__genres-item ${
-            item === active ? 'catalog__genres-item--active' : ''
+            item === hash || (isDefault && item === DEFAULT_NAME_GENRE)
+              ? 'catalog__genres-item--active'
+              : ''
           }`}
           key={item}
         >
@@ -35,8 +36,6 @@ const GenresList = ({ films }: TGenresList) => {
             href="!#"
             onClick={(evt) => {
               evt.preventDefault();
-              window.location.hash = `#${item}`;
-              setActive(item);
               dispatch(changeCurrentGenre(item));
             }}
           >
