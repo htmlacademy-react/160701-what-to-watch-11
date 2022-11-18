@@ -12,14 +12,9 @@ import AddReviewPage from 'src/pages/add-review-page/add-review-page';
 import UserLayout from 'src/layouts/user-layout/user-layout';
 import FilmCardLayout from 'src/layouts/film-card-layout/film-card-layout';
 import ScrollToTop from '../scroll-to-top/scroll-to-top';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setAllFilms, setCurrentFilm } from 'src/store/action';
-import mockFilms from 'src/mocks/films';
+import { useAppSelector } from 'src/hooks';
 
 const App = (): JSX.Element => {
-  const dispatch = useAppDispatch();
-  dispatch(setAllFilms(mockFilms));
-  dispatch(setCurrentFilm(mockFilms[0]));
   const films = useAppSelector((state) => state.films);
 
   return (

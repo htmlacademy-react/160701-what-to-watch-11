@@ -1,4 +1,7 @@
-import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { DEFAULT_NAME_GENRE } from 'src/const';
+import { useAppDispatch } from 'src/hooks';
+import { changeCurrentGenre } from 'src/store/action';
 import { TFilm } from 'src/types/films';
 
 type TGenresList = {
@@ -6,24 +9,38 @@ type TGenresList = {
 };
 
 const GenresList = ({ films }: TGenresList) => {
-  const DEFAULT_NAME_GENRE = 'All genres';
+  const dispatch = useAppDispatch();
+  const location = useLocation();
+  const hash = decodeURI(location.hash.slice(1));
   const MAX_FILMS_GENRES = 10;
   const filmsGenres = films.map((film) => film.genre);
   const genres = Array.from(new Set([DEFAULT_NAME_GENRE, ...filmsGenres])).slice(
     0,
     MAX_FILMS_GENRES,
   );
+  const isDefault = !genres.includes(hash);
 
   return (
     <ul className="catalog__genres-list">
-      {genres.map((item, idx) => (
+      {genres.map((item) => (
         <li
-          className={`catalog__genres-item ${idx === 0 ? 'catalog__genres-item--active' : ''}`}
+          className={`catalog__genres-item ${
+            item === hash || (isDefault && item === DEFAULT_NAME_GENRE)
+              ? 'catalog__genres-item--active'
+              : ''
+          }`}
           key={item}
         >
-          <Link className="catalog__genres-link" to="/">
+          <a
+            className="catalog__genres-link"
+            href="!#"
+            onClick={(evt) => {
+              evt.preventDefault();
+              dispatch(changeCurrentGenre(item));
+            }}
+          >
             {item}
-          </Link>
+          </a>
         </li>
       ))}
     </ul>

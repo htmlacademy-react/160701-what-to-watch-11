@@ -1,30 +1,37 @@
 import { Helmet } from 'react-helmet-async';
+import { useLocation } from 'react-router-dom';
 import FilmsList from 'src/components/films-list/films-list';
 import GenresList from 'src/components/genres-list/genres-list';
-import ShowMoreBtn from 'src/components/show-more-btn/show-more-btn';
-import { PageTitles } from 'src/const';
+import { DEFAULT_NAME_GENRE, PageTitles } from 'src/const';
 import { TFilm } from 'src/types/films';
 
 type TMainPage = {
   films: TFilm[];
 };
 
-const MainPage = ({ films }: TMainPage) => (
-  <>
-    <Helmet>
-      <title>{PageTitles.Root}</title>
-    </Helmet>
+const MainPage = ({ films }: TMainPage) => {
+  const location = useLocation();
+  const hash = decodeURI(location.hash.slice(1));
+  const filteredBy = hash || DEFAULT_NAME_GENRE;
+  const sortedFilms = films.filter(
+    (film) => filteredBy === DEFAULT_NAME_GENRE || filteredBy === film.genre,
+  );
 
-    <section className="catalog">
-      <h2 className="catalog__title visually-hidden">Catalog</h2>
+  return (
+    <>
+      <Helmet>
+        <title>{PageTitles.Root}</title>
+      </Helmet>
 
-      <GenresList films={films} />
+      <section className="catalog">
+        <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-      <FilmsList films={films} maxFilms={8} />
+        <GenresList films={films} />
 
-      <ShowMoreBtn />
-    </section>
-  </>
-);
+        <FilmsList films={sortedFilms} maxFilms={8} withWhowMoreBtn />
+      </section>
+    </>
+  );
+};
 
 export default MainPage;
