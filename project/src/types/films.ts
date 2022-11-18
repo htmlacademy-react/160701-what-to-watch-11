@@ -33,4 +33,5 @@ export type TFilmCard = {
 export type TFilmsList = {
   films: TFilm[];
   maxFilms?: number;
+  withWhowMoreBtn?: boolean;
 };

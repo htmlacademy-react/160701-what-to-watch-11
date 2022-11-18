@@ -3,7 +3,7 @@ import SmallFilmCard from '../small-film-card/small-film-card';
 import { TFilmsList } from 'src/types/films';
 import ShowMoreBtn from 'src/components/show-more-btn/show-more-btn';
 
-const FilmsList = ({ films, maxFilms = films.length }: TFilmsList) => {
+const FilmsList = ({ films, maxFilms = films.length, withWhowMoreBtn = false }: TFilmsList) => {
   const filmsLength = films.length;
   const FILM_COUNT_PER_STEP = maxFilms;
   const [renderedFilmCount, setRenderedFilmCount] = useState(
@@ -50,7 +50,9 @@ const FilmsList = ({ films, maxFilms = films.length }: TFilmsList) => {
             />
           ))}
       </div>
-      {renderedFilmCount < films.length && <ShowMoreBtn onClick={clickShowMoreBtnHandler} />}
+      {withWhowMoreBtn && renderedFilmCount < films.length && (
+        <ShowMoreBtn onClick={clickShowMoreBtnHandler} />
+      )}
     </>
   );
 };

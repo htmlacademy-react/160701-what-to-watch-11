@@ -28,7 +28,7 @@ const MainPage = ({ films }: TMainPage) => {
 
         <GenresList films={films} />
 
-        <FilmsList films={sortedFilms} maxFilms={8} />
+        <FilmsList films={sortedFilms} maxFilms={8} withWhowMoreBtn />
       </section>
     </>
   );
