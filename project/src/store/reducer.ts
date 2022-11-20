@@ -2,9 +2,13 @@ import { createReducer } from '@reduxjs/toolkit';
 import { TFilm } from 'src/types/films';
 import { changeCurrentGenre, setAllFilms, setCurrentFilm } from './action';
 
-const initialState = {
-  films: [] as TFilm[],
-  currentFilm: null as TFilm | null,
+type TInitialState = {
+  films: TFilm[];
+  currentFilm: null | TFilm;
+};
+const initialState: TInitialState = {
+  films: [],
+  currentFilm: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
