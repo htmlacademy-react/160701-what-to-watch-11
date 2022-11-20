@@ -13,6 +13,7 @@ const AppRoute = {
   Film: `/${RouteName.Films}/:id`,
   MyList: '/mylist',
   AddReview: `/${RouteName.Films}/:id/${RouteName.Review}`,
+  ErrorPage: '/page404',
 } as const;
 
 enum AuthStatus {

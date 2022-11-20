@@ -47,6 +47,7 @@ const App = (): JSX.Element => {
               }
             />
             <Route path={AppRoute.Login} element={<SingInPage />} />
+            <Route path={AppRoute.ErrorPage} element={<Page404 />} />
             <Route path="*" element={<Page404 />} />
           </Route>
         </Routes>
