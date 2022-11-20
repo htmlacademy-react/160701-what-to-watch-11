@@ -18,4 +18,13 @@ const loadFilms = createAction<TFilm[]>('data/loadFilms');
 
 const requireAuthorization = createAction<AuthStatus>('user/requireAuthorization');
 
-export { changeCurrentGenre, setAllFilms, setCurrentFilm, loadFilms, requireAuthorization };
+const setFilmsLoadingStatus = createAction<boolean>('data/setFilmsLoadingStatus');
+
+export {
+  changeCurrentGenre,
+  setAllFilms,
+  setCurrentFilm,
+  loadFilms,
+  requireAuthorization,
+  setFilmsLoadingStatus,
+};

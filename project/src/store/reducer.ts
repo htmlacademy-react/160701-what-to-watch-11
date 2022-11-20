@@ -7,17 +7,20 @@ import {
   requireAuthorization,
   setAllFilms,
   setCurrentFilm,
+  setFilmsLoadingStatus,
 } from './action';
 
 type TInitialState = {
   films: TFilm[];
   currentFilm: null | TFilm;
   authorizationStatus: AuthStatus;
+  isFilmsLoading: boolean;
 };
 const initialState: TInitialState = {
   films: [],
   currentFilm: null,
   authorizationStatus: AuthStatus.Unknown,
+  isFilmsLoading: false,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -35,6 +38,9 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(requireAuthorization, (state, action) => {
     state.authorizationStatus = action.payload;
+  });
+  builder.addCase(setFilmsLoadingStatus, (state, action) => {
+    state.isFilmsLoading = action.payload;
   });
 });
 
