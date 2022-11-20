@@ -1,4 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
+import { AuthStatus } from 'src/const';
 import { TFilm } from 'src/types/films';
 
 const changeCurrentGenre = createAction('films/currentGenre', (value: string) => ({
@@ -15,4 +16,6 @@ const setCurrentFilm = createAction('films/current', (value: TFilm) => ({
 
 const loadFilms = createAction<TFilm[]>('data/loadFilms');
 
-export { changeCurrentGenre, setAllFilms, setCurrentFilm, loadFilms };
+const requireAuthorization = createAction<AuthStatus>('user/requireAuthorization');
+
+export { changeCurrentGenre, setAllFilms, setCurrentFilm, loadFilms, requireAuthorization };
