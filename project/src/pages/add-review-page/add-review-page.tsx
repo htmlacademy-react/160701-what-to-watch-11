@@ -1,10 +1,22 @@
 import { Helmet } from 'react-helmet-async';
+import { Navigate, useParams } from 'react-router-dom';
 
-import { PageTitles } from 'src/const';
+import { AppRoute, PageTitles } from 'src/const';
+import { useAppSelector } from 'src/hooks';
 
-const AddReviewPage = () => (
-  <Helmet>
-    <title>{PageTitles.AddReview}</title>
-  </Helmet>
-);
+const AddReviewPage = () => {
+  const films = useAppSelector((state) => state.films);
+  const { id: currentFilmId } = useParams();
+  const currentFilm = films.find((film) => film.id === Number(currentFilmId));
+
+  if (!currentFilm) {
+    return <Navigate to={AppRoute.ErrorPage} />;
+  }
+
+  return (
+    <Helmet>
+      <title>{PageTitles.AddReview}</title>
+    </Helmet>
+  );
+};
 export default AddReviewPage;
