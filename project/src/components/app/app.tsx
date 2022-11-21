@@ -13,9 +13,15 @@ import UserLayout from 'src/layouts/user-layout/user-layout';
 import FilmCardLayout from 'src/layouts/film-card-layout/film-card-layout';
 import ScrollToTop from '../scroll-to-top/scroll-to-top';
 import { useAppSelector } from 'src/hooks';
+import Loader from '../loader/loader';
 
 const App = (): JSX.Element => {
+  const isFilmsLoading = useAppSelector((state) => state.isFilmsLoading);
   const films = useAppSelector((state) => state.films);
+
+  if (isFilmsLoading) {
+    return <Loader />;
+  }
 
   return (
     <BrowserRouter>
@@ -47,6 +53,7 @@ const App = (): JSX.Element => {
               }
             />
             <Route path={AppRoute.Login} element={<SingInPage />} />
+            <Route path={AppRoute.ErrorPage} element={<Page404 />} />
             <Route path="*" element={<Page404 />} />
           </Route>
         </Routes>

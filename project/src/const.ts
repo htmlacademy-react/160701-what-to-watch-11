@@ -13,6 +13,7 @@ const AppRoute = {
   Film: `/${RouteName.Films}/:id`,
   MyList: '/mylist',
   AddReview: `/${RouteName.Films}/:id/${RouteName.Review}`,
+  ErrorPage: '/page404',
 } as const;
 
 enum AuthStatus {
@@ -29,4 +30,8 @@ enum PageTitles {
   AddReview = 'Добавить отзыв',
   Page404 = 'Страница не найдена',
 }
-export { DEFAULT_NAME_GENRE, RouteName, AppRoute, AuthStatus, PageTitles };
+
+enum APIRoute {
+  Films = '/films',
+}
+export { DEFAULT_NAME_GENRE, RouteName, AppRoute, AuthStatus, PageTitles, APIRoute };

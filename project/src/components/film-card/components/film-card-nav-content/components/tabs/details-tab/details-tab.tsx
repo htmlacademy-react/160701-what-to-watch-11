@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { TFilm } from 'src/types/films';
 import { HumanizeDate } from 'src/utils/date';
 
@@ -15,7 +16,7 @@ const DetailsTab = ({ film }: { film: TFilm }) => {
           <strong className="film-card__details-name">Starring</strong>
           <span className="film-card__details-value">
             {starring.map((el, idx, array) => (
-              <>
+              <Fragment key={el}>
                 {el}
                 {idx !== array.length - 1 && (
                   <>
@@ -23,7 +24,7 @@ const DetailsTab = ({ film }: { film: TFilm }) => {
                     <br />
                   </>
                 )}
-              </>
+              </Fragment>
             ))}
           </span>
         </p>

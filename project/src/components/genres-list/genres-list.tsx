@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { DEFAULT_NAME_GENRE } from 'src/const';
 import { useAppDispatch } from 'src/hooks';
 import { changeCurrentGenre } from 'src/store/action';
@@ -31,16 +31,13 @@ const GenresList = ({ films }: TGenresList) => {
           }`}
           key={item}
         >
-          <a
+          <Link
+            to={`#${item}`}
             className="catalog__genres-link"
-            href="!#"
-            onClick={(evt) => {
-              evt.preventDefault();
-              dispatch(changeCurrentGenre(item));
-            }}
+            onClick={() => dispatch(changeCurrentGenre(item))}
           >
             {item}
-          </a>
+          </Link>
         </li>
       ))}
     </ul>

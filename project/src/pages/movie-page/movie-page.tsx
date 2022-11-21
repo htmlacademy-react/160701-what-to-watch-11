@@ -1,15 +1,16 @@
 import { Helmet } from 'react-helmet-async';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import FilmsList from 'src/components/films-list/films-list';
 import { AppRoute, PageTitles } from 'src/const';
 import { useAppSelector } from 'src/hooks';
 
 const MoviePage = () => {
   const films = useAppSelector((state) => state.films);
-  const currentFilm = useAppSelector((state) => state.currentFilm);
+  const { id: currentFilmId } = useParams();
+  const currentFilm = films.find((film) => film.id === Number(currentFilmId));
 
   if (!currentFilm) {
-    return <Navigate to={AppRoute.Root} />;
+    return <Navigate to={AppRoute.ErrorPage} />;
   }
 
   return (

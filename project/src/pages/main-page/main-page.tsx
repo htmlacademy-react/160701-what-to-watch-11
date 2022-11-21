@@ -22,14 +22,17 @@ const MainPage = ({ films }: TMainPage) => {
       <Helmet>
         <title>{PageTitles.Root}</title>
       </Helmet>
+      {!films.length && <h1 className="page-title ">Фильмы не найдены</h1>}
 
-      <section className="catalog">
-        <h2 className="catalog__title visually-hidden">Catalog</h2>
+      {!!films.length && (
+        <section className="catalog">
+          <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <GenresList films={films} />
+          <GenresList films={films} />
 
-        <FilmsList films={sortedFilms} maxFilms={8} withWhowMoreBtn />
-      </section>
+          <FilmsList films={sortedFilms} maxFilms={8} withWhowMoreBtn />
+        </section>
+      )}
     </>
   );
 };
