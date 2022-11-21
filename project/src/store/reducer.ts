@@ -1,5 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { AuthStatus } from 'src/const';
+import { DEFAULT_NAME_GENRE } from 'src/const';
 import { TFilm } from 'src/types/films';
 import {
   changeCurrentGenre,
@@ -11,12 +12,14 @@ import {
 } from './action';
 
 type TInitialState = {
+  currentGenre: string;
   films: TFilm[];
   currentFilm: null | TFilm;
   authorizationStatus: AuthStatus;
   isFilmsLoading: boolean;
 };
 const initialState: TInitialState = {
+  currentGenre: DEFAULT_NAME_GENRE,
   films: [],
   currentFilm: null,
   authorizationStatus: AuthStatus.Unknown,
@@ -24,8 +27,8 @@ const initialState: TInitialState = {
 };
 
 const reducer = createReducer(initialState, (builder) => {
-  builder.addCase(changeCurrentGenre, (_, action) => {
-    window.location.hash = `#${action.payload}`;
+  builder.addCase(changeCurrentGenre, (state, action) => {
+    state.currentGenre = action.payload;
   });
   builder.addCase(setAllFilms, (state, action) => {
     state.films = action.payload;
