@@ -10,21 +10,10 @@ const setAllFilms = createAction('films/getAll', (value: TFilm[]) => ({
   payload: value,
 }));
 
-const setCurrentFilm = createAction('films/current', (value: TFilm) => ({
-  payload: value,
-}));
-
 const loadFilms = createAction<TFilm[]>('data/loadFilms');
 
 const requireAuthorization = createAction<AuthStatus>('user/requireAuthorization');
 
 const setFilmsLoadingStatus = createAction<boolean>('data/setFilmsLoadingStatus');
 
-export {
-  changeCurrentGenre,
-  setAllFilms,
-  setCurrentFilm,
-  loadFilms,
-  requireAuthorization,
-  setFilmsLoadingStatus,
-};
+export { changeCurrentGenre, setAllFilms, loadFilms, requireAuthorization, setFilmsLoadingStatus };
