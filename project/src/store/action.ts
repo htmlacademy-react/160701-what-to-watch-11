@@ -16,4 +16,13 @@ const requireAuthorization = createAction<AuthStatus>('user/requireAuthorization
 
 const setFilmsLoadingStatus = createAction<boolean>('data/setFilmsLoadingStatus');
 
-export { changeCurrentGenre, setAllFilms, loadFilms, requireAuthorization, setFilmsLoadingStatus };
+const setError = createAction<string | null>('app/setEror');
+
+export {
+  changeCurrentGenre,
+  setAllFilms,
+  loadFilms,
+  requireAuthorization,
+  setFilmsLoadingStatus,
+  setError,
+};
