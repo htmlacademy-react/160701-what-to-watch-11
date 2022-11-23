@@ -1,7 +1,7 @@
 import MainPage from 'src/pages/main-page/main-page';
 import { HelmetProvider } from 'react-helmet-async';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
-import { AppRoute, AuthStatus } from 'src/const';
+import { AppRoute } from 'src/const';
 import Page404 from 'src/pages/404-page/404-page';
 import SingInPage from 'src/pages/sing-in-page/sing-in-page';
 import MyListPage from 'src/pages/my-list-page/my-list-page';
