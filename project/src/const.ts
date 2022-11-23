@@ -1,5 +1,5 @@
 const DEFAULT_NAME_GENRE = 'All genres';
-
+const TIMEOUT_SHOW_ERROR = 2000;
 const RouteName = {
   Player: 'player',
   Films: 'films',
@@ -36,4 +36,12 @@ enum APIRoute {
   Login = '/login',
   Logout = '/logout',
 }
-export { DEFAULT_NAME_GENRE, RouteName, AppRoute, AuthStatus, PageTitles, APIRoute };
+export {
+  TIMEOUT_SHOW_ERROR,
+  DEFAULT_NAME_GENRE,
+  RouteName,
+  AppRoute,
+  AuthStatus,
+  PageTitles,
+  APIRoute,
+};
