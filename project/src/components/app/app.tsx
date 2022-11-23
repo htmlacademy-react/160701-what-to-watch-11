@@ -18,6 +18,7 @@ import Loader from '../loader/loader';
 const App = (): JSX.Element => {
   const isFilmsLoading = useAppSelector((state) => state.isFilmsLoading);
   const films = useAppSelector((state) => state.films);
+  const authStatus = useAppSelector((state) => state.authorizationStatus);
 
   if (isFilmsLoading) {
     return <Loader />;
@@ -35,7 +36,7 @@ const App = (): JSX.Element => {
             <Route
               path={AppRoute.AddReview}
               element={
-                <PrivateRoute authStatus={AuthStatus.Auth}>
+                <PrivateRoute authStatus={authStatus}>
                   <AddReviewPage />
                 </PrivateRoute>
               }
@@ -47,7 +48,7 @@ const App = (): JSX.Element => {
             <Route
               path={AppRoute.MyList}
               element={
-                <PrivateRoute authStatus={AuthStatus.Auth}>
+                <PrivateRoute authStatus={authStatus}>
                   <MyListPage films={films} />
                 </PrivateRoute>
               }
