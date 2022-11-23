@@ -33,5 +33,7 @@ enum PageTitles {
 
 enum APIRoute {
   Films = '/films',
+  Login = '/login',
+  Logout = '/logout',
 }
 export { DEFAULT_NAME_GENRE, RouteName, AppRoute, AuthStatus, PageTitles, APIRoute };

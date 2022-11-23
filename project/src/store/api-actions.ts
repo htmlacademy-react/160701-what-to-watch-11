@@ -1,9 +1,12 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { loadFilms, setFilmsLoadingStatus } from './action';
+import { loadFilms, requireAuthorization, setFilmsLoadingStatus } from './action';
 import { TAppDispatch, TState } from 'src/types/state';
-import { APIRoute } from 'src/const';
+import { APIRoute, AppRoute, AuthStatus } from 'src/const';
 import { TFilm } from 'src/types/films';
+import { AuthData } from 'src/types/auth-data';
+import { UserData } from 'src/types/user-data';
+import { removeToken, setToken } from 'src/services/token';
 
 const fetchFilmsAction = createAsyncThunk<
   void,
@@ -20,4 +23,51 @@ const fetchFilmsAction = createAsyncThunk<
   dispatch(loadFilms(data));
 });
 
-export { fetchFilmsAction };
+const checkAuthAction = createAsyncThunk<
+  void,
+  undefined,
+  {
+    dispatch: TAppDispatch;
+    state: TState;
+    extra: AxiosInstance;
+  }
+>('user/checkAuth', async (_arg, { dispatch, extra: api }) => {
+  try {
+    await api.get(APIRoute.Login);
+    dispatch(requireAuthorization(AuthStatus.Auth));
+  } catch {
+    dispatch(requireAuthorization(AuthStatus.NoAuth));
+  }
+});
+
+const loginAction = createAsyncThunk<
+  void,
+  AuthData,
+  {
+    dispatch: TAppDispatch;
+    state: TState;
+    extra: AxiosInstance;
+  }
+>('user/login', async ({ login: email, password }, { dispatch, extra: api }) => {
+  const {
+    data: { token },
+  } = await api.post<UserData>(APIRoute.Login, { email, password });
+  setToken(token);
+  dispatch(requireAuthorization(AuthStatus.Auth));
+});
+
+const logoutAction = createAsyncThunk<
+  void,
+  undefined,
+  {
+    dispatch: TAppDispatch;
+    state: TState;
+    extra: AxiosInstance;
+  }
+>('user/logout', async (_arg, { dispatch, extra: api }) => {
+  await api.delete(APIRoute.Logout);
+  removeToken();
+  dispatch(requireAuthorization(AuthStatus.NoAuth));
+});
+
+export { fetchFilmsAction, checkAuthAction, loginAction, logoutAction };
