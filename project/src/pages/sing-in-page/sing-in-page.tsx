@@ -76,8 +76,6 @@ const SingInPage = ({ authStatus }: TSingInPage) => {
                 value={formData['user-password']}
                 autoComplete="autoComplete"
                 minLength={2}
-                // pattern="[0-9]{1,48}[a-z]{1,48}"
-                // onInvalid={(evt: any) => evt?.target?.setCustomValidity('hohoh')}
               />
               <label className="sign-in__label visually-hidden" htmlFor={FormFieldName.Password}>
                 Password
