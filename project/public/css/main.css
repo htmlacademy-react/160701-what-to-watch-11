@@ -1381,6 +1381,7 @@ main {
 }
 
 .user-block__avatar {
+  margin: 0 auto;
   width: 63px;
   height: 63px;
   overflow: hidden;
@@ -1393,6 +1394,9 @@ main {
        font-family: "object-fit:cover";
        object-fit: cover; }
 
+.user-block__name {
+  font-size: 16px;
+}
 .user-block__link {
   display: block;
   font-size: 20px;

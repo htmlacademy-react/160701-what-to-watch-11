@@ -1,6 +1,7 @@
 import { createAction } from '@reduxjs/toolkit';
 import { AuthStatus } from 'src/const';
 import { TFilm } from 'src/types/films';
+import { UserData } from 'src/types/user-data';
 
 const changeCurrentGenre = createAction('films/currentGenre', (value: string) => ({
   payload: value,
@@ -18,6 +19,10 @@ const setFilmsLoadingStatus = createAction<boolean>('data/setFilmsLoadingStatus'
 
 const setError = createAction<string | null>('app/setEror');
 
+const setUser = createAction('user/setUser', (value: UserData) => ({
+  payload: value,
+}));
+
 export {
   changeCurrentGenre,
   setAllFilms,
@@ -25,4 +30,5 @@ export {
   requireAuthorization,
   setFilmsLoadingStatus,
   setError,
+  setUser,
 };

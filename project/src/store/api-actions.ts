@@ -1,6 +1,12 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { loadFilms, requireAuthorization, setError, setFilmsLoadingStatus } from './action';
+import {
+  loadFilms,
+  requireAuthorization,
+  setError,
+  setFilmsLoadingStatus,
+  setUser,
+} from './action';
 import { TAppDispatch, TState } from 'src/types/state';
 import { APIRoute, AuthStatus, TIMEOUT_SHOW_ERROR } from 'src/const';
 import { TFilm } from 'src/types/films';
@@ -40,7 +46,9 @@ const checkAuthAction = createAsyncThunk<
   }
 >('user/checkAuth', async (_arg, { dispatch, extra: api }) => {
   try {
-    await api.get(APIRoute.Login);
+    const { data: User } = await api.get<UserData>(APIRoute.Login);
+
+    dispatch(setUser(User));
     dispatch(requireAuthorization(AuthStatus.Auth));
   } catch {
     dispatch(requireAuthorization(AuthStatus.NoAuth));
@@ -56,10 +64,10 @@ const loginAction = createAsyncThunk<
     extra: AxiosInstance;
   }
 >('user/login', async ({ email, password }, { dispatch, extra: api }) => {
-  const {
-    data: { token },
-  } = await api.post<UserData>(APIRoute.Login, { email, password });
-  setToken(token);
+  const { data: User } = await api.post<UserData>(APIRoute.Login, { email, password });
+
+  setToken(User.token);
+  dispatch(setUser(User));
   dispatch(requireAuthorization(AuthStatus.Auth));
 });
 

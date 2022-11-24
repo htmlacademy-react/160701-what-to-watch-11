@@ -2,6 +2,7 @@ import { createReducer } from '@reduxjs/toolkit';
 import { AuthStatus } from 'src/const';
 import { DEFAULT_NAME_GENRE } from 'src/const';
 import { TFilm } from 'src/types/films';
+import { UserData } from 'src/types/user-data';
 import {
   changeCurrentGenre,
   loadFilms,
@@ -9,9 +10,11 @@ import {
   setAllFilms,
   setError,
   setFilmsLoadingStatus,
+  setUser,
 } from './action';
 
 type TInitialState = {
+  user: UserData | null;
   currentGenre: string;
   films: TFilm[];
   authorizationStatus: AuthStatus;
@@ -19,6 +22,7 @@ type TInitialState = {
   error: string | null;
 };
 const initialState: TInitialState = {
+  user: null,
   currentGenre: DEFAULT_NAME_GENRE,
   films: [],
   authorizationStatus: AuthStatus.Unknown,
@@ -44,6 +48,9 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(setError, (state, action) => {
     state.error = action.payload;
+  });
+  builder.addCase(setUser, (state, action) => {
+    state.user = action.payload;
   });
 });
 
