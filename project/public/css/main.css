@@ -1278,6 +1278,12 @@ main {
   text-align: center;
   color: #D9CD8D;
   cursor: pointer; }
+  .sign-in__btn:disabled {
+    border: 1px solid #9e9e9e33;
+    color: #4a4839;
+    cursor: default;
+    pointer-events: none;
+  }
   .sign-in__btn:hover, .sign-in__btn:focus {
     border: 1px solid rgba(217, 205, 141, 0.7); }
 

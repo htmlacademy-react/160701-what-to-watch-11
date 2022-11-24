@@ -4,6 +4,7 @@ import { Navigate } from 'react-router-dom';
 import { AppRoute, AuthStatus, PageTitles } from 'src/const';
 import { useAppDispatch } from 'src/hooks';
 import { loginAction } from 'src/store/api-actions';
+import { validateEmail, validatePassword } from 'src/utils/main';
 
 type TSingInPage = {
   authStatus: AuthStatus;
@@ -36,6 +37,9 @@ const SingInPage = ({ authStatus }: TSingInPage) => {
       }),
     );
   };
+  const isValid = (email: string, password: string): boolean =>
+    !(validateEmail(email) && validatePassword(password));
+
   if (authStatus === AuthStatus.Auth) {
     return <Navigate to={AppRoute.Root} />;
   }
@@ -84,7 +88,8 @@ const SingInPage = ({ authStatus }: TSingInPage) => {
             <button
               className="sign-in__btn"
               type="submit"
-              disabled={!(formData[FormFieldName.Email] && formData[FormFieldName.Password])}
+              // disabled={!(formData[FormFieldName.Email] && formData[FormFieldName.Password])}
+              disabled={isValid(formData[FormFieldName.Email], formData[FormFieldName.Password])}
             >
               Sign in
             </button>
