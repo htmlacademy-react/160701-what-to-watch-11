@@ -55,7 +55,7 @@ const loginAction = createAsyncThunk<
     state: TState;
     extra: AxiosInstance;
   }
->('user/login', async ({ login: email, password }, { dispatch, extra: api }) => {
+>('user/login', async ({ email, password }, { dispatch, extra: api }) => {
   const {
     data: { token },
   } = await api.post<UserData>(APIRoute.Login, { email, password });

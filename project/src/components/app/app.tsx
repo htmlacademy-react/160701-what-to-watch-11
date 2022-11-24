@@ -1,7 +1,7 @@
 import MainPage from 'src/pages/main-page/main-page';
 import { HelmetProvider } from 'react-helmet-async';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
-import { AppRoute } from 'src/const';
+import { AppRoute, AuthStatus } from 'src/const';
 import Page404 from 'src/pages/404-page/404-page';
 import SingInPage from 'src/pages/sing-in-page/sing-in-page';
 import MyListPage from 'src/pages/my-list-page/my-list-page';
@@ -20,7 +20,7 @@ const App = (): JSX.Element => {
   const films = useAppSelector((state) => state.films);
   const authStatus = useAppSelector((state) => state.authorizationStatus);
 
-  if (isFilmsLoading) {
+  if (isFilmsLoading || authStatus === AuthStatus.Unknown) {
     return <Loader />;
   }
 
@@ -53,7 +53,7 @@ const App = (): JSX.Element => {
                 </PrivateRoute>
               }
             />
-            <Route path={AppRoute.Login} element={<SingInPage />} />
+            <Route path={AppRoute.Login} element={<SingInPage authStatus={authStatus} />} />
             <Route path={AppRoute.ErrorPage} element={<Page404 />} />
             <Route path="*" element={<Page404 />} />
           </Route>
