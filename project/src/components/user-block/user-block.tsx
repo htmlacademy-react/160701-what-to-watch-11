@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
 import { AppRoute, AuthStatus } from 'src/const';
-import { useAppSelector } from 'src/hooks';
+import { useAppDispatch, useAppSelector } from 'src/hooks';
+import { logoutAction } from 'src/store/api-actions';
 
 const UserBlock = () => {
+  const dispatch = useAppDispatch();
   const authStatus = useAppSelector((state) => state.authorizationStatus);
   const user = useAppSelector((state) => state.user);
   const isAuth = authStatus === AuthStatus.Auth;
@@ -18,7 +20,14 @@ const UserBlock = () => {
             <span className="user-block__name">{user?.name}</span>
           </li>
           <li className="user-block__item">
-            <a href="!#" className="user-block__link">
+            <a
+              href="!#"
+              className="user-block__link"
+              onClick={(evt) => {
+                evt.preventDefault();
+                dispatch(logoutAction());
+              }}
+            >
               Sign out
             </a>
           </li>
