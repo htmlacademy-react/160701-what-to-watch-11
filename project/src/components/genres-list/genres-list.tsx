@@ -1,7 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
 import { DEFAULT_NAME_GENRE } from 'src/const';
-import { useAppDispatch } from 'src/hooks';
-import { changeCurrentGenre } from 'src/store/action';
 import { TFilm } from 'src/types/films';
 
 type TGenresList = {
@@ -9,7 +7,6 @@ type TGenresList = {
 };
 
 const GenresList = ({ films }: TGenresList) => {
-  const dispatch = useAppDispatch();
   const location = useLocation();
   const hash = decodeURI(location.hash.slice(1));
   const MAX_FILMS_GENRES = 10;
@@ -31,11 +28,7 @@ const GenresList = ({ films }: TGenresList) => {
           }`}
           key={item}
         >
-          <Link
-            to={`#${item}`}
-            className="catalog__genres-link"
-            onClick={() => dispatch(changeCurrentGenre(item))}
-          >
+          <Link to={`#${item}`} className="catalog__genres-link">
             {item}
           </Link>
         </li>
