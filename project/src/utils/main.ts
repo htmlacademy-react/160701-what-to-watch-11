@@ -24,4 +24,13 @@ const getFilmRatingPhrase = (rating: number) => {
   return phrase;
 };
 
-export { adjustColor, getFilmRatingPhrase };
+const validateEmail = (email: string) =>
+  email
+    .toLowerCase()
+    .match(
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+    );
+const validatePassword = (password: string) =>
+  /^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{2,16}$/.test(password.trim());
+
+export { adjustColor, getFilmRatingPhrase, validateEmail, validatePassword };
