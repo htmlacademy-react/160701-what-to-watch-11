@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 import { AppRoute, AuthStatus, PageTitles } from 'src/const';
 import { useAppDispatch } from 'src/hooks';
 import { loginAction } from 'src/store/api-actions';
-import { validateEmail, validatePassword } from 'src/utils/main';
+import { LoginSchema } from 'src/utils/validate';
 
 type TSingInPage = {
   authStatus: AuthStatus;
@@ -21,6 +21,11 @@ const SingInPage = ({ authStatus }: TSingInPage) => {
     [FormFieldName.Email]: '',
     [FormFieldName.Password]: '',
   });
+  const { error: validError } = LoginSchema.validate({
+    email: formData[FormFieldName.Email],
+    password: formData[FormFieldName.Password],
+  });
+
   const onChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = evt.target;
 
@@ -28,18 +33,19 @@ const SingInPage = ({ authStatus }: TSingInPage) => {
   };
   const formSubmitHandler = (evt: FormEvent) => {
     evt.preventDefault();
-    // eslint-disable-next-line no-console
-    console.log(formData);
-    dispatch(
-      loginAction({
-        email: formData[FormFieldName.Email],
-        password: formData[FormFieldName.Password],
-      }),
-    );
-  };
-  const isValid = (email: string, password: string): boolean =>
-    !(validateEmail(email) && validatePassword(password));
 
+    if (!validError) {
+      dispatch(
+        loginAction({
+          email: formData[FormFieldName.Email],
+          password: formData[FormFieldName.Password],
+        }),
+      );
+    }
+  };
+  const emptyField = Boolean(
+    formData[FormFieldName.Email].length === 0 && formData[FormFieldName.Password].length === 0,
+  );
   if (authStatus === AuthStatus.Auth) {
     return <Navigate to={AppRoute.Root} />;
   }
@@ -50,6 +56,11 @@ const SingInPage = ({ authStatus }: TSingInPage) => {
       </Helmet>
       <div className="sign-in user-page__content">
         <form className="sign-in__htmlForm" onSubmit={formSubmitHandler}>
+          {!emptyField && validError && (
+            <div className="sign-in__message">
+              <p>{validError.message}</p>
+            </div>
+          )}
           <div className="sign-in__fields">
             <div className="sign-in__field">
               <input
@@ -83,12 +94,7 @@ const SingInPage = ({ authStatus }: TSingInPage) => {
             </div>
           </div>
           <div className="sign-in__submit">
-            <button
-              className="sign-in__btn"
-              type="submit"
-              // disabled={!(formData[FormFieldName.Email] && formData[FormFieldName.Password])}
-              disabled={isValid(formData[FormFieldName.Email], formData[FormFieldName.Password])}
-            >
+            <button className="sign-in__btn" type="submit" disabled={emptyField}>
               Sign in
             </button>
           </div>
