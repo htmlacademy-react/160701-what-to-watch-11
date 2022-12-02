@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Loader from 'src/components/loader/loader';
 import { useAppDispatch, useAppSelector } from 'src/hooks';
-import reviews from 'src/mocks/reviews';
 import { fetchCommentsFilmAction } from 'src/store/api-actions';
 import { TFilm } from 'src/types/films';
 import { HumanizeDate } from 'src/utils/date';
