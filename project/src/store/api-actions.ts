@@ -1,11 +1,14 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
+  loadSimilarFilms,
+  changeCurrentFilm,
   loadFilms,
   requireAuthorization,
   setError,
   setFilmsLoadingStatus,
   setUser,
+  setSimilarFilmsLoadingStatus,
 } from './action';
 import { TAppDispatch, TState } from 'src/types/state';
 import { APIRoute, AuthStatus, TIMEOUT_SHOW_ERROR } from 'src/const';
@@ -19,6 +22,34 @@ const clearError = createAsyncThunk('app/clearError', () => {
   setTimeout(() => {
     store.dispatch(setError(null));
   }, TIMEOUT_SHOW_ERROR);
+});
+
+const fetchFilmAction = createAsyncThunk<
+  void,
+  number | string,
+  {
+    dispatch: TAppDispatch;
+    state: TState;
+    extra: AxiosInstance;
+  }
+>('data/fetchFilm', async (filmId, { dispatch, extra: api }) => {
+  const { data } = await api.get<TFilm>(`${APIRoute.Films}/${filmId}`);
+  dispatch(changeCurrentFilm(data));
+});
+
+const fetchSimilarFilmsAction = createAsyncThunk<
+  void,
+  number | string,
+  {
+    dispatch: TAppDispatch;
+    state: TState;
+    extra: AxiosInstance;
+  }
+>('data/fetchFilm', async (filmId, { dispatch, extra: api }) => {
+  dispatch(setSimilarFilmsLoadingStatus(true));
+  const { data } = await api.get<TFilm[]>(`${APIRoute.Films}/${filmId}/similar`);
+  dispatch(setSimilarFilmsLoadingStatus(false));
+  dispatch(loadSimilarFilms(data));
 });
 
 const fetchFilmsAction = createAsyncThunk<
@@ -85,4 +116,12 @@ const logoutAction = createAsyncThunk<
   dispatch(requireAuthorization(AuthStatus.NoAuth));
 });
 
-export { fetchFilmsAction, checkAuthAction, loginAction, logoutAction, clearError };
+export {
+  fetchSimilarFilmsAction,
+  fetchFilmsAction,
+  fetchFilmAction,
+  checkAuthAction,
+  loginAction,
+  logoutAction,
+  clearError,
+};

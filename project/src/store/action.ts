@@ -7,15 +7,24 @@ const changeCurrentGenre = createAction('films/currentGenre', (value: string) =>
   payload: value,
 }));
 
+const changeCurrentFilm = createAction('films/currentFilm', (value: TFilm) => ({
+  payload: value,
+}));
+
 const setAllFilms = createAction('films/getAll', (value: TFilm[]) => ({
   payload: value,
 }));
 
 const loadFilms = createAction<TFilm[]>('data/loadFilms');
 
+const loadSimilarFilms = createAction('data/loadSimilarFilms', (value: TFilm[]) => ({
+  payload: value,
+}));
+
 const requireAuthorization = createAction<AuthStatus>('user/requireAuthorization');
 
 const setFilmsLoadingStatus = createAction<boolean>('data/setFilmsLoadingStatus');
+const setSimilarFilmsLoadingStatus = createAction<boolean>('data/setSimilarFilmsLoadingStatus');
 
 const setError = createAction<string | null>('app/setEror');
 
@@ -24,11 +33,14 @@ const setUser = createAction('user/setUser', (value: UserData) => ({
 }));
 
 export {
+  changeCurrentFilm,
   changeCurrentGenre,
   setAllFilms,
   loadFilms,
+  loadSimilarFilms,
   requireAuthorization,
   setFilmsLoadingStatus,
+  setSimilarFilmsLoadingStatus,
   setError,
   setUser,
 };
