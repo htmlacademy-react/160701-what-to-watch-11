@@ -7,6 +7,9 @@
   color: #C9B37E;
   padding: 15px;
 }
+.loader--transparent {
+  background-image: none;
+}
 .lds-spinner {
   color: official;
   display: inline-block;
