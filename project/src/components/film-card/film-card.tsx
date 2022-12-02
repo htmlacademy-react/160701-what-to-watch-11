@@ -1,4 +1,4 @@
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { AppRoute, RouteName } from 'src/const';
 import { TFilm } from 'src/types/films';
@@ -11,6 +11,8 @@ import FilmCardButtons from './components/film-card-buttons/film-card-buttons';
 import FilmCardPoster from './components/film-card-poster/film-card-poster';
 import FilmCardData from './components/film-card-data/film-card-data';
 import FilmCardNavContent from './components/film-card-nav-content/film-card-nav-content';
+import { useAppDispatch, useAppSelector } from 'src/hooks';
+import { fetchFilmAction } from 'src/store/api-actions';
 
 type TFilmCard = {
   films: TFilm[];
@@ -29,9 +31,18 @@ const FilmCard = ({ films }: TFilmCard) => {
   const isRootPage = location.pathname === AppRoute.Root;
   const isFull = isMoviePage || isAddReviewPage;
 
+  const dispatch = useAppDispatch();
   const DEFAULT_FILM_ID = films[0]?.id;
   const { id: currentFilmId = DEFAULT_FILM_ID } = useParams();
-  const currentFilm = films.find((film) => film.id === Number(currentFilmId));
+
+  useEffect(() => {
+    if (currentFilmId) {
+      dispatch(fetchFilmAction(currentFilmId));
+    }
+  }, [currentFilmId, dispatch]);
+
+  const currentFilm = useAppSelector((state) => state.currentFilm);
+
   if (!currentFilm || !films.length) {
     return null;
   }

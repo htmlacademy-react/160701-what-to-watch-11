@@ -5,7 +5,7 @@ import FilmsList from 'src/components/films-list/films-list';
 import Loader from 'src/components/loader/loader';
 import { AppRoute, PageTitles } from 'src/const';
 import { useAppDispatch, useAppSelector } from 'src/hooks';
-import { fetchFilmAction, fetchSimilarFilmsAction } from 'src/store/api-actions';
+import { fetchSimilarFilmsAction } from 'src/store/api-actions';
 
 const MoviePage = () => {
   const isSimilarFilmsLoading = useAppSelector((state) => state.isSimilarFilmsLoading);
@@ -14,7 +14,6 @@ const MoviePage = () => {
 
   useEffect(() => {
     if (currentFilmId) {
-      dispatch(fetchFilmAction(currentFilmId));
       dispatch(fetchSimilarFilmsAction(currentFilmId));
     }
   }, [currentFilmId, dispatch]);
