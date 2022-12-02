@@ -17,7 +17,7 @@ const FilmCardButtons = ({ id = '' }: TFilmCardButtons) => {
         className="btn btn--play film-card__button"
         type="button"
         onClick={() => {
-          navigate(`player/${id}`);
+          navigate(`${RouteName.Player}/${id}`);
         }}
       >
         <svg viewBox="0 0 19 19" width="19" height="19">
