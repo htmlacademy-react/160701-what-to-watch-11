@@ -86,7 +86,7 @@ const FilmCard = ({ films }: TFilmCard) => {
             <FilmCardWrap>
               <FilmCardDescr>
                 <FilmCardData name={name} genre={genre} released={released} />
-                <FilmCardButtons id={id} withReviewLink />
+                <FilmCardButtons id={id} />
               </FilmCardDescr>
             </FilmCardWrap>
           )}
