@@ -9,7 +9,7 @@ const LoginSchema = Joi.object({
     .min(3)
     .max(10)
     .pattern(new RegExp(/^(?=.*[0-9]).{1,}$/))
-    .pattern(new RegExp(/^(?=.*[a-zA-Z]).{1,}$/))
+    .pattern(new RegExp(/^(?=.*[a-zA-Zа-яё]).{1,}$/))
     .error((errors) => {
       for (const item of errors) {
         const {
