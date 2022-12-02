@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { AuthStatus } from 'src/const';
 import { DEFAULT_NAME_GENRE } from 'src/const';
-import { TFilm } from 'src/types/films';
+import { TFilm, TFilmComment } from 'src/types/films';
 import { UserData } from 'src/types/user-data';
 import {
   changeCurrentGenre,
@@ -14,6 +14,8 @@ import {
   setFilmsLoadingStatus,
   setSimilarFilmsLoadingStatus,
   setUser,
+  setCommentsLoadingStatus,
+  loadFilmComments,
 } from './action';
 
 type TInitialState = {
@@ -23,8 +25,10 @@ type TInitialState = {
   similarFilms: TFilm[];
   isSimilarFilmsLoading: boolean;
   currentFilm: TFilm | null;
+  currentFilmComments: TFilmComment[];
   authorizationStatus: AuthStatus;
   isFilmsLoading: boolean;
+  isCommentsLoading: boolean;
   error: string | null;
 };
 const initialState: TInitialState = {
@@ -33,9 +37,11 @@ const initialState: TInitialState = {
   films: [],
   similarFilms: [],
   currentFilm: null,
+  currentFilmComments: [],
   authorizationStatus: AuthStatus.Unknown,
   isFilmsLoading: false,
   isSimilarFilmsLoading: false,
+  isCommentsLoading: false,
   error: null,
 };
 
@@ -51,6 +57,12 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(loadFilms, (state, action) => {
     state.films = action.payload;
+  });
+  builder.addCase(loadFilmComments, (state, action) => {
+    state.currentFilmComments = action.payload;
+  });
+  builder.addCase(setCommentsLoadingStatus, (state, action) => {
+    state.isCommentsLoading = action.payload;
   });
   builder.addCase(loadSimilarFilms, (state, action) => {
     state.similarFilms = action.payload;

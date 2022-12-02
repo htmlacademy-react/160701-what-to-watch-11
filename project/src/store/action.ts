@@ -1,6 +1,6 @@
 import { createAction } from '@reduxjs/toolkit';
 import { AuthStatus } from 'src/const';
-import { TFilm } from 'src/types/films';
+import { TFilm, TFilmComment } from 'src/types/films';
 import { UserData } from 'src/types/user-data';
 
 const changeCurrentGenre = createAction('films/currentGenre', (value: string) => ({
@@ -20,9 +20,13 @@ const loadFilms = createAction<TFilm[]>('data/loadFilms');
 const loadSimilarFilms = createAction('data/loadSimilarFilms', (value: TFilm[]) => ({
   payload: value,
 }));
+const loadFilmComments = createAction('data/loadFilmComments', (value: TFilmComment[]) => ({
+  payload: value,
+}));
 
 const requireAuthorization = createAction<AuthStatus>('user/requireAuthorization');
 
+const setCommentsLoadingStatus = createAction<boolean>('data/setCommentsLoadingStatus');
 const setFilmsLoadingStatus = createAction<boolean>('data/setFilmsLoadingStatus');
 const setSimilarFilmsLoadingStatus = createAction<boolean>('data/setSimilarFilmsLoadingStatus');
 
@@ -41,6 +45,8 @@ export {
   requireAuthorization,
   setFilmsLoadingStatus,
   setSimilarFilmsLoadingStatus,
+  setCommentsLoadingStatus,
+  loadFilmComments,
   setError,
   setUser,
 };

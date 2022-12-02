@@ -9,10 +9,12 @@ import {
   setFilmsLoadingStatus,
   setUser,
   setSimilarFilmsLoadingStatus,
+  setCommentsLoadingStatus,
+  loadFilmComments,
 } from './action';
 import { TAppDispatch, TState } from 'src/types/state';
 import { APIRoute, AuthStatus, TIMEOUT_SHOW_ERROR } from 'src/const';
-import { TFilm } from 'src/types/films';
+import { TFilm, TFilmComment } from 'src/types/films';
 import { AuthData } from 'src/types/auth-data';
 import { UserData } from 'src/types/user-data';
 import { removeToken, setToken } from 'src/services/token';
@@ -50,6 +52,21 @@ const fetchSimilarFilmsAction = createAsyncThunk<
   const { data } = await api.get<TFilm[]>(`${APIRoute.Films}/${filmId}/similar`);
   dispatch(setSimilarFilmsLoadingStatus(false));
   dispatch(loadSimilarFilms(data));
+});
+
+const fetchCommentsFilmAction = createAsyncThunk<
+  void,
+  number | string,
+  {
+    dispatch: TAppDispatch;
+    state: TState;
+    extra: AxiosInstance;
+  }
+>('data/fetchFilmComments', async (filmId, { dispatch, extra: api }) => {
+  dispatch(setCommentsLoadingStatus(true));
+  const { data } = await api.get<TFilmComment[]>(`${APIRoute.Comments}/${filmId}`);
+  dispatch(setCommentsLoadingStatus(false));
+  dispatch(loadFilmComments(data));
 });
 
 const fetchFilmsAction = createAsyncThunk<
@@ -117,6 +134,7 @@ const logoutAction = createAsyncThunk<
 });
 
 export {
+  fetchCommentsFilmAction,
   fetchSimilarFilmsAction,
   fetchFilmsAction,
   fetchFilmAction,
