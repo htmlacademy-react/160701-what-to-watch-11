@@ -1,24 +1,44 @@
 import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useAppDispatch } from 'src/hooks';
+import { addCommentFilmAction } from 'src/store/api-actions';
 
 type TAddReviewForm = {
   backgroundColor: string;
 };
+
+enum FormFieldName {
+  Rating = 'rating',
+  Text = 'review-text',
+}
+
 const AddReviewForm = ({ backgroundColor }: TAddReviewForm) => {
+  const { id: currentFilmId } = useParams();
+  const dispatch = useAppDispatch();
   const [formData, setFormData] = useState({
-    'rating': '',
-    'review-text': '',
+    [FormFieldName.Rating]: 0,
+    [FormFieldName.Text]: '',
   });
   const formSubmitHandler = (evt: FormEvent) => {
     evt.preventDefault();
-    // eslint-disable-next-line no-console
-    console.log(formData);
+
+    if (currentFilmId) {
+      dispatch(
+        addCommentFilmAction({
+          filmId: Number(currentFilmId),
+          comment: formData[FormFieldName.Text],
+          rating: formData[FormFieldName.Rating],
+        }),
+      );
+    }
   };
   const onChange = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { value, name } = evt.target;
 
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-  const isValid = !!(formData.rating && formData['review-text']);
+  const isValid = !!(formData[FormFieldName.Rating] && formData[FormFieldName.Text]);
+
   return (
     <div className="add-review">
       <form className="add-review__htmlForm" onSubmit={formSubmitHandler}>
@@ -35,7 +55,7 @@ const AddReviewForm = ({ backgroundColor }: TAddReviewForm) => {
                       className="rating__input"
                       id={`star-${count}`}
                       type="radio"
-                      name="rating"
+                      name={FormFieldName.Rating}
                       value={count}
                       onChange={onChange}
                       checked={isCurrent}
@@ -52,11 +72,11 @@ const AddReviewForm = ({ backgroundColor }: TAddReviewForm) => {
         <div className="add-review__text" style={{ backgroundColor }}>
           <textarea
             className="add-review__textarea"
-            name="review-text"
-            id="review-text"
+            name={FormFieldName.Text}
+            id={FormFieldName.Text}
             placeholder="Review text"
             onChange={onChange}
-            value={formData['review-text']}
+            value={formData[FormFieldName.Text]}
             minLength={50}
             maxLength={400}
           />

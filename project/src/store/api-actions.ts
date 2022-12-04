@@ -19,6 +19,7 @@ import { AuthData } from 'src/types/auth-data';
 import { UserData } from 'src/types/user-data';
 import { removeToken, setToken } from 'src/services/token';
 import { store } from '.';
+import { TAddReveiw } from 'src/types/reviews';
 
 const clearError = createAsyncThunk('app/clearError', () => {
   setTimeout(() => {
@@ -59,6 +60,19 @@ const fetchCommentsFilmAction = createAsyncThunk<void, number | string, ThunkApi
     dispatch(setFilmComments(data));
   },
 );
+
+const addCommentFilmAction = createAsyncThunk<
+  void,
+  { filmId: number } & TAddReveiw,
+  ThunkApiConfig
+>('data/addFilmComment', async ({ filmId, comment, rating }, { dispatch, extra: api }) => {
+  try {
+    await api.post(`${APIRoute.Comments}/${filmId}`, { comment, rating });
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(error);
+  }
+});
 
 const fetchFilmsAction = createAsyncThunk<void, undefined, ThunkApiConfig>(
   'data/fetchFilms',
@@ -113,4 +127,5 @@ export {
   loginAction,
   logoutAction,
   clearError,
+  addCommentFilmAction,
 };

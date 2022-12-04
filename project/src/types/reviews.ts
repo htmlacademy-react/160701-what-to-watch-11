@@ -8,3 +8,8 @@ export type TReview = {
     name: string;
   };
 };
+
+export type TAddReveiw = {
+  comment: string;
+  rating: number;
+};
