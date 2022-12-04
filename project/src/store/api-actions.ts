@@ -11,9 +11,10 @@ import {
   setSimilarFilms,
   setFilmComments,
   setAuthorizationStatus,
+  redirectToRoute,
 } from './action';
 import { TAppDispatch, TState } from 'src/types/state';
-import { APIRoute, APIRouteName, AuthStatus, TIMEOUT_SHOW_ERROR } from 'src/const';
+import { APIRoute, APIRouteName, AppRoute, AuthStatus, TIMEOUT_SHOW_ERROR } from 'src/const';
 import { TFilm, TFilmComment } from 'src/types/films';
 import { AuthData } from 'src/types/auth-data';
 import { UserData } from 'src/types/user-data';
@@ -68,6 +69,7 @@ const addCommentFilmAction = createAsyncThunk<
 >('data/addFilmComment', async ({ filmId, comment, rating }, { dispatch, extra: api }) => {
   try {
     await api.post(`${APIRoute.Comments}/${filmId}`, { comment, rating });
+    dispatch(redirectToRoute(AppRoute.AddReview));
   } catch (error) {
     // eslint-disable-next-line no-console
     console.log(error);
