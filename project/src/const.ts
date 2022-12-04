@@ -37,6 +37,11 @@ enum APIRoute {
   Login = '/login',
   Logout = '/logout',
 }
+
+enum APIRouteName {
+  Similar = 'similar',
+}
+
 export {
   TIMEOUT_SHOW_ERROR,
   DEFAULT_NAME_GENRE,
@@ -45,4 +50,5 @@ export {
   AuthStatus,
   PageTitles,
   APIRoute,
+  APIRouteName,
 };
