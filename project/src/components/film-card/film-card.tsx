@@ -1,5 +1,5 @@
 import { PropsWithChildren, useEffect } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { Navigate, useLocation, useParams } from 'react-router-dom';
 import { AppRoute, RouteName } from 'src/const';
 import { TFilm } from 'src/types/films';
 import { adjustColor } from 'src/utils/main';
@@ -44,7 +44,7 @@ const FilmCard = ({ films }: TFilmCard) => {
   const currentFilm = useAppSelector(({ filmsState }) => filmsState.films.currentFilm);
 
   if (!currentFilm || !films.length) {
-    return null;
+    return <Navigate to={AppRoute.ErrorPage} />;
   }
   const { id, name, posterImage, backgroundImage, genre, released, backgroundColor } = currentFilm;
 
