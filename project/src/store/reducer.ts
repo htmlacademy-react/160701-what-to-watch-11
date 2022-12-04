@@ -6,16 +6,15 @@ import { UserData } from 'src/types/user-data';
 import {
   changeCurrentGenre,
   changeCurrentFilm,
-  loadFilms,
-  loadSimilarFilms,
-  requireAuthorization,
   setAllFilms,
   setError,
   setFilmsLoadingStatus,
   setSimilarFilmsLoadingStatus,
   setUser,
   setCommentsLoadingStatus,
-  loadFilmComments,
+  setFilmComments,
+  setSimilarFilms,
+  setAuthorizationStatus,
 } from './action';
 
 type TInitialState = {
@@ -55,19 +54,16 @@ const reducer = createReducer(initialState, (builder) => {
   builder.addCase(setAllFilms, (state, action) => {
     state.films = action.payload;
   });
-  builder.addCase(loadFilms, (state, action) => {
-    state.films = action.payload;
-  });
-  builder.addCase(loadFilmComments, (state, action) => {
+  builder.addCase(setFilmComments, (state, action) => {
     state.currentFilmComments = action.payload;
   });
   builder.addCase(setCommentsLoadingStatus, (state, action) => {
     state.isCommentsLoading = action.payload;
   });
-  builder.addCase(loadSimilarFilms, (state, action) => {
+  builder.addCase(setSimilarFilms, (state, action) => {
     state.similarFilms = action.payload;
   });
-  builder.addCase(requireAuthorization, (state, action) => {
+  builder.addCase(setAuthorizationStatus, (state, action) => {
     state.authorizationStatus = action.payload;
   });
   builder.addCase(setFilmsLoadingStatus, (state, action) => {
