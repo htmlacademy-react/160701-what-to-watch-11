@@ -4,9 +4,10 @@ import { useAppSelector } from 'src/hooks';
 
 type TFilmCardButtons = {
   id: string | number;
+  withReviewButton?: boolean;
 };
 
-const FilmCardButtons = ({ id = '' }: TFilmCardButtons) => {
+const FilmCardButtons = ({ id = '', withReviewButton = true }: TFilmCardButtons) => {
   const navigate = useNavigate();
   const authStatus = useAppSelector(({ userState }) => userState.user.authorizationStatus);
   const isAuth = authStatus === AuthStatus.Auth;
@@ -34,12 +35,14 @@ const FilmCardButtons = ({ id = '' }: TFilmCardButtons) => {
             <span>My list</span>
             <span className="film-card__count">9</span>
           </button>
-          <Link
-            className="btn film-card__button"
-            to={`/${RouteName.Films}/${id}/${RouteName.Review}`}
-          >
-            Add review
-          </Link>
+          {withReviewButton && (
+            <Link
+              className="btn film-card__button"
+              to={`/${RouteName.Films}/${id}/${RouteName.Review}`}
+            >
+              Add review
+            </Link>
+          )}
         </>
       )}
     </div>
