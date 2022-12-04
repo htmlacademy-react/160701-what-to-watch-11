@@ -8,7 +8,7 @@ type TFilmCardButtons = {
 
 const FilmCardButtons = ({ id = '' }: TFilmCardButtons) => {
   const navigate = useNavigate();
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
+  const authStatus = useAppSelector(({ userState }) => userState.user.authorizationStatus);
   const isAuth = authStatus === AuthStatus.Auth;
 
   return (

@@ -5,8 +5,8 @@ import { logoutAction } from 'src/store/api-actions';
 
 const UserBlock = () => {
   const dispatch = useAppDispatch();
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
-  const user = useAppSelector((state) => state.user);
+  const authStatus = useAppSelector(({ userState }) => userState.user.authorizationStatus);
+  const user = useAppSelector(({ userState }) => userState.user.userData);
   const isAuth = authStatus === AuthStatus.Auth;
 
   return (

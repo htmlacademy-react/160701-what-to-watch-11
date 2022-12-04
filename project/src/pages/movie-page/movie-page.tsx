@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from 'src/hooks';
 import { fetchSimilarFilmsAction } from 'src/store/api-actions';
 
 const MoviePage = () => {
-  const isSimilarFilmsLoading = useAppSelector((state) => state.isSimilarFilmsLoading);
+  const isSimilarFilmsLoading = useAppSelector(({ filmsState }) => filmsState.films.similarLoading);
   const { id: currentFilmId } = useParams();
   const dispatch = useAppDispatch();
 
@@ -18,8 +18,8 @@ const MoviePage = () => {
     }
   }, [currentFilmId, dispatch]);
 
-  const similarFilms = useAppSelector((state) => state.similarFilms);
-  const currentFilm = useAppSelector((state) => state.currentFilm);
+  const similarFilms = useAppSelector(({ filmsState }) => filmsState.films.similar);
+  const currentFilm = useAppSelector(({ filmsState }) => filmsState.films.currentFilm);
 
   if (!currentFilmId) {
     return <Navigate to={AppRoute.ErrorPage} />;

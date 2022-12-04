@@ -16,9 +16,9 @@ import { useAppSelector } from 'src/hooks';
 import Loader from '../loader/loader';
 
 const App = (): JSX.Element => {
-  const isFilmsLoading = useAppSelector((state) => state.isFilmsLoading);
-  const films = useAppSelector((state) => state.films);
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
+  const isFilmsLoading = useAppSelector(({ filmsState }) => filmsState.films.allLoading);
+  const films = useAppSelector(({ filmsState }) => filmsState.films.all);
+  const authStatus = useAppSelector(({ userState }) => userState.user.authorizationStatus);
 
   if (isFilmsLoading || authStatus === AuthStatus.Unknown) {
     return <Loader />;

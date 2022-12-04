@@ -16,8 +16,8 @@ const ReviewsTab = ({ film: { backgroundColor } }: { film: TFilm }) => {
       dispatch(fetchCommentsFilmAction(currentFilmId));
     }
   }, [currentFilmId, dispatch]);
-  const currentFilmComments = useAppSelector((state) => state.currentFilmComments);
-  const isCommentsLoading = useAppSelector((state) => state.isCommentsLoading);
+  const currentFilmComments = useAppSelector(({ filmsState }) => filmsState.comments.data);
+  const isCommentsLoading = useAppSelector(({ filmsState }) => filmsState.comments.loading);
   const getReviews = (filterFunc: (elem: unknown, i: number) => boolean | number) =>
     currentFilmComments.filter(filterFunc).map((review) => {
       const {

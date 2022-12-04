@@ -5,7 +5,7 @@ import { AppRoute, PageTitles } from 'src/const';
 import { useAppSelector } from 'src/hooks';
 
 const AddReviewPage = () => {
-  const films = useAppSelector((state) => state.films);
+  const films = useAppSelector(({ filmsState }) => filmsState.films.all);
   const { id: currentFilmId } = useParams();
   const currentFilm = films.find((film) => film.id === Number(currentFilmId));
 

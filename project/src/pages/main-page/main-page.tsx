@@ -16,7 +16,7 @@ const MainPage = ({ films }: TMainPage) => {
   const dispatch = useAppDispatch();
   const location = useLocation();
   const hash = decodeURI(location.hash.slice(1));
-  const stateGenre = useAppSelector((state) => state.currentGenre);
+  const stateGenre = useAppSelector(({ filmsState }) => filmsState.films.currentGenre);
   const sortedFilms = films.filter(
     (film) => stateGenre === DEFAULT_NAME_GENRE || stateGenre === film.genre,
   );

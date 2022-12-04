@@ -18,66 +18,88 @@ import {
 } from './action';
 
 type TInitialState = {
-  user: UserData | null;
-  currentGenre: string;
-  films: TFilm[];
-  similarFilms: TFilm[];
-  isSimilarFilmsLoading: boolean;
-  currentFilm: TFilm | null;
-  currentFilmComments: TFilmComment[];
-  authorizationStatus: AuthStatus;
-  isFilmsLoading: boolean;
-  isCommentsLoading: boolean;
+  user: {
+    userData: UserData | null;
+    authorizationStatus: AuthStatus;
+  };
+  films: {
+    currentGenre: string;
+    currentFilm: TFilm | null;
+    all: TFilm[];
+    similar: TFilm[];
+    allLoading: boolean;
+    similarLoading: boolean;
+  };
+  comments: {
+    data: TFilmComment[];
+    loading: boolean;
+  };
   error: string | null;
 };
 const initialState: TInitialState = {
-  user: null,
-  currentGenre: DEFAULT_NAME_GENRE,
-  films: [],
-  similarFilms: [],
-  currentFilm: null,
-  currentFilmComments: [],
-  authorizationStatus: AuthStatus.Unknown,
-  isFilmsLoading: false,
-  isSimilarFilmsLoading: false,
-  isCommentsLoading: false,
+  user: {
+    userData: null,
+    authorizationStatus: AuthStatus.Unknown,
+  },
+  films: {
+    currentGenre: DEFAULT_NAME_GENRE,
+    currentFilm: null,
+    all: [],
+    similar: [],
+    allLoading: false,
+    similarLoading: false,
+  },
+  comments: {
+    data: [],
+    loading: false,
+  },
   error: null,
 };
 
-const reducer = createReducer(initialState, (builder) => {
+const filmsReducer = createReducer(initialState, (builder) => {
   builder.addCase(changeCurrentGenre, (state, action) => {
-    state.currentGenre = action.payload;
+    state.films.currentGenre = action.payload;
   });
+
   builder.addCase(changeCurrentFilm, (state, action) => {
-    state.currentFilm = action.payload;
+    state.films.currentFilm = action.payload;
   });
+
   builder.addCase(setAllFilms, (state, action) => {
-    state.films = action.payload;
-  });
-  builder.addCase(setFilmComments, (state, action) => {
-    state.currentFilmComments = action.payload;
-  });
-  builder.addCase(setCommentsLoadingStatus, (state, action) => {
-    state.isCommentsLoading = action.payload;
-  });
-  builder.addCase(setSimilarFilms, (state, action) => {
-    state.similarFilms = action.payload;
-  });
-  builder.addCase(setAuthorizationStatus, (state, action) => {
-    state.authorizationStatus = action.payload;
+    state.films.all = action.payload;
   });
   builder.addCase(setFilmsLoadingStatus, (state, action) => {
-    state.isFilmsLoading = action.payload;
+    state.films.allLoading = action.payload;
+  });
+
+  builder.addCase(setFilmComments, (state, action) => {
+    state.comments.data = action.payload;
+  });
+  builder.addCase(setCommentsLoadingStatus, (state, action) => {
+    state.comments.loading = action.payload;
+  });
+
+  builder.addCase(setSimilarFilms, (state, action) => {
+    state.films.similar = action.payload;
   });
   builder.addCase(setSimilarFilmsLoadingStatus, (state, action) => {
-    state.isSimilarFilmsLoading = action.payload;
-  });
-  builder.addCase(setError, (state, action) => {
-    state.error = action.payload;
-  });
-  builder.addCase(setUser, (state, action) => {
-    state.user = action.payload;
+    state.films.similarLoading = action.payload;
   });
 });
 
-export { reducer };
+const userReducer = createReducer(initialState, (builder) => {
+  builder.addCase(setAuthorizationStatus, (state, action) => {
+    state.user.authorizationStatus = action.payload;
+  });
+  builder.addCase(setUser, (state, action) => {
+    state.user.userData = action.payload;
+  });
+});
+
+const rootReducer = createReducer(initialState, (builder) => {
+  builder.addCase(setError, (state, action) => {
+    state.error = action.payload;
+  });
+});
+
+export { rootReducer, filmsReducer, userReducer };

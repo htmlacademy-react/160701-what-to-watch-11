@@ -41,7 +41,7 @@ const FilmCard = ({ films }: TFilmCard) => {
     }
   }, [currentFilmId, dispatch]);
 
-  const currentFilm = useAppSelector((state) => state.currentFilm);
+  const currentFilm = useAppSelector(({ filmsState }) => filmsState.films.currentFilm);
 
   if (!currentFilm || !films.length) {
     return null;
