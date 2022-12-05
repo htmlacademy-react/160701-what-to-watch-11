@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
-import { AppRoute, AuthStatus } from 'src/const';
+import { AuthStatus } from 'src/const';
 import { TFilm, TFilmComment } from 'src/types/films';
 import { UserData } from 'src/types/user-data';
 
@@ -19,7 +19,7 @@ const setError = createAction<string | null>('app/setEror');
 const setUser = createAction<UserData>('user/setUser');
 const setAuthorizationStatus = createAction<AuthStatus>('user/setAuthorizationStatus');
 const REDIRECT_TO_ROUTE = 'app/redirectToRoute';
-const redirectToRoute = createAction<typeof AppRoute>(REDIRECT_TO_ROUTE);
+const redirectToRoute = createAction<string>(REDIRECT_TO_ROUTE);
 
 export {
   changeCurrentFilm,

@@ -14,13 +14,14 @@ import {
   redirectToRoute,
 } from './action';
 import { TAppDispatch, TState } from 'src/types/state';
-import { APIRoute, APIRouteName, AppRoute, AuthStatus, TIMEOUT_SHOW_ERROR } from 'src/const';
+import { APIRoute, APIRouteName, AuthStatus, RouteName, TIMEOUT_SHOW_ERROR } from 'src/const';
 import { TFilm, TFilmComment } from 'src/types/films';
 import { AuthData } from 'src/types/auth-data';
 import { UserData } from 'src/types/user-data';
 import { removeToken, setToken } from 'src/services/token';
 import { store } from '.';
 import { TAddReveiw } from 'src/types/reviews';
+import { TabsNames } from 'src/components/film-card/film-card';
 
 const clearError = createAsyncThunk('app/clearError', () => {
   setTimeout(() => {
@@ -67,13 +68,8 @@ const addCommentFilmAction = createAsyncThunk<
   { filmId: number } & TAddReveiw,
   ThunkApiConfig
 >('data/addFilmComment', async ({ filmId, comment, rating }, { dispatch, extra: api }) => {
-  try {
-    await api.post(`${APIRoute.Comments}/${filmId}`, { comment, rating });
-    dispatch(redirectToRoute(AppRoute.AddReview));
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.log(error);
-  }
+  await api.post(`${APIRoute.Comments}/${filmId}`, { comment, rating });
+  dispatch(redirectToRoute(`${RouteName.Films}/${filmId}#${TabsNames.Reviews}`));
 });
 
 const fetchFilmsAction = createAsyncThunk<void, undefined, ThunkApiConfig>(

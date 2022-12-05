@@ -19,4 +19,4 @@ const store = configureStore({
     }).concat(redirect),
 });
 
-export { store, api };
+export { store, api, reducer };
