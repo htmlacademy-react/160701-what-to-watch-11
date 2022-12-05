@@ -8,8 +8,8 @@ const LoginSchema = Joi.object({
   password: Joi.string()
     .min(3)
     .max(10)
-    .pattern(new RegExp(/^(?=.*[0-9]).{1,}$/))
-    .pattern(new RegExp(/^(?=.*[a-zA-Zа-яё]).{1,}$/))
+    .pattern(/[0-9]/)
+    .pattern(/[a-zA-Zа-яё]/)
     .error((errors) => {
       for (const item of errors) {
         const {
