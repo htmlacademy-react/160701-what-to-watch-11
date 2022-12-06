@@ -1,5 +1,9 @@
 import Joi from 'joi';
 
+type TErrorReport = Omit<Joi.ErrorReport, 'local'> & {
+  local: { limit: number };
+};
+
 const LoginSchema = Joi.object({
   email: Joi.string()
     .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'ru'] } })
@@ -15,7 +19,7 @@ const LoginSchema = Joi.object({
         const {
           code,
           local: { limit },
-        } = item;
+        } = item as TErrorReport;
 
         if (code === 'string.min') {
           return new Error(`Please enter min ${limit} symbol`);
