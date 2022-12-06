@@ -33,6 +33,7 @@ export const createApi = (): AxiosInstance => {
     (response) => response,
     (error: AxiosError<{ error: string }>) => {
       if (error.response && shouldDisplayError(error.response)) {
+        //TODO показывать ошибку только на приватных страницах
         toast.warn(error.response.data.error);
       }
 
