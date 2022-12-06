@@ -35,3 +35,14 @@ export type TFilmsList = {
   maxFilms?: number;
   withWhowMoreBtn?: boolean;
 };
+
+export type TFilmComment = {
+  comment: string;
+  date: string;
+  id: number;
+  rating: number;
+  user: {
+    id: number;
+    name: string;
+  };
+};

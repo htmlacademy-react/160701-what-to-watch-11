@@ -1,34 +1,40 @@
 import { createAction } from '@reduxjs/toolkit';
 import { AuthStatus } from 'src/const';
-import { TFilm } from 'src/types/films';
+import { TFilm, TFilmComment } from 'src/types/films';
 import { UserData } from 'src/types/user-data';
 
-const changeCurrentGenre = createAction('films/currentGenre', (value: string) => ({
-  payload: value,
-}));
+const changeCurrentGenre = createAction<string>('films/currentGenre');
+const changeCurrentFilm = createAction<TFilm>('films/currentFilm');
+const setCurrentFilmLoadingEnd = createAction<boolean>('films/currentFilmLoadingEnd');
 
-const setAllFilms = createAction('films/getAll', (value: TFilm[]) => ({
-  payload: value,
-}));
+const setAllFilms = createAction<TFilm[]>('films/setAllFilms');
+const setFilmsLoadingStatus = createAction<boolean>('films/setFilmsLoadingStatus');
 
-const loadFilms = createAction<TFilm[]>('data/loadFilms');
+const setSimilarFilms = createAction<TFilm[]>('films/setSimilarFilms');
+const setSimilarFilmsLoadingStatus = createAction<boolean>('films/setSimilarFilmsLoadingStatus');
 
-const requireAuthorization = createAction<AuthStatus>('user/requireAuthorization');
-
-const setFilmsLoadingStatus = createAction<boolean>('data/setFilmsLoadingStatus');
+const setFilmComments = createAction<TFilmComment[]>('films/setFilmComments');
+const setCommentsLoadingStatus = createAction<boolean>('films/setCommentsLoadingStatus');
 
 const setError = createAction<string | null>('app/setEror');
-
-const setUser = createAction('user/setUser', (value: UserData) => ({
-  payload: value,
-}));
+const setUser = createAction<UserData>('user/setUser');
+const setAuthorizationStatus = createAction<AuthStatus>('user/setAuthorizationStatus');
+const REDIRECT_TO_ROUTE = 'app/redirectToRoute';
+const redirectToRoute = createAction<string>(REDIRECT_TO_ROUTE);
 
 export {
+  changeCurrentFilm,
+  setCurrentFilmLoadingEnd,
   changeCurrentGenre,
   setAllFilms,
-  loadFilms,
-  requireAuthorization,
+  setSimilarFilms,
+  setAuthorizationStatus,
   setFilmsLoadingStatus,
+  setSimilarFilmsLoadingStatus,
+  setCommentsLoadingStatus,
+  setFilmComments,
   setError,
   setUser,
+  redirectToRoute,
+  REDIRECT_TO_ROUTE,
 };

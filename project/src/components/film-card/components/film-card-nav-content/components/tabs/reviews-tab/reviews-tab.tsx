@@ -1,11 +1,25 @@
-import reviews from 'src/mocks/reviews';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import Loader from 'src/components/loader/loader';
+import { useAppDispatch, useAppSelector } from 'src/hooks';
+import { fetchCommentsFilmAction } from 'src/store/api-actions';
 import { TFilm } from 'src/types/films';
 import { HumanizeDate } from 'src/utils/date';
 import { adjustColor } from 'src/utils/main';
 
 const ReviewsTab = ({ film: { backgroundColor } }: { film: TFilm }) => {
+  const dispatch = useAppDispatch();
+  const { id: currentFilmId } = useParams();
+
+  useEffect(() => {
+    if (currentFilmId) {
+      dispatch(fetchCommentsFilmAction(currentFilmId));
+    }
+  }, [currentFilmId, dispatch]);
+  const currentFilmComments = useAppSelector(({ filmsState }) => filmsState.comments.data);
+  const isCommentsLoading = useAppSelector(({ filmsState }) => filmsState.comments.loading);
   const getReviews = (filterFunc: (elem: unknown, i: number) => boolean | number) =>
-    reviews.filter(filterFunc).map((review) => {
+    currentFilmComments.filter(filterFunc).map((review) => {
       const {
         id,
         comment,
@@ -33,8 +47,14 @@ const ReviewsTab = ({ film: { backgroundColor } }: { film: TFilm }) => {
     });
   return (
     <div className="film-card__reviews film-card__row">
-      <div className="film-card__reviews-col">{getReviews((_, i) => !(i % 2))}</div>
-      <div className="film-card__reviews-col">{getReviews((_, i) => i % 2)}</div>
+      {isCommentsLoading ? (
+        <Loader isTransparent />
+      ) : (
+        <>
+          <div className="film-card__reviews-col">{getReviews((_, i) => !(i % 2))}</div>
+          <div className="film-card__reviews-col">{getReviews((_, i) => i % 2)}</div>
+        </>
+      )}
     </div>
   );
 };

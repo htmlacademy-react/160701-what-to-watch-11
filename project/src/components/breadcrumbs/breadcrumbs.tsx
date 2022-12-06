@@ -1,3 +1,4 @@
+//TODO оживить хлебные крошки
 const Breadcrumbs = () => (
   <nav className="breadcrumbs">
     <ul className="breadcrumbs__list">

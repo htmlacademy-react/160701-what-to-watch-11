@@ -32,10 +32,16 @@ enum PageTitles {
 }
 
 enum APIRoute {
+  Comments = '/comments',
   Films = '/films',
   Login = '/login',
   Logout = '/logout',
 }
+
+enum APIRouteName {
+  Similar = 'similar',
+}
+
 export {
   TIMEOUT_SHOW_ERROR,
   DEFAULT_NAME_GENRE,
@@ -44,4 +50,5 @@ export {
   AuthStatus,
   PageTitles,
   APIRoute,
+  APIRouteName,
 };

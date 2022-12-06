@@ -10,7 +10,8 @@ const FilmNav = ({ data, current }: TFilmNav) => (
     <ul className="film-nav__list">
       {data.map((item) => {
         const isCurrent = current === item;
-
+        //TODO отображение при нусуществующем хеше
+        //TODO использовать classNames
         return (
           <li key={item} className={`film-nav__item ${isCurrent ? 'film-nav__item--active' : ''}`}>
             <Link to={`#${item}`} className="film-nav__link">

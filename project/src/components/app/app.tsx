@@ -1,6 +1,6 @@
 import MainPage from 'src/pages/main-page/main-page';
 import { HelmetProvider } from 'react-helmet-async';
-import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { AppRoute, AuthStatus } from 'src/const';
 import Page404 from 'src/pages/404-page/404-page';
 import SingInPage from 'src/pages/sing-in-page/sing-in-page';
@@ -14,18 +14,20 @@ import FilmCardLayout from 'src/layouts/film-card-layout/film-card-layout';
 import ScrollToTop from '../scroll-to-top/scroll-to-top';
 import { useAppSelector } from 'src/hooks';
 import Loader from '../loader/loader';
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from 'src/browser-history';
 
 const App = (): JSX.Element => {
-  const isFilmsLoading = useAppSelector((state) => state.isFilmsLoading);
-  const films = useAppSelector((state) => state.films);
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
+  const isFilmsLoading = useAppSelector(({ filmsState }) => filmsState.films.allLoading);
+  const films = useAppSelector(({ filmsState }) => filmsState.films.all);
+  const authStatus = useAppSelector(({ userState }) => userState.user.authorizationStatus);
 
   if (isFilmsLoading || authStatus === AuthStatus.Unknown) {
     return <Loader />;
   }
 
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <ScrollToTop />
       <HelmetProvider>
         <Routes>
@@ -59,7 +61,7 @@ const App = (): JSX.Element => {
           </Route>
         </Routes>
       </HelmetProvider>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 };
 

@@ -1,5 +1,5 @@
-import { PropsWithChildren } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { PropsWithChildren, useEffect } from 'react';
+import { Navigate, useLocation, useParams } from 'react-router-dom';
 import { AppRoute, RouteName } from 'src/const';
 import { TFilm } from 'src/types/films';
 import { adjustColor } from 'src/utils/main';
@@ -11,6 +11,10 @@ import FilmCardButtons from './components/film-card-buttons/film-card-buttons';
 import FilmCardPoster from './components/film-card-poster/film-card-poster';
 import FilmCardData from './components/film-card-data/film-card-data';
 import FilmCardNavContent from './components/film-card-nav-content/film-card-nav-content';
+import { useAppDispatch, useAppSelector } from 'src/hooks';
+import { fetchFilmAction } from 'src/store/api-actions';
+import Loader from '../loader/loader';
+import { setCurrentFilmLoadingEnd } from 'src/store/action';
 
 type TFilmCard = {
   films: TFilm[];
@@ -29,12 +33,44 @@ const FilmCard = ({ films }: TFilmCard) => {
   const isRootPage = location.pathname === AppRoute.Root;
   const isFull = isMoviePage || isAddReviewPage;
 
+  const dispatch = useAppDispatch();
   const DEFAULT_FILM_ID = films[0]?.id;
   const { id: currentFilmId = DEFAULT_FILM_ID } = useParams();
-  const currentFilm = films.find((film) => film.id === Number(currentFilmId));
-  if (!currentFilm || !films.length) {
+
+  useEffect(() => {
+    if (currentFilmId) {
+      dispatch(fetchFilmAction(currentFilmId));
+    }
+  }, [currentFilmId, dispatch]);
+
+  const currentFilm = useAppSelector(({ filmsState }) => filmsState.films.currentFilm);
+  const currentFilmLoadingEnd = useAppSelector(
+    ({ filmsState }) => filmsState.films.currentFilmLoadingEnd,
+  );
+
+  useEffect(
+    () => {
+      dispatch(setCurrentFilmLoadingEnd(false));
+      return () => {
+        dispatch(setCurrentFilmLoadingEnd(false));
+      };
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
+
+  if (!currentFilmLoadingEnd) {
+    return <Loader />;
+  }
+
+  if (!currentFilm && currentFilmLoadingEnd) {
+    return <Navigate to={AppRoute.ErrorPage} />;
+  }
+
+  if (!currentFilm) {
     return null;
   }
+
   const { id, name, posterImage, backgroundImage, genre, released, backgroundColor } = currentFilm;
 
   const FilmCardHeroWrap = ({ children }: PropsWithChildren) =>
@@ -75,7 +111,7 @@ const FilmCard = ({ films }: TFilmCard) => {
             <FilmCardWrap>
               <FilmCardDescr>
                 <FilmCardData name={name} genre={genre} released={released} />
-                <FilmCardButtons id={id} withReviewLink />
+                <FilmCardButtons id={id} />
               </FilmCardDescr>
             </FilmCardWrap>
           )}
@@ -98,7 +134,7 @@ const FilmCard = ({ films }: TFilmCard) => {
               <FilmCardPoster posterImage={posterImage} name={name} />
               <FilmCardDescr>
                 <FilmCardData name={name} genre={genre} released={released} />
-                <FilmCardButtons id={id} />
+                <FilmCardButtons id={id} withReviewButton={false} />
               </FilmCardDescr>
             </FilmCardInfo>
           </FilmCardWrap>
