@@ -12,6 +12,7 @@ import {
   setFilmComments,
   setAuthorizationStatus,
   redirectToRoute,
+  setCurrentFilmLoadingEnd,
 } from './action';
 import { TAppDispatch, TState } from 'src/types/state';
 import { APIRoute, APIRouteName, AuthStatus, RouteName, TIMEOUT_SHOW_ERROR } from 'src/const';
@@ -38,8 +39,13 @@ type ThunkApiConfig = {
 const fetchFilmAction = createAsyncThunk<void, number | string, ThunkApiConfig>(
   'data/fetchFilm',
   async (filmId, { dispatch, extra: api }) => {
-    const { data } = await api.get<TFilm>(`${APIRoute.Films}/${filmId}`);
-    dispatch(changeCurrentFilm(data));
+    try {
+      const { data } = await api.get<TFilm>(`${APIRoute.Films}/${filmId}`);
+      dispatch(changeCurrentFilm(data));
+      dispatch(setCurrentFilmLoadingEnd(true));
+    } catch {
+      dispatch(setCurrentFilmLoadingEnd(true));
+    }
   },
 );
 

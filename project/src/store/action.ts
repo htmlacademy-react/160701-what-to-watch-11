@@ -5,6 +5,7 @@ import { UserData } from 'src/types/user-data';
 
 const changeCurrentGenre = createAction<string>('films/currentGenre');
 const changeCurrentFilm = createAction<TFilm>('films/currentFilm');
+const setCurrentFilmLoadingEnd = createAction<boolean>('films/currentFilmLoadingEnd');
 
 const setAllFilms = createAction<TFilm[]>('films/setAllFilms');
 const setFilmsLoadingStatus = createAction<boolean>('films/setFilmsLoadingStatus');
@@ -23,6 +24,7 @@ const redirectToRoute = createAction<string>(REDIRECT_TO_ROUTE);
 
 export {
   changeCurrentFilm,
+  setCurrentFilmLoadingEnd,
   changeCurrentGenre,
   setAllFilms,
   setSimilarFilms,

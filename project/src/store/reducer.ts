@@ -15,6 +15,7 @@ import {
   setFilmComments,
   setSimilarFilms,
   setAuthorizationStatus,
+  setCurrentFilmLoadingEnd,
 } from './action';
 
 type TInitialState = {
@@ -25,6 +26,7 @@ type TInitialState = {
   films: {
     currentGenre: string;
     currentFilm: TFilm | null;
+    currentFilmLoadingEnd: boolean;
     all: TFilm[];
     similar: TFilm[];
     allLoading: boolean;
@@ -44,6 +46,7 @@ const initialState: TInitialState = {
   films: {
     currentGenre: DEFAULT_NAME_GENRE,
     currentFilm: null,
+    currentFilmLoadingEnd: false,
     all: [],
     similar: [],
     allLoading: false,
@@ -63,6 +66,9 @@ const filmsReducer = createReducer(initialState, (builder) => {
 
   builder.addCase(changeCurrentFilm, (state, action) => {
     state.films.currentFilm = action.payload;
+  });
+  builder.addCase(setCurrentFilmLoadingEnd, (state, action) => {
+    state.films.currentFilmLoadingEnd = action.payload;
   });
 
   builder.addCase(setAllFilms, (state, action) => {
