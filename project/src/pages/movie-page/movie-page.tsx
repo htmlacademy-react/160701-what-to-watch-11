@@ -9,17 +9,16 @@ import { fetchSimilarFilmsAction } from 'src/store/api-actions';
 
 const MoviePage = () => {
   const isSimilarFilmsLoading = useAppSelector(({ filmsState }) => filmsState.films.similarLoading);
+  const similarFilms = useAppSelector(({ filmsState }) => filmsState.films.similar);
+  const currentFilm = useAppSelector(({ filmsState }) => filmsState.films.currentFilm);
   const { id: currentFilmId } = useParams();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (currentFilmId) {
+    if (currentFilmId && currentFilm) {
       dispatch(fetchSimilarFilmsAction(currentFilmId));
     }
-  }, [currentFilmId, dispatch]);
-
-  const similarFilms = useAppSelector(({ filmsState }) => filmsState.films.similar);
-  const currentFilm = useAppSelector(({ filmsState }) => filmsState.films.currentFilm);
+  }, [currentFilmId, currentFilm, dispatch]);
 
   if (!currentFilmId) {
     return <Navigate to={AppRoute.ErrorPage} />;
@@ -31,15 +30,14 @@ const MoviePage = () => {
         <title>{`${PageTitles.Film} ${currentFilm ? `- ${currentFilm.name}` : ''}`}</title>
       </Helmet>
 
-      {isSimilarFilmsLoading ? (
-        <Loader />
-      ) : (
+      {isSimilarFilmsLoading && <Loader />}
+      {similarFilms.length ? (
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
           <FilmsList films={similarFilms} maxFilms={4} />
         </section>
-      )}
+      ) : null}
     </>
   );
 };
