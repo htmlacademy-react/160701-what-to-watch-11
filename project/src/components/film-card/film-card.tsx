@@ -93,7 +93,8 @@ const FilmCard = ({ films }: TFilmCard) => {
   );
 
   const dataNav = Object.keys(TabsNames);
-  const currentTab = location.hash.slice(1) || TabsNames.Overview;
+  const hashName = location.hash.slice(1);
+  const currentTab = hashName in TabsNames ? hashName : TabsNames.Overview;
 
   return (
     <section className={`film-card ${isFull ? 'film-card--full' : ''}`} style={{ backgroundColor }}>
