@@ -5,7 +5,6 @@ import { toast } from 'react-toastify';
 
 const StatusCodeMap: Record<number, boolean> = {
   [StatusCodes.BAD_REQUEST]: true,
-  [StatusCodes.UNAUTHORIZED]: true,
   [StatusCodes.NOT_FOUND]: true,
 };
 const shouldDisplayError = (response: AxiosResponse) => !!StatusCodeMap[response.status];
@@ -33,8 +32,7 @@ export const createApi = (): AxiosInstance => {
     (response) => response,
     (error: AxiosError<{ error: string }>) => {
       if (error.response && shouldDisplayError(error.response)) {
-        //TODO показывать ошибку только на приватных страницах
-        toast.warn(error.response.data.error);
+        toast.error(error.response.data.error);
       }
 
       throw error;
