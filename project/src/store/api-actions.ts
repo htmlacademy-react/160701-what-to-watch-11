@@ -1,21 +1,19 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
-  changeCurrentFilm,
+  // changeCurrentFilm,
   setError,
   setFilmsLoadingStatus,
-  setUser,
   setSimilarFilmsLoadingStatus,
   setCommentsLoadingStatus,
   setAllFilms,
   setSimilarFilms,
   setFilmComments,
-  setAuthorizationStatus,
   redirectToRoute,
-  setCurrentFilmLoadingEnd,
+  // setCurrentFilmLoadingEnd,
 } from './action';
 import { TAppDispatch, TState } from 'src/types/state';
-import { APIRoute, APIRouteName, AuthStatus, RouteName, TIMEOUT_SHOW_ERROR } from 'src/const';
+import { APIRoute, APIRouteName, RouteName, TIMEOUT_SHOW_ERROR } from 'src/const';
 import { TFilm, TFilmComment } from 'src/types/films';
 import { AuthData } from 'src/types/auth-data';
 import { UserData } from 'src/types/user-data';
@@ -41,10 +39,10 @@ const fetchFilmAction = createAsyncThunk<void, number | string, ThunkApiConfig>(
   async (filmId, { dispatch, extra: api }) => {
     try {
       const { data } = await api.get<TFilm>(`${APIRoute.Films}/${filmId}`);
-      dispatch(changeCurrentFilm(data));
-      dispatch(setCurrentFilmLoadingEnd(true));
+      // dispatch(changeCurrentFilm(data));
+      // dispatch(setCurrentFilmLoadingEnd(true));
     } catch {
-      dispatch(setCurrentFilmLoadingEnd(true));
+      // dispatch(setCurrentFilmLoadingEnd(true));
     }
   },
 );
@@ -90,35 +88,27 @@ const fetchFilmsAction = createAsyncThunk<void, undefined, ThunkApiConfig>(
 
 const checkAuthAction = createAsyncThunk<void, undefined, ThunkApiConfig>(
   'user/checkAuth',
-  async (_arg, { dispatch, extra: api }) => {
-    try {
-      const { data: User } = await api.get<UserData>(APIRoute.Login);
-
-      dispatch(setUser(User));
-      dispatch(setAuthorizationStatus(AuthStatus.Auth));
-    } catch {
-      dispatch(setAuthorizationStatus(AuthStatus.NoAuth));
-    }
+  async (_arg, { extra: api }) => {
+    await api.get<UserData>(APIRoute.Login);
   },
 );
 
-const loginAction = createAsyncThunk<void, AuthData, ThunkApiConfig>(
+const loginAction = createAsyncThunk<UserData, AuthData, ThunkApiConfig>(
   'user/login',
-  async ({ email, password }, { dispatch, extra: api }) => {
-    const { data: User } = await api.post<UserData>(APIRoute.Login, { email, password });
+  async ({ email, password }, { extra: api }) => {
+    const { data } = await api.post<UserData>(APIRoute.Login, { email, password });
+    const { token } = data;
+    setToken(token);
 
-    setToken(User.token);
-    dispatch(setUser(User));
-    dispatch(setAuthorizationStatus(AuthStatus.Auth));
+    return data;
   },
 );
 
 const logoutAction = createAsyncThunk<void, undefined, ThunkApiConfig>(
   'user/logout',
-  async (_arg, { dispatch, extra: api }) => {
+  async (_arg, { extra: api }) => {
     await api.delete(APIRoute.Logout);
     removeToken();
-    dispatch(setAuthorizationStatus(AuthStatus.NoAuth));
   },
 );
 
