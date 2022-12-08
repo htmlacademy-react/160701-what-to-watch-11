@@ -23,6 +23,7 @@ const MoviePage = () => {
   if (!currentFilmId) {
     return <Navigate to={AppRoute.ErrorPage} />;
   }
+  const similarFilmsFiltered = similarFilms.filter((film) => film.id !== Number(currentFilmId));
 
   return (
     <>
@@ -31,11 +32,11 @@ const MoviePage = () => {
       </Helmet>
 
       {isSimilarFilmsLoading && <Loader />}
-      {similarFilms.length ? (
+      {similarFilmsFiltered.length ? (
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <FilmsList films={similarFilms} maxFilms={4} />
+          <FilmsList films={similarFilmsFiltered} maxFilms={4} />
         </section>
       ) : null}
     </>
