@@ -2,13 +2,13 @@ import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   // changeCurrentFilm,
-  setError,
-  setFilmsLoadingStatus,
-  setSimilarFilmsLoadingStatus,
-  setCommentsLoadingStatus,
-  setAllFilms,
-  setSimilarFilms,
-  setFilmComments,
+  // setError,
+  // setFilmsLoadingStatus,
+  // setSimilarFilmsLoadingStatus,
+  // setCommentsLoadingStatus,
+  // setAllFilms,
+  // setSimilarFilms,
+  // setFilmComments,
   redirectToRoute,
   // setCurrentFilmLoadingEnd,
 } from './action';
@@ -18,15 +18,9 @@ import { TFilm, TFilmComment } from 'src/types/films';
 import { AuthData } from 'src/types/auth-data';
 import { UserData } from 'src/types/user-data';
 import { removeToken, setToken } from 'src/services/token';
-import { store } from '.';
+
 import { TAddReveiw } from 'src/types/reviews';
 import { TabsNames } from 'src/components/film-card/film-card';
-
-const clearError = createAsyncThunk('app/clearError', () => {
-  setTimeout(() => {
-    store.dispatch(setError(null));
-  }, TIMEOUT_SHOW_ERROR);
-});
 
 type ThunkApiConfig = {
   dispatch: TAppDispatch;
@@ -34,36 +28,33 @@ type ThunkApiConfig = {
   extra: AxiosInstance;
 };
 
-const fetchFilmAction = createAsyncThunk<void, number | string, ThunkApiConfig>(
+const fetchFilmAction = createAsyncThunk<TFilm, number | string, ThunkApiConfig>(
   'data/fetchFilm',
-  async (filmId, { dispatch, extra: api }) => {
-    try {
-      const { data } = await api.get<TFilm>(`${APIRoute.Films}/${filmId}`);
-      // dispatch(changeCurrentFilm(data));
-      // dispatch(setCurrentFilmLoadingEnd(true));
-    } catch {
-      // dispatch(setCurrentFilmLoadingEnd(true));
-    }
+  async (filmId, { extra: api }) => {
+    const { data } = await api.get<TFilm>(`${APIRoute.Films}/${filmId}`);
+    return data;
   },
 );
 
-const fetchSimilarFilmsAction = createAsyncThunk<void, number | string, ThunkApiConfig>(
+const fetchSimilarFilmsAction = createAsyncThunk<TFilm[], number | string, ThunkApiConfig>(
   'data/fetchFilm',
-  async (filmId, { dispatch, extra: api }) => {
-    dispatch(setSimilarFilmsLoadingStatus(true));
+  async (filmId, { extra: api }) => {
+    // dispatch(setSimilarFilmsLoadingStatus(true));
     const { data } = await api.get<TFilm[]>(`${APIRoute.Films}/${filmId}/${APIRouteName.Similar}`);
-    dispatch(setSimilarFilmsLoadingStatus(false));
-    dispatch(setSimilarFilms(data));
+    return data;
+    // dispatch(setSimilarFilmsLoadingStatus(false));
+    // dispatch(setSimilarFilms(data));
   },
 );
 
-const fetchCommentsFilmAction = createAsyncThunk<void, number | string, ThunkApiConfig>(
+const fetchCommentsFilmAction = createAsyncThunk<TFilmComment[], number | string, ThunkApiConfig>(
   'data/fetchFilmComments',
   async (filmId, { dispatch, extra: api }) => {
-    dispatch(setCommentsLoadingStatus(true));
+    // dispatch(setCommentsLoadingStatus(true));
     const { data } = await api.get<TFilmComment[]>(`${APIRoute.Comments}/${filmId}`);
-    dispatch(setCommentsLoadingStatus(false));
-    dispatch(setFilmComments(data));
+    return data;
+    // dispatch(setCommentsLoadingStatus(false));
+    // dispatch(setFilmComments(data));
   },
 );
 
@@ -76,13 +67,14 @@ const addCommentFilmAction = createAsyncThunk<
   dispatch(redirectToRoute(`${RouteName.Films}/${filmId}#${TabsNames.Reviews}`));
 });
 
-const fetchFilmsAction = createAsyncThunk<void, undefined, ThunkApiConfig>(
+const fetchFilmsAction = createAsyncThunk<TFilm[], undefined, ThunkApiConfig>(
   'data/fetchFilms',
   async (_arg, { dispatch, extra: api }) => {
-    dispatch(setFilmsLoadingStatus(true));
+    // dispatch(setFilmsLoadingStatus(true));
     const { data } = await api.get<TFilm[]>(APIRoute.Films);
-    dispatch(setFilmsLoadingStatus(false));
-    dispatch(setAllFilms(data));
+    return data;
+    // dispatch(setFilmsLoadingStatus(false));
+    // dispatch(setAllFilms(data));
   },
 );
 
@@ -120,6 +112,5 @@ export {
   checkAuthAction,
   loginAction,
   logoutAction,
-  clearError,
   addCommentFilmAction,
 };
