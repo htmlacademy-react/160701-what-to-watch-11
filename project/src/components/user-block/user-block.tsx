@@ -2,11 +2,12 @@ import { Link } from 'react-router-dom';
 import { AppRoute, AuthStatus } from 'src/const';
 import { useAppDispatch, useAppSelector } from 'src/hooks';
 import { logoutAction } from 'src/store/api-actions';
+import { getAuthorizationStatus, getUserData } from 'src/store/user-process/selectors';
 
 const UserBlock = () => {
   const dispatch = useAppDispatch();
-  const authStatus = useAppSelector(({ userState }) => userState.user.authorizationStatus);
-  const user = useAppSelector(({ userState }) => userState.user.userData);
+  const authStatus = useAppSelector(getAuthorizationStatus);
+  const user = useAppSelector(getUserData);
   const isAuth = authStatus === AuthStatus.Auth;
 
   return (

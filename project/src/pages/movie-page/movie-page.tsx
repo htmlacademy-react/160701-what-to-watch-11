@@ -6,11 +6,16 @@ import Loader from 'src/components/loader/loader';
 import { AppRoute, PageTitles } from 'src/const';
 import { useAppDispatch, useAppSelector } from 'src/hooks';
 import { fetchSimilarFilmsAction } from 'src/store/api-actions';
+import {
+  getCurrentFilm,
+  getSimilarFilms,
+  getSimilarLoading,
+} from 'src/store/films-process/selectors';
 
 const MoviePage = () => {
-  const isSimilarFilmsLoading = useAppSelector(({ filmsState }) => filmsState.films.similarLoading);
-  const similarFilms = useAppSelector(({ filmsState }) => filmsState.films.similar);
-  const currentFilm = useAppSelector(({ filmsState }) => filmsState.films.currentFilm);
+  const isSimilarFilmsLoading = useAppSelector(getSimilarLoading);
+  const similarFilms = useAppSelector(getSimilarFilms);
+  const currentFilm = useAppSelector(getCurrentFilm);
   const { id: currentFilmId } = useParams();
   const dispatch = useAppDispatch();
 

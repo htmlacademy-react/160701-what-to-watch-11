@@ -16,11 +16,13 @@ import { useAppSelector } from 'src/hooks';
 import Loader from '../loader/loader';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from 'src/browser-history';
+import { getFilms, getFilmsLoading } from 'src/store/films-process/selectors';
+import { getAuthorizationStatus } from 'src/store/user-process/selectors';
 
 const App = (): JSX.Element => {
-  const isFilmsLoading = useAppSelector(({ filmsState }) => filmsState.films.allLoading);
-  const films = useAppSelector(({ filmsState }) => filmsState.films.all);
-  const authStatus = useAppSelector(({ userState }) => userState.user.authorizationStatus);
+  const isFilmsLoading = useAppSelector(getFilmsLoading);
+  const films = useAppSelector(getFilms);
+  const authStatus = useAppSelector(getAuthorizationStatus);
 
   if (isFilmsLoading || authStatus === AuthStatus.Unknown) {
     return <Loader />;

@@ -14,7 +14,8 @@ import FilmCardNavContent from './components/film-card-nav-content/film-card-nav
 import { useAppDispatch, useAppSelector } from 'src/hooks';
 import { fetchFilmAction } from 'src/store/api-actions';
 import Loader from '../loader/loader';
-import { setCurrentFilmLoadingEnd } from 'src/store/action';
+import { setCurrentFilmLoadingEnd } from 'src/store/films-process/films-process';
+import { getCurrentFilm, getCurrentFilmLoadingEnd } from 'src/store/films-process/selectors';
 
 type TFilmCard = {
   films: TFilm[];
@@ -43,10 +44,8 @@ const FilmCard = ({ films }: TFilmCard) => {
     }
   }, [currentFilmId, dispatch]);
 
-  const currentFilm = useAppSelector(({ filmsState }) => filmsState.films.currentFilm);
-  const currentFilmLoadingEnd = useAppSelector(
-    ({ filmsState }) => filmsState.films.currentFilmLoadingEnd,
-  );
+  const currentFilm = useAppSelector(getCurrentFilm);
+  const currentFilmLoadingEnd = useAppSelector(getCurrentFilmLoadingEnd);
 
   useEffect(
     () => {
