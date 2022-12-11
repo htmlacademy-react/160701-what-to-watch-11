@@ -37,7 +37,7 @@ const fetchFilmAction = createAsyncThunk<TFilm, number | string, ThunkApiConfig>
 );
 
 const fetchSimilarFilmsAction = createAsyncThunk<TFilm[], number | string, ThunkApiConfig>(
-  'data/fetchFilm',
+  'data/fetchSimilarFilm',
   async (filmId, { extra: api }) => {
     // dispatch(setSimilarFilmsLoadingStatus(true));
     const { data } = await api.get<TFilm[]>(`${APIRoute.Films}/${filmId}/${APIRouteName.Similar}`);
