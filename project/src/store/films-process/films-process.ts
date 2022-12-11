@@ -56,13 +56,13 @@ export const filmsProcess = createSlice({
   extraReducers(builder) {
     builder.addCase(fetchFilmsAction.fulfilled, (state, action) => {
       state.films.all = action.payload;
-      state.films.allLoading = true;
-    });
-    builder.addCase(fetchFilmsAction.pending, (state) => {
       state.films.allLoading = false;
     });
-    builder.addCase(fetchFilmsAction.rejected, (state) => {
+    builder.addCase(fetchFilmsAction.pending, (state) => {
       state.films.allLoading = true;
+    });
+    builder.addCase(fetchFilmsAction.rejected, (state) => {
+      state.films.allLoading = false;
     });
 
     builder.addCase(fetchFilmAction.fulfilled, (state, action) => {
@@ -101,3 +101,10 @@ export const filmsProcess = createSlice({
 });
 
 export const { setCurrentFilm, setCurrentGenre, setCurrentFilmLoadingEnd } = filmsProcess.actions;
+export {
+  addCommentFilmAction,
+  fetchCommentsFilmAction,
+  fetchFilmAction,
+  fetchFilmsAction,
+  fetchSimilarFilmsAction,
+};
