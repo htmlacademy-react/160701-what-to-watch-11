@@ -4,9 +4,10 @@ import { useAppDispatch, useAppSelector } from 'src/hooks';
 import { changeFavoriteFilmAction } from 'src/store/api-actions';
 import { getFavoriteFilms } from 'src/store/films-process/selectors';
 import { getAuthorizationStatus } from 'src/store/user-process/selectors';
+import { TFilmId } from 'src/types/films';
 
 type TFilmCardButtons = {
-  id: string | number;
+  id: TFilmId;
   withReviewButton?: boolean;
 };
 
