@@ -1,3 +1,5 @@
+import { TFilmId } from './films';
+
 export type TReview = {
   comment: string;
   date: Date;
@@ -12,4 +14,5 @@ export type TReview = {
 export type TAddReveiw = {
   comment: string;
   rating: number;
+  filmId: TFilmId;
 };

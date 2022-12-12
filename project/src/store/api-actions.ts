@@ -3,7 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { redirectToRoute } from './action';
 import { TAppDispatch, TState } from 'src/types/state';
 import { APIRoute, APIRouteName, RouteName } from 'src/const';
-import { TFilm, TFilmComment } from 'src/types/films';
+import { FavoriteData, TFilm, TFilmComment, TFilmId } from 'src/types/films';
 import { AuthData } from 'src/types/auth-data';
 import { UserData } from 'src/types/user-data';
 import { removeToken, setToken } from 'src/services/token';
@@ -17,7 +17,7 @@ type ThunkApiConfig = {
   extra: AxiosInstance;
 };
 
-const fetchFilmAction = createAsyncThunk<TFilm, number | string, ThunkApiConfig>(
+const fetchFilmAction = createAsyncThunk<TFilm, TFilmId, ThunkApiConfig>(
   'data/fetchFilm',
   async (filmId, { extra: api }) => {
     const { data } = await api.get<TFilm>(`${APIRoute.Films}/${filmId}`);
@@ -25,9 +25,26 @@ const fetchFilmAction = createAsyncThunk<TFilm, number | string, ThunkApiConfig>
     return data;
   },
 );
+const fetchFavoriteFilmsAction = createAsyncThunk<TFilm[], undefined, ThunkApiConfig>(
+  'data/fetchFavoriteFilms',
+  async (_arg, { extra: api }) => {
+    const { data } = await api.get<TFilm[]>(APIRoute.Favorite);
 
-const fetchSimilarFilmsAction = createAsyncThunk<TFilm[], number | string, ThunkApiConfig>(
-  'data/fetchSimilarFilm',
+    return data;
+  },
+);
+
+const changeFavoriteFilmAction = createAsyncThunk<TFilm, FavoriteData, ThunkApiConfig>(
+  'data/changeFavoriteFilm',
+  async ({ filmId, status }, { extra: api }) => {
+    const { data } = await api.post<TFilm>(`${APIRoute.Favorite}/${filmId}/${status}`);
+
+    return data;
+  },
+);
+
+const fetchSimilarFilmsAction = createAsyncThunk<TFilm[], TFilmId, ThunkApiConfig>(
+  'data/fetchSimilarFilms',
   async (filmId, { extra: api }) => {
     const { data } = await api.get<TFilm[]>(`${APIRoute.Films}/${filmId}/${APIRouteName.Similar}`);
 
@@ -35,7 +52,7 @@ const fetchSimilarFilmsAction = createAsyncThunk<TFilm[], number | string, Thunk
   },
 );
 
-const fetchCommentsFilmAction = createAsyncThunk<TFilmComment[], number | string, ThunkApiConfig>(
+const fetchCommentsFilmAction = createAsyncThunk<TFilmComment[], TFilmId, ThunkApiConfig>(
   'data/fetchFilmComments',
   async (filmId, { extra: api }) => {
     const { data } = await api.get<TFilmComment[]>(`${APIRoute.Comments}/${filmId}`);
@@ -44,14 +61,13 @@ const fetchCommentsFilmAction = createAsyncThunk<TFilmComment[], number | string
   },
 );
 
-const addCommentFilmAction = createAsyncThunk<
-  void,
-  { filmId: number } & TAddReveiw,
-  ThunkApiConfig
->('data/addFilmComment', async ({ filmId, comment, rating }, { dispatch, extra: api }) => {
-  await api.post(`${APIRoute.Comments}/${filmId}`, { comment, rating });
-  dispatch(redirectToRoute(`${RouteName.Films}/${filmId}#${TabsNames.Reviews}`));
-});
+const addCommentFilmAction = createAsyncThunk<void, TAddReveiw, ThunkApiConfig>(
+  'data/addFilmComment',
+  async ({ filmId, comment, rating }, { dispatch, extra: api }) => {
+    await api.post(`${APIRoute.Comments}/${filmId}`, { comment, rating });
+    dispatch(redirectToRoute(`${RouteName.Films}/${filmId}#${TabsNames.Reviews}`));
+  },
+);
 
 const fetchFilmsAction = createAsyncThunk<TFilm[], undefined, ThunkApiConfig>(
   'data/fetchFilms',
@@ -89,6 +105,8 @@ const logoutAction = createAsyncThunk<void, undefined, ThunkApiConfig>(
 );
 
 export {
+  fetchFavoriteFilmsAction,
+  changeFavoriteFilmAction,
   fetchCommentsFilmAction,
   fetchSimilarFilmsAction,
   fetchFilmsAction,

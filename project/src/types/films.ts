@@ -46,3 +46,10 @@ export type TFilmComment = {
     name: string;
   };
 };
+
+export type TFilmId = string | number;
+
+export type FavoriteData = {
+  filmId: TFilmId;
+  status: number;
+};
