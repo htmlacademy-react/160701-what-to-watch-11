@@ -8,9 +8,9 @@ type TUserLayout = {
   filmsCount: number;
 };
 const UserLayout = ({ filmsCount }: TUserLayout) => {
-  const location = useLocation();
-  const isLoginPage = location.pathname === AppRoute.Login;
-  const isMylistPage = location.pathname === AppRoute.MyList;
+  const { pathname } = useLocation();
+  const isLoginPage = pathname === AppRoute.Login;
+  const isMylistPage = pathname === AppRoute.MyList;
 
   const PageTitle = ({ children }: PropsWithChildren) => (
     <h1 className="page-title user-page__title">{children}</h1>
