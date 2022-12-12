@@ -48,12 +48,12 @@ const App = (): JSX.Element => {
             <Route path={AppRoute.Film} element={<MoviePage />} />
           </Route>
 
-          <Route element={<UserLayout filmsCount={films.length} />}>
+          <Route element={<UserLayout />}>
             <Route
               path={AppRoute.MyList}
               element={
                 <PrivateRoute authStatus={authStatus}>
-                  <MyListPage films={films} />
+                  <MyListPage />
                 </PrivateRoute>
               }
             />
