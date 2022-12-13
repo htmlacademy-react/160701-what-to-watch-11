@@ -1,15 +1,14 @@
 import { PropsWithChildren } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import Footer from 'src/components/footer/footer';
 import Header from 'src/components/header/header';
-import { AppRoute } from 'src/const';
+
 import { useAppSelector } from 'src/hooks';
+import useCurrentLocation from 'src/hooks/location-path';
 import { getFavoriteFilms } from 'src/store/films-process/selectors';
 
 const UserLayout = () => {
-  const { pathname } = useLocation();
-  const isLoginPage = pathname === AppRoute.Login;
-  const isMylistPage = pathname === AppRoute.MyList;
+  const { isLoginPage, isMylistPage } = useCurrentLocation();
   const favoriteFilms = useAppSelector(getFavoriteFilms);
 
   const PageTitle = ({ children }: PropsWithChildren) => (
