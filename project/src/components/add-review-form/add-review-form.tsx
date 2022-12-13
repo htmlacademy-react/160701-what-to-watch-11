@@ -2,6 +2,7 @@ import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch } from 'src/hooks';
 import { addCommentFilmAction } from 'src/store/api-actions';
+import { AddCommentSchema } from 'src/utils/validate';
 
 type TAddReviewForm = {
   backgroundColor: string;
@@ -37,7 +38,13 @@ const AddReviewForm = ({ backgroundColor }: TAddReviewForm) => {
 
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-  const isValid = !!(formData[FormFieldName.Rating] && formData[FormFieldName.Text]);
+
+  const { error: validError } = AddCommentSchema.validate({
+    rating: formData[FormFieldName.Rating],
+    text: formData[FormFieldName.Text],
+  });
+
+  const isEmpty = !(formData[FormFieldName.Rating] || formData[FormFieldName.Text]);
 
   return (
     <div className="add-review">
@@ -80,13 +87,15 @@ const AddReviewForm = ({ backgroundColor }: TAddReviewForm) => {
             minLength={50}
             maxLength={400}
           />
+          <span className="add-review__counter">{formData[FormFieldName.Text].length}</span>
           <div className="add-review__submit">
-            <button className="add-review__btn" type="submit" disabled={!isValid}>
+            <button className="add-review__btn" type="submit" disabled={!!validError}>
               Post
             </button>
           </div>
         </div>
       </form>
+      {validError && !isEmpty && <p className="add-review__error-message">{validError.message}</p>}
     </div>
   );
 };
