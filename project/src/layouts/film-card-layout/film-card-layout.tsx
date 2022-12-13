@@ -1,15 +1,14 @@
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import FilmCard from 'src/components/film-card/film-card';
 import Footer from 'src/components/footer/footer';
-import { RouteName } from 'src/const';
+import useCurrentLocation from 'src/hooks/location-path';
 import { TFilm } from 'src/types/films';
 
 type TFilmCardLayout = {
   films: TFilm[];
 };
 const FilmCardLayout = ({ films }: TFilmCardLayout) => {
-  const location = useLocation();
-  const isAddReviewPage = location.pathname.includes(RouteName.Review);
+  const { isAddReviewPage } = useCurrentLocation();
 
   return (
     <>

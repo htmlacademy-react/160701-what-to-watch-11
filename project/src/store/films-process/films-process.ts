@@ -3,7 +3,9 @@ import { DEFAULT_NAME_GENRE, NameSpace } from 'src/const';
 import { TFilm, TFilmComment } from 'src/types/films';
 import {
   addCommentFilmAction,
+  changeFavoriteFilmAction,
   fetchCommentsFilmAction,
+  fetchFavoriteFilmsAction,
   fetchFilmAction,
   fetchFilmsAction,
   fetchSimilarFilmsAction,
@@ -16,6 +18,7 @@ type TInitialState = {
     currentFilmLoading: boolean;
     all: TFilm[];
     similar: TFilm[];
+    favorite: TFilm[];
     allLoading: boolean;
     similarLoading: boolean;
   };
@@ -33,6 +36,7 @@ const initialState: TInitialState = {
     similar: [],
     allLoading: false,
     similarLoading: false,
+    favorite: [],
   },
   comments: {
     data: [],
@@ -70,6 +74,17 @@ export const filmsProcess = createSlice({
       state.films.currentFilmLoading = true;
     });
 
+    builder.addCase(fetchFavoriteFilmsAction.fulfilled, (state, action) => {
+      state.films.favorite = action.payload;
+    });
+    builder.addCase(changeFavoriteFilmAction.fulfilled, (state, { payload: film }) => {
+      const { id, isFavorite } = film;
+      const stateFilms = state.films.favorite;
+      state.films.favorite = isFavorite
+        ? [...stateFilms, film]
+        : stateFilms.filter((item) => item.id !== id);
+    });
+
     builder.addCase(fetchSimilarFilmsAction.fulfilled, (state, action) => {
       state.films.similar = action.payload;
       state.films.similarLoading = false;
@@ -101,4 +116,5 @@ export {
   fetchFilmAction,
   fetchFilmsAction,
   fetchSimilarFilmsAction,
+  fetchFavoriteFilmsAction,
 };

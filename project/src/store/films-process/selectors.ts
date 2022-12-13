@@ -15,3 +15,5 @@ export const getSimilarLoading = (state: TState) => state[NameSpace.Films].films
 
 export const getComments = (state: TState) => state[NameSpace.Films].comments.data;
 export const getCommentsLoading = (state: TState) => state[NameSpace.Films].comments.loading;
+
+export const getFavoriteFilms = (state: TState) => state[NameSpace.Films].films.favorite;

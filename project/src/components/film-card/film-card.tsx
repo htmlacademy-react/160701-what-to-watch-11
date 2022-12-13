@@ -1,6 +1,5 @@
 import { PropsWithChildren, useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { AppRoute, RouteName } from 'src/const';
 import { TFilm } from 'src/types/films';
 import { adjustColor } from 'src/utils/main';
 import AddReviewForm from '../add-review-form/add-review-form';
@@ -16,6 +15,7 @@ import { fetchFilmAction } from 'src/store/api-actions';
 import Loader from '../loader/loader';
 import { getCurrentFilm, getCurrentFilmLoading } from 'src/store/films-process/selectors';
 import ErrorScreen from '../error-screen/error-screen';
+import useCurrentLocation from 'src/hooks/location-path';
 
 type TFilmCard = {
   films: TFilm[];
@@ -29,11 +29,8 @@ const TabsNames = {
 
 const FilmCard = ({ films }: TFilmCard) => {
   const location = useLocation();
-  const isAddReviewPage = location.pathname.includes(RouteName.Review);
-  const isMoviePage = location.pathname.includes(RouteName.Films) && !isAddReviewPage;
-  const isRootPage = location.pathname === AppRoute.Root;
+  const { isMoviePage, isAddReviewPage, isRootPage } = useCurrentLocation();
   const isFull = isMoviePage || isAddReviewPage;
-
   const dispatch = useAppDispatch();
   const DEFAULT_FILM_ID = films[0]?.id;
   const { id: currentFilmId = DEFAULT_FILM_ID } = useParams();

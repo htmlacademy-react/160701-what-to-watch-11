@@ -16,7 +16,9 @@ const UserBlock = () => {
         <>
           <li className="user-block__item">
             <div className="user-block__avatar">
-              <img src={user?.avatarUrl} alt={user?.name} width="63" height="63" />
+              <Link to={AppRoute.MyList}>
+                <img src={user?.avatarUrl} alt={user?.name} width="63" height="63" />
+              </Link>
             </div>
             <span className="user-block__name">{user?.name}</span>
           </li>
