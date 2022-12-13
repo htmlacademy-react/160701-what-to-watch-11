@@ -1,5 +1,5 @@
 import { PropsWithChildren, useEffect } from 'react';
-import { Navigate, useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { AppRoute, RouteName } from 'src/const';
 import { TFilm } from 'src/types/films';
 import { adjustColor } from 'src/utils/main';
