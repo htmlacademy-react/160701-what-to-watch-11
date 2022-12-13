@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { RouteName } from 'src/const';
 import { TFilmCard } from 'src/types/films';
-import Player from '../player/player';
+import PlayerPreview from '../player-preveiw/player-preview';
 
 const SmallFilmCard = ({ film, playing, onMouseOver, onMouseLeave }: TFilmCard) => {
   const { id, name, posterImage, previewVideoLink } = film;
@@ -19,7 +19,7 @@ const SmallFilmCard = ({ film, playing, onMouseOver, onMouseLeave }: TFilmCard) 
     >
       <Link to={`/${RouteName.Films}/${id}`} className="small-film-card__link">
         <div className="small-film-card__image">
-          <Player
+          <PlayerPreview
             poster={posterImage}
             src={previewVideoLink}
             width={ImageSize.Width}
