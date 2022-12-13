@@ -1,7 +1,8 @@
 import { ChangeEvent, FormEvent, Fragment, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useAppDispatch } from 'src/hooks';
+import { useAppDispatch, useAppSelector } from 'src/hooks';
 import { addCommentFilmAction } from 'src/store/api-actions';
+import { getAddCommentLoading } from 'src/store/films-process/selectors';
 import { AddCommentSchema } from 'src/utils/validate';
 
 type TAddReviewForm = {
@@ -14,6 +15,7 @@ enum FormFieldName {
 }
 
 const AddReviewForm = ({ backgroundColor }: TAddReviewForm) => {
+  const loading = useAppSelector(getAddCommentLoading);
   const { id: currentFilmId } = useParams();
   const dispatch = useAppDispatch();
   const [formData, setFormData] = useState({
@@ -66,6 +68,7 @@ const AddReviewForm = ({ backgroundColor }: TAddReviewForm) => {
                       value={count}
                       onChange={onChange}
                       checked={isCurrent}
+                      disabled={loading}
                     />
                     <label className="rating__label" htmlFor={`star-${count}`}>
                       Rating {count}
@@ -86,10 +89,11 @@ const AddReviewForm = ({ backgroundColor }: TAddReviewForm) => {
             value={formData[FormFieldName.Text]}
             minLength={50}
             maxLength={400}
+            disabled={loading}
           />
           <span className="add-review__counter">{formData[FormFieldName.Text].length}</span>
           <div className="add-review__submit">
-            <button className="add-review__btn" type="submit" disabled={!!validError}>
+            <button className="add-review__btn" type="submit" disabled={!!validError || loading}>
               Post
             </button>
           </div>

@@ -25,6 +25,7 @@ type TInitialState = {
   comments: {
     data: TFilmComment[];
     loading: boolean;
+    addCommentLoading: boolean;
   };
 };
 const initialState: TInitialState = {
@@ -41,6 +42,7 @@ const initialState: TInitialState = {
   comments: {
     data: [],
     loading: false,
+    addCommentLoading: false,
   },
 };
 export const filmsProcess = createSlice({
@@ -105,6 +107,16 @@ export const filmsProcess = createSlice({
     });
     builder.addCase(fetchCommentsFilmAction.rejected, (state) => {
       state.comments.loading = false;
+    });
+
+    builder.addCase(addCommentFilmAction.fulfilled, (state) => {
+      state.comments.addCommentLoading = false;
+    });
+    builder.addCase(addCommentFilmAction.pending, (state) => {
+      state.comments.addCommentLoading = true;
+    });
+    builder.addCase(addCommentFilmAction.rejected, (state) => {
+      state.comments.addCommentLoading = false;
     });
   },
 });
