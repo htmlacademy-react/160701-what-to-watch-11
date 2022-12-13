@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthStatus, RouteName } from 'src/const';
 import { useAppSelector } from 'src/hooks';
+import { getAuthorizationStatus } from 'src/store/user-process/selectors';
 
 type TFilmCardButtons = {
   id: string | number;
@@ -9,7 +10,7 @@ type TFilmCardButtons = {
 
 const FilmCardButtons = ({ id = '', withReviewButton = true }: TFilmCardButtons) => {
   const navigate = useNavigate();
-  const authStatus = useAppSelector(({ userState }) => userState.user.authorizationStatus);
+  const authStatus = useAppSelector(getAuthorizationStatus);
   const isAuth = authStatus === AuthStatus.Auth;
 
   return (

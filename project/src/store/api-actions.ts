@@ -1,34 +1,15 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import {
-  changeCurrentFilm,
-  setError,
-  setFilmsLoadingStatus,
-  setUser,
-  setSimilarFilmsLoadingStatus,
-  setCommentsLoadingStatus,
-  setAllFilms,
-  setSimilarFilms,
-  setFilmComments,
-  setAuthorizationStatus,
-  redirectToRoute,
-  setCurrentFilmLoadingEnd,
-} from './action';
+import { redirectToRoute } from './action';
 import { TAppDispatch, TState } from 'src/types/state';
-import { APIRoute, APIRouteName, AuthStatus, RouteName, TIMEOUT_SHOW_ERROR } from 'src/const';
+import { APIRoute, APIRouteName, RouteName } from 'src/const';
 import { TFilm, TFilmComment } from 'src/types/films';
 import { AuthData } from 'src/types/auth-data';
 import { UserData } from 'src/types/user-data';
 import { removeToken, setToken } from 'src/services/token';
-import { store } from '.';
+
 import { TAddReveiw } from 'src/types/reviews';
 import { TabsNames } from 'src/components/film-card/film-card';
-
-const clearError = createAsyncThunk('app/clearError', () => {
-  setTimeout(() => {
-    store.dispatch(setError(null));
-  }, TIMEOUT_SHOW_ERROR);
-});
 
 type ThunkApiConfig = {
   dispatch: TAppDispatch;
@@ -36,36 +17,30 @@ type ThunkApiConfig = {
   extra: AxiosInstance;
 };
 
-const fetchFilmAction = createAsyncThunk<void, number | string, ThunkApiConfig>(
+const fetchFilmAction = createAsyncThunk<TFilm, number | string, ThunkApiConfig>(
   'data/fetchFilm',
-  async (filmId, { dispatch, extra: api }) => {
-    try {
-      const { data } = await api.get<TFilm>(`${APIRoute.Films}/${filmId}`);
-      dispatch(changeCurrentFilm(data));
-      dispatch(setCurrentFilmLoadingEnd(true));
-    } catch {
-      dispatch(setCurrentFilmLoadingEnd(true));
-    }
+  async (filmId, { extra: api }) => {
+    const { data } = await api.get<TFilm>(`${APIRoute.Films}/${filmId}`);
+
+    return data;
   },
 );
 
-const fetchSimilarFilmsAction = createAsyncThunk<void, number | string, ThunkApiConfig>(
-  'data/fetchFilm',
-  async (filmId, { dispatch, extra: api }) => {
-    dispatch(setSimilarFilmsLoadingStatus(true));
+const fetchSimilarFilmsAction = createAsyncThunk<TFilm[], number | string, ThunkApiConfig>(
+  'data/fetchSimilarFilm',
+  async (filmId, { extra: api }) => {
     const { data } = await api.get<TFilm[]>(`${APIRoute.Films}/${filmId}/${APIRouteName.Similar}`);
-    dispatch(setSimilarFilmsLoadingStatus(false));
-    dispatch(setSimilarFilms(data));
+
+    return data;
   },
 );
 
-const fetchCommentsFilmAction = createAsyncThunk<void, number | string, ThunkApiConfig>(
+const fetchCommentsFilmAction = createAsyncThunk<TFilmComment[], number | string, ThunkApiConfig>(
   'data/fetchFilmComments',
-  async (filmId, { dispatch, extra: api }) => {
-    dispatch(setCommentsLoadingStatus(true));
+  async (filmId, { extra: api }) => {
     const { data } = await api.get<TFilmComment[]>(`${APIRoute.Comments}/${filmId}`);
-    dispatch(setCommentsLoadingStatus(false));
-    dispatch(setFilmComments(data));
+
+    return data;
   },
 );
 
@@ -78,47 +53,38 @@ const addCommentFilmAction = createAsyncThunk<
   dispatch(redirectToRoute(`${RouteName.Films}/${filmId}#${TabsNames.Reviews}`));
 });
 
-const fetchFilmsAction = createAsyncThunk<void, undefined, ThunkApiConfig>(
+const fetchFilmsAction = createAsyncThunk<TFilm[], undefined, ThunkApiConfig>(
   'data/fetchFilms',
-  async (_arg, { dispatch, extra: api }) => {
-    dispatch(setFilmsLoadingStatus(true));
+  async (_arg, { extra: api }) => {
     const { data } = await api.get<TFilm[]>(APIRoute.Films);
-    dispatch(setFilmsLoadingStatus(false));
-    dispatch(setAllFilms(data));
+
+    return data;
   },
 );
 
 const checkAuthAction = createAsyncThunk<void, undefined, ThunkApiConfig>(
   'user/checkAuth',
-  async (_arg, { dispatch, extra: api }) => {
-    try {
-      const { data: User } = await api.get<UserData>(APIRoute.Login);
-
-      dispatch(setUser(User));
-      dispatch(setAuthorizationStatus(AuthStatus.Auth));
-    } catch {
-      dispatch(setAuthorizationStatus(AuthStatus.NoAuth));
-    }
+  async (_arg, { extra: api }) => {
+    await api.get<UserData>(APIRoute.Login);
   },
 );
 
-const loginAction = createAsyncThunk<void, AuthData, ThunkApiConfig>(
+const loginAction = createAsyncThunk<UserData, AuthData, ThunkApiConfig>(
   'user/login',
-  async ({ email, password }, { dispatch, extra: api }) => {
-    const { data: User } = await api.post<UserData>(APIRoute.Login, { email, password });
+  async ({ email, password }, { extra: api }) => {
+    const { data } = await api.post<UserData>(APIRoute.Login, { email, password });
+    const { token } = data;
+    setToken(token);
 
-    setToken(User.token);
-    dispatch(setUser(User));
-    dispatch(setAuthorizationStatus(AuthStatus.Auth));
+    return data;
   },
 );
 
 const logoutAction = createAsyncThunk<void, undefined, ThunkApiConfig>(
   'user/logout',
-  async (_arg, { dispatch, extra: api }) => {
+  async (_arg, { extra: api }) => {
     await api.delete(APIRoute.Logout);
     removeToken();
-    dispatch(setAuthorizationStatus(AuthStatus.NoAuth));
   },
 );
 
@@ -130,6 +96,5 @@ export {
   checkAuthAction,
   loginAction,
   logoutAction,
-  clearError,
   addCommentFilmAction,
 };

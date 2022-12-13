@@ -1,5 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import { AppRoute, AuthStatus } from 'src/const';
+import { toast } from 'react-toastify';
 
 type TPrivateRoute = {
   authStatus: AuthStatus;
@@ -8,8 +9,13 @@ type TPrivateRoute = {
 
 const PrivateRoute = (props: TPrivateRoute) => {
   const { authStatus, children } = props;
+  const isAuth = authStatus === AuthStatus.Auth;
 
-  return authStatus === AuthStatus.Auth ? children : <Navigate to={AppRoute.Login} />;
+  if (!isAuth) {
+    toast.warn('You are not logged in or you do not have permission to this page.');
+  }
+
+  return isAuth ? children : <Navigate to={AppRoute.Login} />;
 };
 
 export default PrivateRoute;

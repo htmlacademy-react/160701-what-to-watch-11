@@ -5,7 +5,8 @@ import FilmsList from 'src/components/films-list/films-list';
 import GenresList from 'src/components/genres-list/genres-list';
 import { DEFAULT_NAME_GENRE, PageTitles } from 'src/const';
 import { useAppDispatch, useAppSelector } from 'src/hooks';
-import { changeCurrentGenre } from 'src/store/action';
+import { setCurrentGenre } from 'src/store/films-process/films-process';
+import { getCurrentGenre } from 'src/store/films-process/selectors';
 import { TFilm } from 'src/types/films';
 
 type TMainPage = {
@@ -16,7 +17,7 @@ const MainPage = ({ films }: TMainPage) => {
   const dispatch = useAppDispatch();
   const location = useLocation();
   const hash = decodeURI(location.hash.slice(1));
-  const stateGenre = useAppSelector(({ filmsState }) => filmsState.films.currentGenre);
+  const stateGenre = useAppSelector(getCurrentGenre);
   const sortedFilms = films.filter(
     (film) => stateGenre === DEFAULT_NAME_GENRE || stateGenre === film.genre,
   );
@@ -25,10 +26,10 @@ const MainPage = ({ films }: TMainPage) => {
     const isCorrectHash =
       hash && hash !== DEFAULT_NAME_GENRE && films.some((film) => film.genre === hash);
     if (isCorrectHash) {
-      dispatch(changeCurrentGenre(hash));
+      dispatch(setCurrentGenre(hash));
     }
     return () => {
-      dispatch(changeCurrentGenre(DEFAULT_NAME_GENRE));
+      dispatch(setCurrentGenre(DEFAULT_NAME_GENRE));
     };
   }, [dispatch, hash, films]);
 
@@ -37,7 +38,7 @@ const MainPage = ({ films }: TMainPage) => {
       <Helmet>
         <title>{PageTitles.Root}</title>
       </Helmet>
-      {!films.length && <h1 className="page-title ">Фильмы не найдены</h1>}
+      {!films.length && <h1 className="page-title">Фильмы не найдены</h1>}
 
       {!!films.length && (
         <section className="catalog">

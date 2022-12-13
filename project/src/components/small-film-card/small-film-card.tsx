@@ -17,22 +17,22 @@ const SmallFilmCard = ({ film, playing, onMouseOver, onMouseLeave }: TFilmCard) 
       onMouseOver={() => onMouseOver(id)}
       onMouseLeave={onMouseLeave}
     >
-      <div className="small-film-card__image">
-        <Player
-          poster={posterImage}
-          src={previewVideoLink}
-          width={ImageSize.Width}
-          height={ImageSize.Height}
-          playing={playing}
-          loop
-          muted
-        />
-      </div>
-      <h3 className="small-film-card__title">
-        <Link className="small-film-card__link" to={`/${RouteName.Films}/${id}`}>
-          {name}
-        </Link>
-      </h3>
+      <Link to={`/${RouteName.Films}/${id}`} className="small-film-card__link">
+        <div className="small-film-card__image">
+          <Player
+            poster={posterImage}
+            src={previewVideoLink}
+            width={ImageSize.Width}
+            height={ImageSize.Height}
+            playing={playing}
+            loop
+            muted
+          />
+        </div>
+        <h3 className="small-film-card__title">
+          <span>{name}</span>
+        </h3>
+      </Link>
     </article>
   );
 };

@@ -19,20 +19,24 @@ const GenresList = ({ films }: TGenresList) => {
 
   return (
     <ul className="catalog__genres-list">
-      {genres.map((item) => (
-        <li
-          className={`catalog__genres-item ${
-            item === hash || (isDefault && item === DEFAULT_NAME_GENRE)
-              ? 'catalog__genres-item--active'
-              : ''
-          }`}
-          key={item}
-        >
-          <Link to={`#${item}`} className="catalog__genres-link">
-            {item}
-          </Link>
-        </li>
-      ))}
+      {genres.map((item) => {
+        const current = item === hash || (isDefault && item === DEFAULT_NAME_GENRE);
+
+        return (
+          <li
+            className={`catalog__genres-item ${current ? 'catalog__genres-item--active' : ''}`}
+            key={item}
+          >
+            {current ? (
+              <span className="catalog__genres-link">{item}</span>
+            ) : (
+              <Link to={`#${item}`} className="catalog__genres-link">
+                {item}
+              </Link>
+            )}
+          </li>
+        );
+      })}
     </ul>
   );
 };

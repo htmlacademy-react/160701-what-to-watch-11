@@ -42,6 +42,11 @@ enum APIRouteName {
   Similar = 'similar',
 }
 
+enum NameSpace {
+  User = 'USER',
+  Films = 'FILMS',
+}
+
 export {
   TIMEOUT_SHOW_ERROR,
   DEFAULT_NAME_GENRE,
@@ -51,4 +56,5 @@ export {
   PageTitles,
   APIRoute,
   APIRouteName,
+  NameSpace,
 };

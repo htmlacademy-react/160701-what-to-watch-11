@@ -1371,8 +1371,7 @@ main {
   font-weight: 500; }
 
 .small-film-card__link {
-  display: inline-block;
-  vertical-align: top;
+  display: block;
   text-decoration: none;
   color: inherit; }
 

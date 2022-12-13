@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import Loader from 'src/components/loader/loader';
 import { useAppDispatch, useAppSelector } from 'src/hooks';
 import { fetchCommentsFilmAction } from 'src/store/api-actions';
+import { getComments, getCommentsLoading } from 'src/store/films-process/selectors';
 import { TFilm } from 'src/types/films';
 import { HumanizeDate } from 'src/utils/date';
 import { adjustColor } from 'src/utils/main';
@@ -16,8 +17,8 @@ const ReviewsTab = ({ film: { backgroundColor } }: { film: TFilm }) => {
       dispatch(fetchCommentsFilmAction(currentFilmId));
     }
   }, [currentFilmId, dispatch]);
-  const currentFilmComments = useAppSelector(({ filmsState }) => filmsState.comments.data);
-  const isCommentsLoading = useAppSelector(({ filmsState }) => filmsState.comments.loading);
+  const currentFilmComments = useAppSelector(getComments);
+  const isCommentsLoading = useAppSelector(getCommentsLoading);
   const getReviews = (filterFunc: (elem: unknown, i: number) => boolean | number) =>
     currentFilmComments.filter(filterFunc).map((review) => {
       const {

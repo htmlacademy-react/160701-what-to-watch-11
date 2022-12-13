@@ -6,11 +6,16 @@ import Loader from 'src/components/loader/loader';
 import { AppRoute, PageTitles } from 'src/const';
 import { useAppDispatch, useAppSelector } from 'src/hooks';
 import { fetchSimilarFilmsAction } from 'src/store/api-actions';
+import {
+  getCurrentFilm,
+  getSimilarFilms,
+  getSimilarLoading,
+} from 'src/store/films-process/selectors';
 
 const MoviePage = () => {
-  const isSimilarFilmsLoading = useAppSelector(({ filmsState }) => filmsState.films.similarLoading);
-  const similarFilms = useAppSelector(({ filmsState }) => filmsState.films.similar);
-  const currentFilm = useAppSelector(({ filmsState }) => filmsState.films.currentFilm);
+  const isSimilarFilmsLoading = useAppSelector(getSimilarLoading);
+  const similarFilms = useAppSelector(getSimilarFilms);
+  const currentFilm = useAppSelector(getCurrentFilm);
   const { id: currentFilmId } = useParams();
   const dispatch = useAppDispatch();
 
@@ -23,6 +28,7 @@ const MoviePage = () => {
   if (!currentFilmId) {
     return <Navigate to={AppRoute.ErrorPage} />;
   }
+  const similarFilmsFiltered = similarFilms.filter((film) => film.id !== Number(currentFilmId));
 
   return (
     <>
@@ -31,11 +37,11 @@ const MoviePage = () => {
       </Helmet>
 
       {isSimilarFilmsLoading && <Loader />}
-      {similarFilms.length ? (
+      {similarFilmsFiltered.length ? (
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <FilmsList films={similarFilms} maxFilms={4} />
+          <FilmsList films={similarFilmsFiltered} maxFilms={4} />
         </section>
       ) : null}
     </>

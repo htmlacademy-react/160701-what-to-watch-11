@@ -1,0 +1,104 @@
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { DEFAULT_NAME_GENRE, NameSpace } from 'src/const';
+import { TFilm, TFilmComment } from 'src/types/films';
+import {
+  addCommentFilmAction,
+  fetchCommentsFilmAction,
+  fetchFilmAction,
+  fetchFilmsAction,
+  fetchSimilarFilmsAction,
+} from '../api-actions';
+
+type TInitialState = {
+  films: {
+    currentGenre: string;
+    currentFilm: TFilm | null;
+    currentFilmLoading: boolean;
+    all: TFilm[];
+    similar: TFilm[];
+    allLoading: boolean;
+    similarLoading: boolean;
+  };
+  comments: {
+    data: TFilmComment[];
+    loading: boolean;
+  };
+};
+const initialState: TInitialState = {
+  films: {
+    currentGenre: DEFAULT_NAME_GENRE,
+    currentFilm: null,
+    currentFilmLoading: false,
+    all: [],
+    similar: [],
+    allLoading: false,
+    similarLoading: false,
+  },
+  comments: {
+    data: [],
+    loading: false,
+  },
+};
+export const filmsProcess = createSlice({
+  name: NameSpace.Films,
+  initialState,
+  reducers: {
+    setCurrentGenre: (state, action: PayloadAction<string>) => {
+      state.films.currentGenre = action.payload;
+    },
+  },
+  extraReducers(builder) {
+    builder.addCase(fetchFilmsAction.fulfilled, (state, action) => {
+      state.films.all = action.payload;
+      state.films.allLoading = false;
+    });
+    builder.addCase(fetchFilmsAction.pending, (state) => {
+      state.films.allLoading = true;
+    });
+    builder.addCase(fetchFilmsAction.rejected, (state) => {
+      state.films.allLoading = false;
+    });
+
+    builder.addCase(fetchFilmAction.fulfilled, (state, action) => {
+      state.films.currentFilm = action.payload;
+      state.films.currentFilmLoading = true;
+    });
+    builder.addCase(fetchFilmAction.pending, (state) => {
+      state.films.currentFilmLoading = false;
+    });
+    builder.addCase(fetchFilmAction.rejected, (state) => {
+      state.films.currentFilmLoading = true;
+    });
+
+    builder.addCase(fetchSimilarFilmsAction.fulfilled, (state, action) => {
+      state.films.similar = action.payload;
+      state.films.similarLoading = false;
+    });
+    builder.addCase(fetchSimilarFilmsAction.pending, (state) => {
+      state.films.similarLoading = false;
+    });
+    builder.addCase(fetchSimilarFilmsAction.rejected, (state) => {
+      state.films.similarLoading = true;
+    });
+
+    builder.addCase(fetchCommentsFilmAction.fulfilled, (state, action) => {
+      state.comments.data = action.payload;
+      state.comments.loading = false;
+    });
+    builder.addCase(fetchCommentsFilmAction.pending, (state) => {
+      state.comments.loading = true;
+    });
+    builder.addCase(fetchCommentsFilmAction.rejected, (state) => {
+      state.comments.loading = false;
+    });
+  },
+});
+
+export const { setCurrentGenre } = filmsProcess.actions;
+export {
+  addCommentFilmAction,
+  fetchCommentsFilmAction,
+  fetchFilmAction,
+  fetchFilmsAction,
+  fetchSimilarFilmsAction,
+};

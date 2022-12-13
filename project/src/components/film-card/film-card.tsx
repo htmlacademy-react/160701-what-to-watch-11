@@ -1,5 +1,5 @@
 import { PropsWithChildren, useEffect } from 'react';
-import { Navigate, useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { AppRoute, RouteName } from 'src/const';
 import { TFilm } from 'src/types/films';
 import { adjustColor } from 'src/utils/main';
@@ -14,7 +14,8 @@ import FilmCardNavContent from './components/film-card-nav-content/film-card-nav
 import { useAppDispatch, useAppSelector } from 'src/hooks';
 import { fetchFilmAction } from 'src/store/api-actions';
 import Loader from '../loader/loader';
-import { setCurrentFilmLoadingEnd } from 'src/store/action';
+import { getCurrentFilm, getCurrentFilmLoading } from 'src/store/films-process/selectors';
+import ErrorScreen from '../error-screen/error-screen';
 
 type TFilmCard = {
   films: TFilm[];
@@ -43,32 +44,18 @@ const FilmCard = ({ films }: TFilmCard) => {
     }
   }, [currentFilmId, dispatch]);
 
-  const currentFilm = useAppSelector(({ filmsState }) => filmsState.films.currentFilm);
-  const currentFilmLoadingEnd = useAppSelector(
-    ({ filmsState }) => filmsState.films.currentFilmLoadingEnd,
-  );
+  const currentFilm = useAppSelector(getCurrentFilm);
+  const currentFilmLoading = useAppSelector(getCurrentFilmLoading);
 
-  useEffect(
-    () => {
-      dispatch(setCurrentFilmLoadingEnd(false));
-      return () => {
-        dispatch(setCurrentFilmLoadingEnd(false));
-      };
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
-
-  if (!currentFilmLoadingEnd) {
+  if (!currentFilmLoading) {
     return <Loader />;
   }
 
-  if (!currentFilm && currentFilmLoadingEnd) {
-    return <Navigate to={AppRoute.ErrorPage} />;
-  }
-
   if (!currentFilm) {
-    return null;
+    if (isRootPage) {
+      return null;
+    }
+    return <ErrorScreen statusCode={404} />;
   }
 
   const { id, name, posterImage, backgroundImage, genre, released, backgroundColor } = currentFilm;
@@ -93,7 +80,8 @@ const FilmCard = ({ films }: TFilmCard) => {
   );
 
   const dataNav = Object.keys(TabsNames);
-  const currentTab = location.hash.slice(1) || TabsNames.Overview;
+  const hashName = location.hash.slice(1);
+  const currentTab = hashName in TabsNames ? hashName : TabsNames.Overview;
 
   return (
     <section className={`film-card ${isFull ? 'film-card--full' : ''}`} style={{ backgroundColor }}>
