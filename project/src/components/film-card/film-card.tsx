@@ -14,8 +14,8 @@ import FilmCardNavContent from './components/film-card-nav-content/film-card-nav
 import { useAppDispatch, useAppSelector } from 'src/hooks';
 import { fetchFilmAction } from 'src/store/api-actions';
 import Loader from '../loader/loader';
-import { setCurrentFilmLoadingEnd } from 'src/store/films-process/films-process';
-import { getCurrentFilm, getCurrentFilmLoadingEnd } from 'src/store/films-process/selectors';
+import { getCurrentFilm, getCurrentFilmLoading } from 'src/store/films-process/selectors';
+import ErrorScreen from '../error-screen/error-screen';
 
 type TFilmCard = {
   films: TFilm[];
@@ -45,29 +45,17 @@ const FilmCard = ({ films }: TFilmCard) => {
   }, [currentFilmId, dispatch]);
 
   const currentFilm = useAppSelector(getCurrentFilm);
-  const currentFilmLoadingEnd = useAppSelector(getCurrentFilmLoadingEnd);
+  const currentFilmLoading = useAppSelector(getCurrentFilmLoading);
 
-  useEffect(
-    () => {
-      dispatch(setCurrentFilmLoadingEnd(false));
-      return () => {
-        dispatch(setCurrentFilmLoadingEnd(false));
-      };
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
-
-  if (!currentFilmLoadingEnd) {
+  if (!currentFilmLoading) {
     return <Loader />;
   }
 
-  if (!currentFilm && currentFilmLoadingEnd) {
-    return <Navigate to={AppRoute.ErrorPage} />;
-  }
-
   if (!currentFilm) {
-    return null;
+    if (isRootPage) {
+      return null;
+    }
+    return <ErrorScreen statusCode={404} />;
   }
 
   const { id, name, posterImage, backgroundImage, genre, released, backgroundColor } = currentFilm;

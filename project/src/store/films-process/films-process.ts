@@ -13,7 +13,7 @@ type TInitialState = {
   films: {
     currentGenre: string;
     currentFilm: TFilm | null;
-    currentFilmLoadingEnd: boolean;
+    currentFilmLoading: boolean;
     all: TFilm[];
     similar: TFilm[];
     allLoading: boolean;
@@ -28,7 +28,7 @@ const initialState: TInitialState = {
   films: {
     currentGenre: DEFAULT_NAME_GENRE,
     currentFilm: null,
-    currentFilmLoadingEnd: false,
+    currentFilmLoading: false,
     all: [],
     similar: [],
     allLoading: false,
@@ -46,12 +46,6 @@ export const filmsProcess = createSlice({
     setCurrentGenre: (state, action: PayloadAction<string>) => {
       state.films.currentGenre = action.payload;
     },
-    setCurrentFilm: (state, action: PayloadAction<TFilm>) => {
-      state.films.currentFilm = action.payload;
-    },
-    setCurrentFilmLoadingEnd: (state, action: PayloadAction<boolean>) => {
-      state.films.currentFilmLoadingEnd = action.payload;
-    },
   },
   extraReducers(builder) {
     builder.addCase(fetchFilmsAction.fulfilled, (state, action) => {
@@ -67,13 +61,13 @@ export const filmsProcess = createSlice({
 
     builder.addCase(fetchFilmAction.fulfilled, (state, action) => {
       state.films.currentFilm = action.payload;
-      state.films.currentFilmLoadingEnd = true;
+      state.films.currentFilmLoading = true;
     });
     builder.addCase(fetchFilmAction.pending, (state) => {
-      state.films.currentFilmLoadingEnd = false;
+      state.films.currentFilmLoading = false;
     });
     builder.addCase(fetchFilmAction.rejected, (state) => {
-      state.films.currentFilmLoadingEnd = true;
+      state.films.currentFilmLoading = true;
     });
 
     builder.addCase(fetchSimilarFilmsAction.fulfilled, (state, action) => {
@@ -100,7 +94,7 @@ export const filmsProcess = createSlice({
   },
 });
 
-export const { setCurrentFilm, setCurrentGenre, setCurrentFilmLoadingEnd } = filmsProcess.actions;
+export const { setCurrentGenre } = filmsProcess.actions;
 export {
   addCommentFilmAction,
   fetchCommentsFilmAction,
