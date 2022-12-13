@@ -78,10 +78,12 @@ const fetchFilmsAction = createAsyncThunk<TFilm[], undefined, ThunkApiConfig>(
   },
 );
 
-const checkAuthAction = createAsyncThunk<void, undefined, ThunkApiConfig>(
+const checkAuthAction = createAsyncThunk<UserData, undefined, ThunkApiConfig>(
   'user/checkAuth',
   async (_arg, { extra: api }) => {
-    await api.get<UserData>(APIRoute.Login);
+    const { data } = await api.get<UserData>(APIRoute.Login);
+
+    return data;
   },
 );
 
