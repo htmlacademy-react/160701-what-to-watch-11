@@ -4,8 +4,8 @@ import { TState } from 'src/types/state';
 export const getCurrentGenre = (state: TState) => state[NameSpace.Films].films.currentGenre;
 
 export const getCurrentFilm = (state: TState) => state[NameSpace.Films].films.currentFilm;
-export const getCurrentFilmLoadingEnd = (state: TState) =>
-  state[NameSpace.Films].films.currentFilmLoadingEnd;
+export const getCurrentFilmLoading = (state: TState) =>
+  state[NameSpace.Films].films.currentFilmLoading;
 
 export const getFilms = (state: TState) => state[NameSpace.Films].films.all;
 export const getFilmsLoading = (state: TState) => state[NameSpace.Films].films.allLoading;
