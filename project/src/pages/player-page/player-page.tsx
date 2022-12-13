@@ -1,8 +1,8 @@
 import { Helmet } from 'react-helmet-async';
-import { Link, Navigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import ErrorScreen from 'src/components/error-screen/error-screen';
 import Player from 'src/components/player/player';
-import { AppRoute, PageTitles, RouteName } from 'src/const';
+import { PageTitles } from 'src/const';
 import { TFilm } from 'src/types/films';
 
 type TPlayerPage = {
