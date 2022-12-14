@@ -373,6 +373,7 @@ main {
   margin: 0 auto; }
 
 .add-review__text {
+  position: relative;
   background: #E8C3C4;
   border-radius: 8px; }
 
@@ -400,6 +401,20 @@ main {
   .add-review__textarea::placeholder {
     opacity: 1;
     color: #252525; }
+
+.add-review__counter {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.add-review__error-message {
+  margin: 0;
+  padding: 3px 0;
+  font-size: 14px;
+}
 
 .add-review__submit {
   display: -webkit-box;
