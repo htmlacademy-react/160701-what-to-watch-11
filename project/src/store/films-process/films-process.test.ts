@@ -177,7 +177,7 @@ describe('Reducer: filmsProcess', () => {
   });
   describe('changeFavoriteFilmAction test', () => {
     const mockFavoriteFilm = { ...mockFilm, isFavorite: true };
-    const mockNotFavoriteFilm = { ...mockFilm, isFavorite: false };
+    const mockNotFavoriteFilm = { ...mockFavoriteFilm, isFavorite: false };
 
     it('should add favorite film', () => {
       expect(
