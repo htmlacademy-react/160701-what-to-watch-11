@@ -1,5 +1,5 @@
 import { makeFakeComment, makeFakeFilm } from 'src/utils/mocks';
-import { changeFavoriteFilmAction } from '../api-actions';
+import { addCommentFilmAction, changeFavoriteFilmAction } from '../api-actions';
 import {
   filmsProcess,
   TInitialState,
@@ -139,6 +139,7 @@ describe('Reducer: filmsProcess', () => {
       ).toEqual({
         ...initialState,
         comments: {
+          ...initialState.comments,
           data: mockCommentsArray,
           loading: false,
         },
@@ -155,6 +156,35 @@ describe('Reducer: filmsProcess', () => {
     });
     it('should set default comments', () => {
       expect(filmsProcess.reducer(state, { type: fetchCommentsFilmAction.rejected.type })).toEqual(
+        initialState,
+      );
+    });
+  });
+  describe('addCommentFilmAction test', () => {
+    it('should change addCommentLoading false', () => {
+      expect(
+        filmsProcess.reducer(state, {
+          type: addCommentFilmAction.fulfilled.type,
+        }),
+      ).toEqual({
+        ...initialState,
+        comments: {
+          ...initialState.comments,
+          addCommentLoading: false,
+        },
+      });
+    });
+    it('should change addCommentLoading true', () => {
+      expect(filmsProcess.reducer(state, { type: addCommentFilmAction.pending.type })).toEqual({
+        ...initialState,
+        comments: {
+          ...initialState.comments,
+          addCommentLoading: true,
+        },
+      });
+    });
+    it('should change addCommentLoading default', () => {
+      expect(filmsProcess.reducer(state, { type: addCommentFilmAction.rejected.type })).toEqual(
         initialState,
       );
     });
