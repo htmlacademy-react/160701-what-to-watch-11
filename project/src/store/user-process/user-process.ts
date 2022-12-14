@@ -3,11 +3,11 @@ import { AuthStatus, NameSpace } from 'src/const';
 import { UserData } from 'src/types/user-data';
 import { checkAuthAction, loginAction, logoutAction } from '../api-actions';
 
-type TInitialState = {
+export type TInitialState = {
   authorizationStatus: AuthStatus;
   userData: UserData | null;
 };
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
   authorizationStatus: AuthStatus.Unknown,
   userData: null,
 };
@@ -35,6 +35,7 @@ export const userProcess = createSlice({
 
     builder.addCase(logoutAction.fulfilled, (state) => {
       state.authorizationStatus = AuthStatus.NoAuth;
+      state.userData = null;
     });
   },
 });
