@@ -44,7 +44,7 @@ const FilmCard = ({ films }: TFilmCard) => {
   const currentFilm = useAppSelector(getCurrentFilm);
   const currentFilmLoading = useAppSelector(getCurrentFilmLoading);
 
-  if (!currentFilmLoading) {
+  if (currentFilmLoading) {
     return <Loader />;
   }
 

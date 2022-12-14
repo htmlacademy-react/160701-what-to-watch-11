@@ -9,9 +9,10 @@ import {
   fetchFilmAction,
   fetchFilmsAction,
   fetchSimilarFilmsAction,
+  logoutAction,
 } from '../api-actions';
 
-type TInitialState = {
+export type TInitialState = {
   films: {
     currentGenre: string;
     currentFilm: TFilm | null;
@@ -28,7 +29,7 @@ type TInitialState = {
     addCommentLoading: boolean;
   };
 };
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
   films: {
     currentGenre: DEFAULT_NAME_GENRE,
     currentFilm: null,
@@ -67,13 +68,13 @@ export const filmsProcess = createSlice({
 
     builder.addCase(fetchFilmAction.fulfilled, (state, action) => {
       state.films.currentFilm = action.payload;
-      state.films.currentFilmLoading = true;
-    });
-    builder.addCase(fetchFilmAction.pending, (state) => {
       state.films.currentFilmLoading = false;
     });
-    builder.addCase(fetchFilmAction.rejected, (state) => {
+    builder.addCase(fetchFilmAction.pending, (state) => {
       state.films.currentFilmLoading = true;
+    });
+    builder.addCase(fetchFilmAction.rejected, (state) => {
+      state.films.currentFilmLoading = false;
     });
 
     builder.addCase(fetchFavoriteFilmsAction.fulfilled, (state, action) => {
@@ -92,10 +93,10 @@ export const filmsProcess = createSlice({
       state.films.similarLoading = false;
     });
     builder.addCase(fetchSimilarFilmsAction.pending, (state) => {
-      state.films.similarLoading = false;
+      state.films.similarLoading = true;
     });
     builder.addCase(fetchSimilarFilmsAction.rejected, (state) => {
-      state.films.similarLoading = true;
+      state.films.similarLoading = false;
     });
 
     builder.addCase(fetchCommentsFilmAction.fulfilled, (state, action) => {
@@ -117,6 +118,9 @@ export const filmsProcess = createSlice({
     });
     builder.addCase(addCommentFilmAction.rejected, (state) => {
       state.comments.addCommentLoading = false;
+    });
+    builder.addCase(logoutAction.fulfilled, (state) => {
+      state.films.favorite = [];
     });
   },
 });

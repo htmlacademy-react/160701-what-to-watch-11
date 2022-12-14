@@ -5,15 +5,23 @@ const adjustColor = (dataColor: string, amount: number) =>
       `0${Math.min(255, Math.max(0, parseInt(color, 16) + amount)).toString(16)}`.substr(-2),
     )}`;
 
-const getFilmRatingPhrase = (rating: number) => {
-  const FilmRate = {
-    0: 'Bad',
-    3: 'Normal',
-    5: 'Good',
-    8: 'Very good',
-    10: 'Awesome',
-  } as const;
+const FilmRateName = {
+  Bad: 'Bad',
+  Normal: 'Normal',
+  Good: 'Good',
+  VeryGood: 'Very good',
+  Awesome: 'Awesome',
+} as const;
 
+const FilmRate = {
+  0: FilmRateName.Bad,
+  3: FilmRateName.Normal,
+  5: FilmRateName.Good,
+  8: FilmRateName.VeryGood,
+  10: FilmRateName.Awesome,
+} as const;
+
+const getFilmRatingPhrase = (rating: number) => {
   const phrase = Object.entries(FilmRate).reduce((acc, [key, value]) => {
     if (rating >= Number(key)) {
       return value;
@@ -24,4 +32,4 @@ const getFilmRatingPhrase = (rating: number) => {
   return phrase;
 };
 
-export { adjustColor, getFilmRatingPhrase };
+export { adjustColor, getFilmRatingPhrase, FilmRateName };
