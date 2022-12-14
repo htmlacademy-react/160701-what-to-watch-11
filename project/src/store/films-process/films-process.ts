@@ -9,6 +9,7 @@ import {
   fetchFilmAction,
   fetchFilmsAction,
   fetchSimilarFilmsAction,
+  logoutAction,
 } from '../api-actions';
 
 export type TInitialState = {
@@ -117,6 +118,9 @@ export const filmsProcess = createSlice({
     });
     builder.addCase(addCommentFilmAction.rejected, (state) => {
       state.comments.addCommentLoading = false;
+    });
+    builder.addCase(logoutAction.fulfilled, (state) => {
+      state.films.favorite = [];
     });
   },
 });
