@@ -30,6 +30,7 @@ export const makeFakeFilm = (): TFilm => ({
   videoLink: 'https://11.react.pages.academy/static/film/video/bubbles.mp4',
   previewVideoLink: 'https://11.react.pages.academy/static/film/video/traffic.mp4',
 });
+export const makeFakeFilmsArray = (number = 10) => Array.from({ length: number }, makeFakeFilm);
 
 export const makeFakeComment = (): TFilmComment => ({
   id: datatype.number(),
@@ -42,3 +43,6 @@ export const makeFakeComment = (): TFilmComment => ({
     'The editing is a mess, and the transitions of the plot or characters are rather strange. There is no narrative focus and the storytelling is unbalanced. I cannot really understand why such a bad movie received an overwhelming approval from the critics. ',
   date: '2022-10-03T13:58:46.523Z',
 });
+
+export const makeFakeCommentsArray = (number = 10) =>
+  Array.from({ length: number }, makeFakeComment);
