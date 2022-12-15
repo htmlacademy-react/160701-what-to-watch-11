@@ -43,6 +43,12 @@ const fakeApp = (
 );
 
 describe('Application Routing', () => {
+  beforeAll(() => {
+    window.HTMLMediaElement.prototype.play = jest.fn();
+    window.HTMLMediaElement.prototype.pause = jest.fn();
+    window.HTMLMediaElement.prototype.load = jest.fn();
+    window.scrollTo = jest.fn();
+  });
   // it('should render "index page" when user navigate to "/"', () => {
   //   history.push(AppRoute.Root);
   //   render(fakeApp);
