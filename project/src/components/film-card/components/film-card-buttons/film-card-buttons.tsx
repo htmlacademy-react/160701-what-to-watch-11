@@ -8,17 +8,16 @@ import { TFilmId } from 'src/types/films';
 
 type TFilmCardButtons = {
   id: TFilmId;
-  withReviewButton?: boolean;
 };
 
-const FilmCardButtons = ({ id = '', withReviewButton = true }: TFilmCardButtons) => {
+const FilmCardButtons = ({ id }: TFilmCardButtons) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const authStatus = useAppSelector(getAuthorizationStatus);
   const isAuth = authStatus === AuthStatus.Auth;
   const favoriteFilms = useAppSelector(getFavoriteFilms);
   const favoriteFilmsCount = favoriteFilms.length;
-  const inList = favoriteFilms.find((film) => film.id === id);
+  const isFavorite = favoriteFilms.find((film) => film.id === id);
 
   return (
     <div className="film-card__buttons">
@@ -40,7 +39,7 @@ const FilmCardButtons = ({ id = '', withReviewButton = true }: TFilmCardButtons)
             dispatch(
               changeFavoriteFilmAction({
                 filmId: id,
-                status: Number(!inList),
+                status: Number(!isFavorite),
               }),
             );
           } else {
@@ -51,12 +50,12 @@ const FilmCardButtons = ({ id = '', withReviewButton = true }: TFilmCardButtons)
         type="button"
       >
         <svg viewBox="0 0 19 20" width="19" height="20">
-          <use xlinkHref={`#${inList ? 'in-list' : 'add'}`}></use>
+          <use xlinkHref={`#${isFavorite ? 'in-list' : 'add'}`}></use>
         </svg>
         <span>My list</span>
         {!!favoriteFilmsCount && <span className="film-card__count">{favoriteFilmsCount}</span>}
       </button>
-      {withReviewButton && (
+      {isAuth && (
         <Link
           className="btn film-card__button"
           to={`/${RouteName.Films}/${id}/${RouteName.Review}`}
