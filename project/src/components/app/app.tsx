@@ -14,8 +14,7 @@ import FilmCardLayout from 'src/layouts/film-card-layout/film-card-layout';
 import ScrollToTop from '../scroll-to-top/scroll-to-top';
 import { useAppSelector } from 'src/hooks';
 import Loader from '../loader/loader';
-import HistoryRouter from '../history-route/history-route';
-import browserHistory from 'src/browser-history';
+
 import { getFilms, getFilmsLoading } from 'src/store/films-process/selectors';
 import { getAuthorizationStatus } from 'src/store/user-process/selectors';
 
@@ -29,7 +28,7 @@ const App = (): JSX.Element => {
   }
 
   return (
-    <HistoryRouter history={browserHistory}>
+    <>
       <ScrollToTop />
       <HelmetProvider>
         <Routes>
@@ -63,7 +62,7 @@ const App = (): JSX.Element => {
           </Route>
         </Routes>
       </HelmetProvider>
-    </HistoryRouter>
+    </>
   );
 };
 
