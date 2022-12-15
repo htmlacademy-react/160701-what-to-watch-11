@@ -32,6 +32,7 @@ enum PageTitles {
 }
 
 enum APIRoute {
+  PromoFilm = '/promo',
   Favorite = '/favorite',
   Comments = '/comments',
   Films = '/films',

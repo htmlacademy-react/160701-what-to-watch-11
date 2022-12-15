@@ -8,6 +8,7 @@ import {
   fetchFavoriteFilmsAction,
   fetchFilmAction,
   fetchFilmsAction,
+  fetchPromoFilmAction,
   fetchSimilarFilmsAction,
   logoutAction,
 } from '../api-actions';
@@ -74,6 +75,17 @@ export const filmsProcess = createSlice({
       state.films.currentFilmLoading = true;
     });
     builder.addCase(fetchFilmAction.rejected, (state) => {
+      state.films.currentFilmLoading = false;
+    });
+
+    builder.addCase(fetchPromoFilmAction.fulfilled, (state, action) => {
+      state.films.currentFilm = action.payload;
+      state.films.currentFilmLoading = false;
+    });
+    builder.addCase(fetchPromoFilmAction.pending, (state) => {
+      state.films.currentFilmLoading = true;
+    });
+    builder.addCase(fetchPromoFilmAction.rejected, (state) => {
       state.films.currentFilmLoading = false;
     });
 

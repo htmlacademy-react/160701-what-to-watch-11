@@ -11,7 +11,7 @@ import FilmCardPoster from './components/film-card-poster/film-card-poster';
 import FilmCardData from './components/film-card-data/film-card-data';
 import FilmCardNavContent from './components/film-card-nav-content/film-card-nav-content';
 import { useAppDispatch, useAppSelector } from 'src/hooks';
-import { fetchFilmAction } from 'src/store/api-actions';
+import { fetchFilmAction, fetchPromoFilmAction } from 'src/store/api-actions';
 import Loader from '../loader/loader';
 import { getCurrentFilm, getCurrentFilmLoading } from 'src/store/films-process/selectors';
 import ErrorScreen from '../error-screen/error-screen';
@@ -32,14 +32,19 @@ const FilmCard = ({ films }: TFilmCard) => {
   const { isMoviePage, isAddReviewPage, isRootPage } = useCurrentLocation();
   const isFull = isMoviePage || isAddReviewPage;
   const dispatch = useAppDispatch();
-  const DEFAULT_FILM_ID = films[0]?.id;
-  const { id: currentFilmId = DEFAULT_FILM_ID } = useParams();
+  const { id: currentFilmId } = useParams();
 
   useEffect(() => {
-    if (currentFilmId) {
+    if (isRootPage) {
+      dispatch(fetchPromoFilmAction());
+    }
+  }, [dispatch, isRootPage]);
+
+  useEffect(() => {
+    if (currentFilmId && !isRootPage) {
       dispatch(fetchFilmAction(currentFilmId));
     }
-  }, [currentFilmId, dispatch]);
+  }, [currentFilmId, dispatch, isRootPage]);
 
   const currentFilm = useAppSelector(getCurrentFilm);
   const currentFilmLoading = useAppSelector(getCurrentFilmLoading);
