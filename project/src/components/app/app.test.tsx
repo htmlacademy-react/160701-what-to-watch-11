@@ -90,8 +90,8 @@ describe('Application Routing', () => {
     expect(screen.getByText('404 Not Found')).toBeInTheDocument();
     expect(screen.getByText('Вернуться на главную')).toBeInTheDocument();
   });
-  it(`should render "MyListScreen" when user navigate to "/${AppRoute.MyList}`, async () => {
-    await store.dispatch(changeAuthStatus(AuthStatus.Auth));
+  it(`should render "MyListScreen" when user navigate to "/${AppRoute.MyList}`, () => {
+    store.dispatch(changeAuthStatus(AuthStatus.Auth));
 
     history.push(AppRoute.MyList);
 
