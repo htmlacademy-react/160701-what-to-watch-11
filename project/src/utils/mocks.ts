@@ -10,7 +10,7 @@ export const makeFakeUserData = (): UserData => ({
   name: name.title(),
 });
 
-export const makeFakeFilm = (): TFilm => ({
+export const makeFakeFilm = (idx: number): TFilm => ({
   name: 'A Star Is Born',
   posterImage: 'https://11.react.pages.academy/static/film/poster/A_Star_Is_Born.jpg',
   previewImage: 'https://11.react.pages.academy/static/film/preview/A_Star_Is_Born.jpg',
@@ -25,12 +25,13 @@ export const makeFakeFilm = (): TFilm => ({
   runTime: 136,
   genre: 'Drama',
   released: 2018,
-  id: datatype.number(),
+  id: idx,
   isFavorite: datatype.boolean(),
   videoLink: 'https://11.react.pages.academy/static/film/video/bubbles.mp4',
   previewVideoLink: 'https://11.react.pages.academy/static/film/video/traffic.mp4',
 });
-export const makeFakeFilmsArray = (number = 10) => Array.from({ length: number }, makeFakeFilm);
+export const makeFakeFilmsArray = (number = 10) =>
+  Array.from({ length: number }, (_, idx) => makeFakeFilm(idx + 1));
 
 export const makeFakeComment = (): TFilmComment => ({
   id: datatype.number(),
