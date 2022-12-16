@@ -1,4 +1,4 @@
-import { makeFakeCommentsArray, makeFakeFilm, makeFakeFilmsArray } from 'src/utils/mocks';
+import { makeFakeCommentsArray, makeFakeFilmsArray } from 'src/utils/mocks';
 import { addCommentFilmAction, changeFavoriteFilmAction } from '../api-actions';
 import {
   filmsProcess,
@@ -12,8 +12,8 @@ import {
   fetchFavoriteFilmsAction,
 } from './films-process';
 
-const mockFilm = makeFakeFilm();
 const mockFilmsArray = makeFakeFilmsArray();
+const [mockFilm] = mockFilmsArray;
 const mockCommentsArray = makeFakeCommentsArray();
 
 describe('Reducer: filmsProcess', () => {
