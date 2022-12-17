@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'src/hooks';
 import { addCommentFilmAction } from 'src/store/api-actions';
 import { getAddCommentLoading } from 'src/store/films-process/selectors';
+import { getTestId } from 'src/utils/main';
 import { AddCommentSchema } from 'src/utils/validate';
 
 type TAddReviewForm = {
@@ -90,6 +91,7 @@ const AddReviewForm = ({ backgroundColor }: TAddReviewForm) => {
             minLength={50}
             maxLength={400}
             disabled={loading}
+            {...getTestId('textarea')}
           />
           <span className="add-review__counter">{formData[FormFieldName.Text].length}</span>
           <div className="add-review__submit">
