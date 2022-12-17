@@ -21,34 +21,30 @@ const mockStore = configureMockStore([thunk]);
 const fakeAllFilms = makeFakeFilmsArray();
 const [fakeFilm] = fakeAllFilms;
 
+const mockFilms = {
+  [NameSpace.Films]: {
+    ...filmsState,
+    films: {
+      ...filmsState.films,
+      all: fakeAllFilms,
+      currentFilm: fakeFilm,
+    },
+  } as TFilmsState,
+};
 const storeNoAuth = mockStore({
+  ...mockFilms,
   [NameSpace.User]: {
     ...userState,
     authorizationStatus: AuthStatus.NoAuth,
   } as TUserState,
-  [NameSpace.Films]: {
-    ...filmsState,
-    films: {
-      ...filmsState.films,
-      all: fakeAllFilms,
-      currentFilm: fakeFilm,
-    },
-  } as TFilmsState,
 });
 
 const storeAuth = mockStore({
+  ...mockFilms,
   [NameSpace.User]: {
     ...userState,
     authorizationStatus: AuthStatus.Auth,
   } as TUserState,
-  [NameSpace.Films]: {
-    ...filmsState,
-    films: {
-      ...filmsState.films,
-      all: fakeAllFilms,
-      currentFilm: fakeFilm,
-    },
-  } as TFilmsState,
 });
 
 const history = createMemoryHistory();
@@ -78,8 +74,8 @@ describe('Application Routing', () => {
 
     render(fakeApp());
 
-    // expect(screen.getByRole('heading')).toHaveTextContent('Sing in');
-    // expect(screen.getByText(/Sing in/i)).toBeInTheDocument();
+    expect(screen.getByTestId('email')).toBeInTheDocument();
+    expect(screen.getByTestId('password')).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/Email address/i)).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/Password/i)).toBeInTheDocument();
   });
@@ -89,7 +85,6 @@ describe('Application Routing', () => {
     history.push(MOVIE_ROUTE);
 
     render(fakeApp());
-    // expect(screen.getByText(fakeFilm.name)).toBeInTheDocument();
     expect(screen.getByText(TabsNames.Overview)).toBeInTheDocument();
   });
 
