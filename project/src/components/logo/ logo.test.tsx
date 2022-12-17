@@ -15,7 +15,7 @@ describe('Component: Logo', () => {
       </HistoryRouter>,
     );
 
-    expect(screen.getByText(/T/i)).toBeInTheDocument();
+    expect(screen.getByTestId('logo')).toBeInTheDocument();
   });
 
   it('should redirect to root url when user clicked to link', async () => {
