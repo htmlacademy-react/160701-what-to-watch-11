@@ -83,15 +83,19 @@ describe('Application Routing', () => {
     expect(screen.getByPlaceholderText(/Email address/i)).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/Password/i)).toBeInTheDocument();
   });
-  it(`should render "MovieScreen" when user navigate to "/${RouteName.Films}/${fakeFilm.id}}"`, () => {
-    history.push(`/${RouteName.Films}/${fakeFilm.id}`);
+
+  const MOVIE_ROUTE = `/${RouteName.Films}/${fakeFilm.id}}`;
+  it(`should render "MovieScreen" when user navigate to "${MOVIE_ROUTE}"`, () => {
+    history.push(MOVIE_ROUTE);
 
     render(fakeApp());
     // expect(screen.getByText(fakeFilm.name)).toBeInTheDocument();
     expect(screen.getByText(TabsNames.Overview)).toBeInTheDocument();
   });
-  it(`should render "PlayerScreen" when user navigate to "/${RouteName.Player}/${fakeFilm.id}"`, () => {
-    history.push(`/${RouteName.Player}/${fakeFilm.id}`);
+
+  const PLAYER_ROUTE = `/${RouteName.Player}/${fakeFilm.id}`;
+  it(`should render "PlayerScreen" when user navigate to "${PLAYER_ROUTE}"`, () => {
+    history.push(PLAYER_ROUTE);
     render(fakeApp());
     expect(screen.getByText(fakeFilm.name)).toBeInTheDocument();
     expect(screen.getByText(/Exit/i)).toBeInTheDocument();
@@ -103,20 +107,38 @@ describe('Application Routing', () => {
     expect(screen.getByText('404 Not Found')).toBeInTheDocument();
     expect(screen.getByText('Вернуться на главную')).toBeInTheDocument();
   });
-  it(`should render "MyListScreen" when user navigate to "/${AppRoute.MyList}`, () => {
+  it(`should render "MyListScreen" when user navigate to "/${AppRoute.MyList}, when user ${AuthStatus.Auth}`, () => {
     history.push(AppRoute.MyList);
 
     render(fakeApp(AuthStatus.Auth));
     expect(screen.getByText('Catalog')).toBeInTheDocument();
     expect(screen.getByText('My list')).toBeInTheDocument();
   });
-  it(`should render "AddReviewScreen" when user navigate to "/${RouteName.Films}/${fakeFilm.id}/${RouteName.Review}`, () => {
-    history.push(`/${RouteName.Films}/${fakeFilm.id}/${RouteName.Review}`);
+  it(`should NOT render "MyListScreen" when user navigate to "/${AppRoute.MyList}, when user ${AuthStatus.NoAuth}`, () => {
+    history.push(AppRoute.MyList);
+
+    render(fakeApp(AuthStatus.NoAuth));
+    expect(screen.queryByText('Catalog')).not.toBeInTheDocument();
+    expect(screen.queryByText('My list')).not.toBeInTheDocument();
+  });
+
+  const ADD_REVIEW_ROUTE = `/${RouteName.Films}/${fakeFilm.id}/${RouteName.Review}`;
+  it(`should render "AddReviewScreen" when user navigate to "${ADD_REVIEW_ROUTE}", when user ${AuthStatus.Auth}`, () => {
+    history.push(ADD_REVIEW_ROUTE);
 
     render(fakeApp(AuthStatus.Auth));
     expect(screen.getByText(fakeFilm.name)).toBeInTheDocument();
     expect(screen.getByText('Add review')).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/Review text/i)).toBeInTheDocument();
+  });
+  it(`should NOT render "AddReviewScreen" when user navigate to "${ADD_REVIEW_ROUTE}, when user ${AuthStatus.NoAuth}"`, () => {
+    history.push(ADD_REVIEW_ROUTE);
+
+    render(fakeApp(AuthStatus.NoAuth));
+
+    expect(screen.queryByPlaceholderText(/Review text/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(fakeFilm.name)).not.toBeInTheDocument();
+    expect(screen.queryByText('Add review')).not.toBeInTheDocument();
   });
 
   it('should render "NotFoundScreen" when user navigate to non-existent route', () => {
