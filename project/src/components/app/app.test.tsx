@@ -16,12 +16,13 @@ import {
   initialState as filmsState,
   TInitialState as TFilmsState,
 } from 'src/store/films-process/films-process';
+import { PropsWithChildren } from 'react';
 
 const mockStore = configureMockStore([thunk]);
 const fakeAllFilms = makeFakeFilmsArray();
 const [fakeFilm] = fakeAllFilms;
 
-const mockFilms = {
+export const mockFilms = {
   [NameSpace.Films]: {
     ...filmsState,
     films: {
@@ -31,7 +32,7 @@ const mockFilms = {
     },
   } as TFilmsState,
 };
-const storeNoAuth = mockStore({
+export const storeNoAuth = mockStore({
   ...mockFilms,
   [NameSpace.User]: {
     ...userState,
@@ -39,7 +40,7 @@ const storeNoAuth = mockStore({
   } as TUserState,
 });
 
-const storeAuth = mockStore({
+export const storeAuth = mockStore({
   ...mockFilms,
   [NameSpace.User]: {
     ...userState,
@@ -49,12 +50,18 @@ const storeAuth = mockStore({
 
 const history = createMemoryHistory();
 
-const fakeApp = (storeType = AuthStatus.NoAuth) => (
+type TFakeAppTemplate = PropsWithChildren & {
+  storeType: AuthStatus;
+};
+export const FakeAppTemplate = ({ children, storeType }: TFakeAppTemplate) => (
   <Provider store={storeType === AuthStatus.NoAuth ? storeNoAuth : storeAuth}>
-    <HistoryRouter history={history}>
-      <App />
-    </HistoryRouter>
+    <HistoryRouter history={history}>{children}</HistoryRouter>
   </Provider>
+);
+const fakeApp = (storeType = AuthStatus.NoAuth) => (
+  <FakeAppTemplate storeType={storeType}>
+    <App />
+  </FakeAppTemplate>
 );
 
 describe('Application Routing', () => {
