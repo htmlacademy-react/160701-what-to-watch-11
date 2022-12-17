@@ -41,9 +41,13 @@ describe('Async actions', () => {
   >(middlewares);
   const getActionsType = (actions: Action<string>[]): string[] => actions.map(({ type }) => type);
 
+  let store: ReturnType<typeof mockStore>;
+  beforeEach(() => {
+    store = mockStore();
+  });
+
   describe('User actions', () => {
     it('should auth status is "auth" when server return 200', async () => {
-      const store = mockStore();
       mockApi.onGet(APIRoute.Login).reply(200, []);
 
       expect(store.getActions()).toEqual([]);
@@ -60,7 +64,6 @@ describe('Async actions', () => {
 
       mockApi.onPost(APIRoute.Login).reply(200, { token: 'secret' });
 
-      const store = mockStore();
       Storage.prototype.setItem = jest.fn();
 
       await store.dispatch(loginAction(fakeUser));
@@ -76,7 +79,6 @@ describe('Async actions', () => {
     it('should dispatch Logout when DELETE /logout', async () => {
       mockApi.onDelete(APIRoute.Logout).reply(204);
 
-      const store = mockStore();
       Storage.prototype.removeItem = jest.fn();
 
       await store.dispatch(logoutAction());
@@ -95,7 +97,7 @@ describe('Async actions', () => {
 
       mockApi.onGet(APIRoute.Films).reply(200, mockFilms);
 
-      const store = mockStore();
+      // const store = mockStore();
 
       await store.dispatch(fetchFilmsAction());
 
@@ -109,8 +111,6 @@ describe('Async actions', () => {
 
       mockApi.onGet(`${APIRoute.Films}/${mockId}`).reply(200, mockFilm);
 
-      const store = mockStore();
-
       await store.dispatch(fetchFilmAction(mockId));
 
       const actions = getActionsType(store.getActions());
@@ -123,8 +123,6 @@ describe('Async actions', () => {
       const mockId = mockFilm.id;
 
       mockApi.onGet(`${APIRoute.Films}/${mockId}/${APIRouteName.Similar}`).reply(200, mockFilms);
-
-      const store = mockStore();
 
       await store.dispatch(fetchSimilarFilmsAction(mockId));
 
@@ -140,8 +138,6 @@ describe('Async actions', () => {
       const mockFilms = makeFakeFilmsArray();
 
       mockApi.onGet(`${APIRoute.Favorite}`).reply(200, mockFilms);
-
-      const store = mockStore();
 
       await store.dispatch(fetchFavoriteFilmsAction());
 
@@ -165,8 +161,6 @@ describe('Async actions', () => {
         .onPost(`${APIRoute.Favorite}/${fakeParams.filmId}/${fakeParams.status}`)
         .reply(200, mockFilm);
 
-      const store = mockStore();
-
       await store.dispatch(changeFavoriteFilmAction(fakeParams));
 
       const actions = getActionsType(store.getActions());
@@ -183,8 +177,6 @@ describe('Async actions', () => {
 
       mockApi.onGet(`${APIRoute.Comments}/${id}`).reply(200, mockComments);
 
-      const store = mockStore();
-
       await store.dispatch(fetchCommentsFilmAction(id));
 
       const actions = getActionsType(store.getActions());
@@ -199,7 +191,6 @@ describe('Async actions', () => {
       const mockComment = makeFakeComment();
 
       mockApi.onPost(`${APIRoute.Comments}/${id}`).reply(200, mockComment);
-      const store = mockStore();
 
       const fakeParams: TAddReveiw = {
         filmId: id,
