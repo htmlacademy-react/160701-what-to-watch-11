@@ -107,14 +107,14 @@ describe('Application Routing', () => {
     expect(screen.getByText('404 Not Found')).toBeInTheDocument();
     expect(screen.getByText('Вернуться на главную')).toBeInTheDocument();
   });
-  it(`should render "MyListScreen" when user navigate to "/${AppRoute.MyList}, when user ${AuthStatus.Auth}`, () => {
+  it(`should render "MyListScreen" when user navigate to "${AppRoute.MyList}, when user ${AuthStatus.Auth}`, () => {
     history.push(AppRoute.MyList);
 
     render(fakeApp(AuthStatus.Auth));
     expect(screen.getByText('Catalog')).toBeInTheDocument();
     expect(screen.getByText('My list')).toBeInTheDocument();
   });
-  it(`should NOT render "MyListScreen" when user navigate to "/${AppRoute.MyList}, when user ${AuthStatus.NoAuth}`, () => {
+  it(`should NOT render "MyListScreen" when user navigate to "${AppRoute.MyList}, when user ${AuthStatus.NoAuth}`, () => {
     history.push(AppRoute.MyList);
 
     render(fakeApp(AuthStatus.NoAuth));
