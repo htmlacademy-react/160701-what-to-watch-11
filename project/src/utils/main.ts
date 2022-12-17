@@ -32,4 +32,6 @@ const getFilmRatingPhrase = (rating: number) => {
   return phrase;
 };
 
-export { adjustColor, getFilmRatingPhrase, FilmRateName };
+const getTestId = (name: string) => ({ 'data-testid': name });
+
+export { adjustColor, getFilmRatingPhrase, FilmRateName, getTestId };

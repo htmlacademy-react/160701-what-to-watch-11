@@ -4,6 +4,7 @@ import { Navigate } from 'react-router-dom';
 import { AppRoute, AuthStatus, PageTitles } from 'src/const';
 import { useAppDispatch } from 'src/hooks';
 import { loginAction } from 'src/store/api-actions';
+import { getTestId } from 'src/utils/main';
 import { LoginSchema } from 'src/utils/validate';
 
 type TSingInPage = {
@@ -71,6 +72,7 @@ const SingInPage = ({ authStatus }: TSingInPage) => {
                 id={FormFieldName.Email}
                 onChange={onChange}
                 autoComplete="autoComplete"
+                {...getTestId('email')}
               />
               <label className="sign-in__label visually-hidden" htmlFor={FormFieldName.Email}>
                 Email address
@@ -87,6 +89,7 @@ const SingInPage = ({ authStatus }: TSingInPage) => {
                 value={formData['user-password']}
                 autoComplete="autoComplete"
                 minLength={2}
+                {...getTestId('password')}
               />
               <label className="sign-in__label visually-hidden" htmlFor={FormFieldName.Password}>
                 Password

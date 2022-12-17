@@ -12,24 +12,32 @@ import AddReviewPage from 'src/pages/add-review-page/add-review-page';
 import UserLayout from 'src/layouts/user-layout/user-layout';
 import FilmCardLayout from 'src/layouts/film-card-layout/film-card-layout';
 import ScrollToTop from '../scroll-to-top/scroll-to-top';
-import { useAppSelector } from 'src/hooks';
+import { useAppDispatch, useAppSelector } from 'src/hooks';
 import Loader from '../loader/loader';
-import HistoryRouter from '../history-route/history-route';
-import browserHistory from 'src/browser-history';
+
 import { getFilms, getFilmsLoading } from 'src/store/films-process/selectors';
 import { getAuthorizationStatus } from 'src/store/user-process/selectors';
+import { useEffect } from 'react';
+import { fetchFavoriteFilmsAction } from 'src/store/api-actions';
 
 const App = (): JSX.Element => {
+  const dispatch = useAppDispatch();
   const isFilmsLoading = useAppSelector(getFilmsLoading);
   const films = useAppSelector(getFilms);
   const authStatus = useAppSelector(getAuthorizationStatus);
+
+  useEffect(() => {
+    if (authStatus === AuthStatus.Auth) {
+      dispatch(fetchFavoriteFilmsAction());
+    }
+  }, [dispatch, authStatus]);
 
   if (isFilmsLoading || authStatus === AuthStatus.Unknown) {
     return <Loader />;
   }
 
   return (
-    <HistoryRouter history={browserHistory}>
+    <>
       <ScrollToTop />
       <HelmetProvider>
         <Routes>
@@ -63,7 +71,7 @@ const App = (): JSX.Element => {
           </Route>
         </Routes>
       </HelmetProvider>
-    </HistoryRouter>
+    </>
   );
 };
 

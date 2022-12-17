@@ -7,7 +7,6 @@ import { FavoriteData, TFilm, TFilmComment, TFilmId } from 'src/types/films';
 import { AuthData } from 'src/types/auth-data';
 import { UserData } from 'src/types/user-data';
 import { removeToken, setToken } from 'src/services/token';
-
 import { TAddReveiw } from 'src/types/reviews';
 import { TabsNames } from 'src/components/film-card/film-card';
 
@@ -25,6 +24,15 @@ const fetchFilmAction = createAsyncThunk<TFilm, TFilmId, ThunkApiConfig>(
     return data;
   },
 );
+const fetchPromoFilmAction = createAsyncThunk<TFilm, undefined, ThunkApiConfig>(
+  'data/fetchPromoFilm',
+  async (_arg, { extra: api }) => {
+    const { data } = await api.get<TFilm>(APIRoute.PromoFilm);
+
+    return data;
+  },
+);
+
 const fetchFavoriteFilmsAction = createAsyncThunk<TFilm[], undefined, ThunkApiConfig>(
   'data/fetchFavoriteFilms',
   async (_arg, { extra: api }) => {
@@ -107,6 +115,7 @@ const logoutAction = createAsyncThunk<void, undefined, ThunkApiConfig>(
 );
 
 export {
+  fetchPromoFilmAction,
   fetchFavoriteFilmsAction,
   changeFavoriteFilmAction,
   fetchCommentsFilmAction,

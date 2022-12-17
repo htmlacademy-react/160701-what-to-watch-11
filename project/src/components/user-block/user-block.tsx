@@ -3,6 +3,7 @@ import { AppRoute, AuthStatus } from 'src/const';
 import { useAppDispatch, useAppSelector } from 'src/hooks';
 import { logoutAction } from 'src/store/api-actions';
 import { getAuthorizationStatus, getUserData } from 'src/store/user-process/selectors';
+import { getTestId } from 'src/utils/main';
 
 const UserBlock = () => {
   const dispatch = useAppDispatch();
@@ -17,7 +18,13 @@ const UserBlock = () => {
           <li className="user-block__item">
             <div className="user-block__avatar">
               <Link to={AppRoute.MyList}>
-                <img src={user?.avatarUrl} alt={user?.name} width="63" height="63" />
+                <img
+                  src={user?.avatarUrl}
+                  alt={user?.name}
+                  width="63"
+                  height="63"
+                  {...getTestId('avatar')}
+                />
               </Link>
             </div>
             <span className="user-block__name">{user?.name}</span>
@@ -36,7 +43,7 @@ const UserBlock = () => {
           </li>
         </>
       ) : (
-        <Link className="user-block__link" to={AppRoute.Login}>
+        <Link className="user-block__link" to={AppRoute.Login} {...getTestId('sign-in-link')}>
           Sign in
         </Link>
       )}

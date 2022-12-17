@@ -1,4 +1,4 @@
-import { internet, name, datatype } from 'faker';
+import { internet, name, datatype, lorem, image, music, date, random } from 'faker';
 import { TFilm, TFilmComment } from 'src/types/films';
 import { UserData } from 'src/types/user-data';
 
@@ -10,26 +10,36 @@ export const makeFakeUserData = (): UserData => ({
   name: name.title(),
 });
 
-export const makeFakeFilm = (): TFilm => ({
-  name: 'A Star Is Born',
-  posterImage: 'https://11.react.pages.academy/static/film/poster/A_Star_Is_Born.jpg',
-  previewImage: 'https://11.react.pages.academy/static/film/preview/A_Star_Is_Born.jpg',
-  backgroundImage: 'https://11.react.pages.academy/static/film/background/A_Star_is_Born.jpg',
+export const makeFakeFilm = (idx = 1): TFilm => ({
+  name: name.title(),
+  posterImage: image.imageUrl(),
+  previewImage: image.imageUrl(),
+  backgroundImage: image.imageUrl(),
   backgroundColor: '#C4C0C0',
-  description:
-    'A musician helps a young singer find fame as age and alcoholism send his own career into a downward spiral.',
-  rating: 3.9,
-  scoresCount: 244484,
-  director: 'Bradley Cooper',
-  starring: ['Lady Gaga', 'Bradley Cooper', 'Sam Elliott'],
-  runTime: 136,
-  genre: 'Drama',
-  released: 2018,
-  id: datatype.number(),
+  description: lorem.paragraphs(2),
+  rating: datatype.float({
+    min: 0,
+    max: 10,
+  }),
+  scoresCount: datatype.number({ min: 10, max: 250000 }),
+  director: `${name.firstName()} ${name.lastName()}`,
+  starring: random.arrayElements(
+    Array.from({ length: 10 }, () => `${name.firstName()} ${name.lastName()}`),
+    5,
+  ),
+  runTime: datatype.number({ min: 10, max: 150 }),
+  genre: music.genre(),
+  released: datatype.number({
+    min: 1900,
+    max: 2022,
+  }),
+  id: idx,
   isFavorite: datatype.boolean(),
-  videoLink: 'https://11.react.pages.academy/static/film/video/bubbles.mp4',
-  previewVideoLink: 'https://11.react.pages.academy/static/film/video/traffic.mp4',
+  videoLink: image.imageUrl(),
+  previewVideoLink: image.imageUrl(),
 });
+export const makeFakeFilmsArray = (number = 10) =>
+  Array.from({ length: number }, (_, idx) => makeFakeFilm(idx + 1));
 
 export const makeFakeComment = (): TFilmComment => ({
   id: datatype.number(),
@@ -37,8 +47,13 @@ export const makeFakeComment = (): TFilmComment => ({
     id: datatype.number(),
     name: name.title(),
   },
-  rating: 5.3,
-  comment:
-    'The editing is a mess, and the transitions of the plot or characters are rather strange. There is no narrative focus and the storytelling is unbalanced. I cannot really understand why such a bad movie received an overwhelming approval from the critics. ',
-  date: '2022-10-03T13:58:46.523Z',
+  rating: datatype.float({
+    min: 0,
+    max: 10,
+  }),
+  comment: lorem.paragraphs(1),
+  date: date.past(2010).toISOString(),
 });
+
+export const makeFakeCommentsArray = (number = 10) =>
+  Array.from({ length: number }, makeFakeComment);

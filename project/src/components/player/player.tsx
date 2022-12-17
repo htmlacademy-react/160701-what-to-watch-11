@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { RouteName } from 'src/const';
 import { TFilm } from 'src/types/films';
 import { HumanizeDate } from 'src/utils/date';
+import { getTestId } from 'src/utils/main';
 import Loader from '../loader/loader';
 
 type TPlayer = {
@@ -71,7 +72,13 @@ const Player = ({ currentFilm }: TPlayer) => {
           bottom: 0,
         }}
       >
-        <video ref={videoRef} src={videoLink} className="player__video" poster={previewImage} />
+        <video
+          ref={videoRef}
+          src={videoLink}
+          className="player__video"
+          poster={previewImage}
+          {...getTestId('video')}
+        />
 
         <Link className="player__exit" to={`/${RouteName.Films}/${id}`}>
           Exit
@@ -97,6 +104,7 @@ const Player = ({ currentFilm }: TPlayer) => {
               onClick={() => {
                 setPlaying(!playing);
               }}
+              {...getTestId('play-btn')}
             >
               <svg viewBox="0 0 19 19" width="19" height="19">
                 <use xlinkHref={`#${playing ? 'pause' : 'play-s'}`}></use>

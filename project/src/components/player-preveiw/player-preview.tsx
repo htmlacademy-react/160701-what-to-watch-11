@@ -1,4 +1,5 @@
 import { useEffect, useRef, VideoHTMLAttributes } from 'react';
+import { getTestId } from 'src/utils/main';
 
 type TPlayer = VideoHTMLAttributes<HTMLVideoElement> & {
   playing?: boolean;
@@ -13,7 +14,7 @@ const PlayerPreview = ({ playing = false, ...props }: TPlayer) => {
     video?.[playing ? 'play' : 'load']();
   }, [playing]);
 
-  return <video {...props} ref={videoRef} />;
+  return <video {...props} ref={videoRef} {...getTestId('video')} />;
 };
 
 export default PlayerPreview;
